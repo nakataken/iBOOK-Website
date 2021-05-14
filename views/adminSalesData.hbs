@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <title>Sales Page</title>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Righteous">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/adminSales.css">
+    <script src="https://kit.fontawesome.com/85f9dbedb7.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+
+    {{> adminHeader}}
+
+    <!--Begin page content-->
+    <div class="container-fluid px-lg-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 mt-4">
+                        <div class="card">
+                            <div class="card-body background">
+                                <div class="row">
+                                    <div class="col-lg-12 d-flex justify-content-center">
+                                        <div class="row">
+                                            <div class="col-md-12 d-md-flex d-none pt-3">
+                                                <h1>CHECK THE NUMBER OF SALES</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="d-md-flex d-none">
+                                            <hr class="mt-5">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="row d-flex align-items-center">
+
+                                            <div class="col-lg-4 col-md-4 d-flex">
+                                                <div class="card w-100 d-flex d-block align-items-center daily_sales"
+                                                    type="button"
+                                                    onclick="location.href='http://localhost:8080/data/dailySales'">
+                                                    <div class="card-body">
+                                                        <h5>Daily Sales</h5>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 d-flex">
+
+                                                <div class="card w-100 d-flex d-block align-items-center monthly_sales"
+                                                    type="button"
+                                                    onclick="location.href='http://localhost:8080/data/monthlySales'">
+                                                    <div class="card-body">
+                                                        <h5>Monthly Sales</h5>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 d-flex">
+
+                                                <div class="card w-100 d-flex d-block align-items-center annual_sales"
+                                                    type="button"
+                                                    onclick="location.href='http://localhost:8080/data/annualSales'">
+                                                    <div class="card-body">
+                                                        <h5>Annual Sales</h5>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card d-flex">
+                            <div class="card-body">
+                                <div class="row d-md-flex align-items-center">
+                                    <div class="mr-auto col-md-6 col-sm-12 mt-3" id="breadcrumbs"
+                                        aria-label="breadcrumb">
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="/adminPage">Dashboard</a></li>
+                                            <li class="breadcrumb-item active"><a href="/adminSalesData">Table</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Sales</li>
+                                        </ul>
+                                    </div>
+                                    <div class="ml-auto col-md-2 col-sm-12 d-sm-inline-block">
+                                        <form action="/data/adminSortSales" method="POST">
+                                            <div class="dl float-left">
+                                                <select class="custom-select" name="sortSales" id="sortSales"
+                                                    onchange="this.form.submit()">
+                                                    <option class="text-muted" name="default" value="default">Sort by..
+                                                    </option>
+                                                    <option name="sortDateAsc" value="sortDateAsc">Date: Old - New
+                                                    </option>
+                                                    <option name="sortDateDesc" value="sortDateDesc">Date: New - Old
+                                                    </option>
+                                                    <option name="sortAmountAsc" value="sortAmountAsc">Amount: Low -
+                                                        High</option>
+                                                    <option name="sortAmountDesc" value="sortAmountDesc">Amount: High -
+                                                        Low</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="ml-auto col-md-4 col-sm-12">
+                                        <form class="d-sm-inline-block form-inline navbar-search w-100"
+                                            action="/data/adminSearchSales" method="POST">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-light" id="searchSales"
+                                                    name="searchSales" placeholder="search for...">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="submit"><i
+                                                            class="fas fa-search fa-sm"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table v-middle">
+                                <thead>
+                                    <tr class="bg-light">
+                                        <th class="border-top-0 user-col">Username</th>
+                                        <th class="border-top-0 date-col">Mode of Payment</th>
+                                        <th class="border-top-0 total-col">Total Amount of Purchase</th>
+                                        <th class="border-top-0 date-col">Date of Purchase</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each salesData}}
+                                    <tr>
+                                        <td class="user-row">
+                                            {{this.user}}
+                                        </td>
+                                        <td class="code-col">
+                                            {{this.mop}}
+                                        </td>
+                                        <td class="date-col">
+                                            P{{this.amount}}
+                                        </td>
+                                        <td class="total-col">
+                                            {{this.date}}
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            {{#if message}}
+                            <p class="alert alert-danger text-center p-1">{{message}}</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{> adminFooter}}
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        $('#bar').click(function () {
+            $(this).toggleClass('open');
+            $('#page-content-wrapper, #sidebar-wrapper').toggleClass('toggled');
+        });
+    </script>
+
+    <script>
+        // When the user clicks on <div>, open the popup
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+    </script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
