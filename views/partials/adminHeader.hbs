@@ -1,0 +1,61 @@
+<div id="wrapper">
+        <div class="overlay">
+        </div>
+        <!--Sidebar-->
+        <nav class="fixed-top align-top" id="sidebar-wrapper" role="navigation">
+            <div class="simplebar-content" style="padding:0px;">
+                <a href="#" class="sidebar-brand">
+                    <span class="align-middle"><img src="/images/logo.png" class="website-logo"></span>
+                </a>
+                <ul class="navbar-nav align-self-stretch">
+                    <hr class="my-2">
+                    <li><a href="/adminPage" class="nav-link text-left active" role="button">
+                            <i class="fas fa-th-large"></i>Dashboard</a>
+                    </li>
+                    <hr class="my-2">
+                    <li class="sidebar-header">
+                        Tables
+                    </li>
+                    <li><a href="/adminUsersData" class="nav-link text-left" role="button">
+                            <i class="fas fa-users"></i>Customers</i></a>
+                    </li>
+                    <li><a href="/adminBooksData/1" class="nav-link text-left" role="button">
+                            <i class="fas fa-book"></i>Books</i></a>
+                    </li>
+                    <li><a href="/adminSalesData" class="nav-link text-left" role="button">
+                            <i class="fas fa-list"></i>Sales</i></a>
+                    </li>                   
+                </ul>
+            </div>
+        </nav>
+
+        <!--Sidebar Wrapper-->
+
+        <!--Page Content-->
+        <div id="page-content-wrapper">
+            <div id="content">
+                <div class="container-fluid p-0 px-lg-0 px-md-0">
+                    <!--Top bar nav-->
+                    <nav class="navbar navbar-expand navbar-light my-navbar shadow-sm">
+                        <div type="button" id="bar" class="nav-icon1 hamburger animated fadeInLeft is-closed"
+                            data-toggle="offcanvas">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="navbar-nav ml-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-lg-inline text-gray-600 small">iBOOK</span>
+                                    <img src="/images/admin-pic.png" alt="" class="img-profile rounded-circle">
+                                </a>
+                                <div class="user-menu dropdown-menu">
+                                    <a class="nav-link" href="/adminProfile"><i class="fa fa-user"></i>My Profile</a>
+
+                                    <a class="nav-link" href="/auth/admin/logout"><i class="fa fa-power-off"></i>Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <!--End of top bar-->
