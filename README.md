@@ -26,9 +26,9 @@ Instructions: (Gawin nyo to after nyo magawa yung above)
   * e.g. C:/iBook-Website>
 4) run "npm install" IF DI NYO PA NAGAGAWA
   * e.g. C:/iBook-Website> npm install
-6) run "nodemon app", then magsstart na dapat yung session
+5) run "nodemon app", then magsstart na dapat yung session
   * e.g. C:/iBook-Website> nodemon app
-8) open nyo yung browser, then access nyo yung "localhost:8080". 
+6) open nyo yung browser, then access nyo yung "localhost:8080". 
 
 P.S Chat nalang kayo if may naging problem
 * localhost:8080 - para maaccess yung system
