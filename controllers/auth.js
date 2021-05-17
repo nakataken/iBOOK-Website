@@ -455,7 +455,7 @@ exports.userSendEmail = (req, res) => {
             subject: "📘 iBOOK PASSWORD RESET",
             html: ` <p>Hey ${req.body.userEmail}!</p>
                 <p>We heard that you lost your iBook password. Sorry about that!</p>
-                <p>To reset your password, please click the link below.\n\nhttp://localhost:8080/userForgotPassword?token='+${encodeURIComponent(urlTokens)}+'&email='+${req.body.userEmail}</p>
+                <p>To reset your password, please click the link below.\n\nhttp://localhost:8080/userForgotPassword/${encodeURIComponent(urlTokens)}/${req.body.userEmail}</p>
                 <p>Don't forget to read anytime and anywhere you want!</p>
                 <p>–Scrummy Bears</p>`,
         };
@@ -467,7 +467,8 @@ exports.userSendEmail = (req, res) => {
             } else {
                 console.log(info);
                 return res.render('userSendEmail', {
-                    sentMessage: 'Please check your email for a password reset link'
+                    sentMessage: 'Please check your email for a password reset link',
+                    userEmail: req.body.userEmail
                 })
             }
         });
@@ -479,6 +480,7 @@ exports.userSendEmail = (req, res) => {
 //USER RESET PASSWORD
 exports.userForgotPassword = (req, res, next) => {
     console.log(req.body);
+
 
     if (urlTokens == null) {
         return res.render('userForgotPassword', {
@@ -496,7 +498,8 @@ exports.userForgotPassword = (req, res, next) => {
 //USER FORGOT PASSWORD
 exports.userForgotPassword = async (req, res, next) => {
     console.log(req.body);
-
+    
+    const userEmail = req.params.userEmail;
     const userPassword = req.body.userPassword;
     const userPasswordConfirm = req.body.userPasswordConfirm;
 
@@ -512,10 +515,10 @@ exports.userForgotPassword = async (req, res, next) => {
     let hashedPassword = await bcrypt.hash(userPassword, 8); //rounds of encryption
     console.log(hashedPassword);
 
-    db.query('UPDATE users_table SET ?', {
+    db.query('UPDATE users_table SET ? WHERE USER_EMAIL = ?', [{
         USER_PASS: hashedPassword,
         USER_MODIFIED_DATE: datetime
-    }, (error, results) => {
+    }, userEmail], (error, results) => {
         if (error) {
             console.log(error);
         } else {

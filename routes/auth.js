@@ -15,9 +15,9 @@ router.get('/admin/logout', authController.logout);
 
 router.post('/userSendEmail', authController.userSendEmail);
 
-router.get('/userForgotPassword', authController.userForgotPassword);
+router.get('/userForgotPassword/:userEmail', authController.userForgotPassword);
 
-router.post('/userForgotPassword', authController.userForgotPassword);
+router.post('/userForgotPassword/:userEmail', authController.userForgotPassword);
 
 router.post('/user/change/:userID', authController.userChangeInfo);
 

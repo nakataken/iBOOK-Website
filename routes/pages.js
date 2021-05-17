@@ -50,8 +50,12 @@ router.get('/', authController.isLoggedIn, (req, res) => {
 })
 
 //FORGOT PASSWORD PAGE ROUTER
-router.get('/userForgotPassword', (req, res) => {
-    res.render('userForgotPassword');
+router.get('/userForgotPassword/:token/:userEmail', (req, res) => {
+   // const userEmail = req.params.userEmail;   
+    res.render('userForgotPassword', {
+        userEmail: req.params.userEmail
+     
+    });
 })
 
 //USER SEND EMAIL FOR PASSWORD PAGE ROUTER
