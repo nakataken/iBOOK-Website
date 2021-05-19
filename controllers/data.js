@@ -244,9 +244,11 @@ exports.adminAddBook = (req, res) => {
     const bookDesc = req.body.bookDesc;
     const bookPrice = req.body.bookPrice;
     const bookCategory = req.body.bookCategory;
-    var file = req.files.bookCover;
+    var cover = req.files.bookCover;
+    var file = req.files.bookFile;
 
-    var bookCoverName = file.name
+    var bookCoverName = cover.name
+    var bookFileName = file.name
     var datetime = new Date();
     console.log(datetime);
 
@@ -263,28 +265,29 @@ exports.adminAddBook = (req, res) => {
                 })
             }
 
-            file.mv('public/uploadedImages/' + file.name, function (err) {
+            cover.mv('public/uploadedImages/' + cover.name, function (err) {
+                file.mv('public/uploadedFiles/' + file.name, function (err) {
+                    if (err)
 
-                if (err)
-
-                    return res.status(500).send(err);
-                db.query('INSERT INTO books_table SET ?', {
-                    BOOK_TITLE: bookTitle,
-                    BOOK_AUTHOR: bookAuthor,
-                    BOOK_COVER: bookCoverName,
-                    BOOK_PRICE: bookPrice,
-                    BOOK_DESC: bookDesc,
-                    BOOK_CATEGORY: bookCategory,
-                    BOOK_CREATED_DATE: datetime,
-                    BOOK_MODIFIED_DATE: datetime
-                }, (error, results) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        res.redirect("/adminBooksData/1");
-                    }
-                })
-
+                        return res.status(500).send(err);
+                            db.query('INSERT INTO books_table SET ?', {
+                                BOOK_TITLE: bookTitle,
+                                BOOK_AUTHOR: bookAuthor,
+                                BOOK_COVER: bookCoverName,
+                                BOOK_FILE: bookFileName,
+                                BOOK_PRICE: bookPrice,
+                                BOOK_DESC: bookDesc,
+                                BOOK_CATEGORY: bookCategory,
+                                BOOK_CREATED_DATE: datetime,
+                                BOOK_MODIFIED_DATE: datetime
+                            }, (error, results) => {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    res.redirect("/adminBooksData/1");
+                                }
+                            })
+                });
             });
 
 

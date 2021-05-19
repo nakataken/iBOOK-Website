@@ -23,7 +23,7 @@ router.post('/user/change/:userID', authController.userChangeInfo);
 
 router.post('/user/change-password/:userID', authController.userChangePass);
 
-router.post('/user/icon/:userID', authController.adminChangeIcon);
+router.post('/user/icon/:userID', authController.userChangeIcon);
 
 router.post('/admin/change', authController.adminChangeInfo);
 

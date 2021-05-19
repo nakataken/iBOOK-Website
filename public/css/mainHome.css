@@ -961,7 +961,16 @@ nav.black .search-form-wrapper .input-group {
     font-size: 15px;
 }
 
-/*--Product Description*/
+/*--Product Description + PDF view*/
+.pdf-view {
+    margin-top: 50px;
+    margin-bottom: 70px;
+    height: 800px;
+}
+.pdf-frame {
+    border: .75rem solid #3f87da;
+}
+
 
 .single-product {
     margin-top: 70px;

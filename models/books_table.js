@@ -24,6 +24,10 @@ books_table.init({
 			type: Sequelize.STRING(10000),
 			allowNull: false
 		},
+		BOOK_FILE: {
+			type: Sequelize.BLOB('long'),
+			allowNull: false
+		},
 		BOOK_PRICE: {
 			type: Sequelize.INTEGER(50),
 			allowNull: false

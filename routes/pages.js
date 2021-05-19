@@ -73,7 +73,7 @@ router.get('/userProfile', authController.isLoggedIn, (req, res) => {
             if (err) throw err;
 
             var sqlLibrary = `SELECT books_table.BOOK_TITLE AS title, 
-            books_table.BOOK_COVER AS cover
+            books_table.BOOK_COVER AS cover, books_table.BOOK_FILE AS file
             FROM books_table JOIN checkout_items_table ON books_table.BOOK_ID = checkout_items_table.BOOK_ID WHERE checkout_items_table.USER_ID = ?`
 
             db.query(sqlLibrary, [userID], function (err, books, fields) {
@@ -313,7 +313,29 @@ router.get('/display/:category/:book', authController.isLoggedIn, (req, res) => 
     })
 
 })
-/
+
+router.get('/viewPdf/:bookTitle', authController.isLoggedIn, (req, res) => {
+    const bookTitle = req.params.bookTitle;
+
+
+    var sql = 'SELECT * FROM books_table WHERE BOOK_TITLE = ?';
+ 
+    db.query(sql, [bookTitle], function (error, data) {
+        
+            if (error) {
+                throw error;
+            } else {
+                res.render('userViewPdf', {
+                    user: req.user,
+                    book: data
+                });
+            }
+        
+    })
+
+})
+
+
 //ACTION ADVENTURE PAGE ROUTER
 router.get('/category/action-adventure', authController.isLoggedIn, (req, res) => {
     var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Action and Adventure'";
