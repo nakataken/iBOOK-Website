@@ -8,7 +8,7 @@ Pre-requisites:
 5) node.js 
 6) node packages (run "npm install" to install all packages included in package.json), kahit later nyo na gawin 
 7) wamp & mysql - https://sourceforge.net/projects/wampserver/
-8) copy of database file (ibook_db.sql), yung sinend ni alex
+8) copy of database file, pacheck sa database branch.
 9) import database file to your phpmyadmin. follow steps below:
   * start first wamp server
   * left click the icon of wamp server on bottom right of your window
