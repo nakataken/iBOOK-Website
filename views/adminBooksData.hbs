@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <title>Books Page</title>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Righteous">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/adminBooksTable.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/85f9dbedb7.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+
+    {{> adminHeader}}
+    <!--Begin page content-->
+    <div class="container-fluid px-lg-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-7 mt-lg-4 mt-4">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Manage Books</h1>
+                        </div>
+                        <div class="text-muted">
+                            <h6>Create or add new books. You can set their details too.
+                            </h6>
+                        </div>
+                        <div class="mr-auto float-left mt-2 mb-3">
+                            <a href="/adminAddBook">
+                                <button type="submit" class="btn text-uppercase">
+                                    <i class="fas fa-plus"></i> Add books
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 mt-lg-4 mt-4">
+                        <div class="card">
+                            <div class="card-body" id="book-box">
+                                <div class="row">
+                                    <div class="col-md-5 align-items-center d-none d-md-flex px-5">
+                                        <span><i class="fas fa-book fa-7x"></i></span>
+                                    </div>
+                                    <div class="col-md-7 px-3 align-items-center">
+                                        <h1 class="display-5 mt-1 mb-3">
+                                            {{#each booksCount}}
+                                            {{this.booksCount}}
+                                            {{/each}}
+                                        </h1>
+                                        <h1 class="card-title mb-4">
+                                            Books
+                                        </h1>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div class="mr-auto col-md-5 col-sm-12 mt-3" id="breadcrumbs"
+                                        aria-label="breadcrumb">
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="/adminPage">Dashboard</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Table
+                                            </li>
+                                            <li class="breadcrumb-item active" aria-current="page">Books
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="ml-auto col-md-5 col-sm-12">
+                                        <form class="d-sm-inline-block form-inline navbar-search w-100"
+                                            action="/data/adminSearchBooks" method="POST">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-light" id="searchBook"
+                                                    placeholder="Search book title" name="searchBook">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary mt-n1" type="submit"><i
+                                                            class="fas fa-search fa-sm pt-0"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="ml-auto col-md-2 d-sm-inline-block">
+                                        <form action="/data/adminSortBooks" method="POST">
+                                            <div class="dl float-left">
+                                                <select class="custom-select" name="sortBooks" id="sortBooks"
+                                                    onchange="this.form.submit()">
+                                                    <option class="text-muted" name="default" value="default">Sort by..
+                                                    </option>
+                                                    <option name="sortTitleAsc" value="sortTitleAsc">
+                                                        Title:
+                                                        A - Z</option>
+                                                    <option name="sortTitleDesc" value="sortTitleDesc">
+                                                        Title: Z - A</option>
+                                                    <option name="sortPriceAsc" value="sortPriceAsc">
+                                                        Price:
+                                                        Low - High</option>
+                                                    <option name="sortPriceDesc" value="sortPriceDesc">
+                                                        Price: High - Low </option>
+                                                    <!-- <input type="submit"/> -->
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table v-middle">
+                                <thead>
+                                    <tr class="bg-light">
+                                        <th class="border-top-0">Book Cover</th>
+                                        <th class="border-top-0">Title</th>
+                                        <th class="border-top-0">Author</th>
+                                        <th class="border-top-0">Description</th>
+                                        <th class="border-top-0">Category</th>
+                                        <th class="border-top-0">Price</th>
+                                        <th class="border-top-0">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {{#each bookData}}
+
+                                    <tr>
+                                        <td>
+                                            <span><img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}'>
+                                        </td></span>
+                                        </td>
+                                        <td>
+                                            {{this.BOOK_TITLE}}
+                                        </td>
+                                        <td>
+                                            {{this.BOOK_AUTHOR}}
+                                        </td>
+                                        <td>
+                                            {{this.BOOK_DESC}}
+                                        </td>
+                                        <td>
+                                            {{this.BOOK_CATEGORY}}
+                                        </td>
+                                        <td>
+                                            {{this.BOOK_PRICE}}
+                                        </td>
+                                        <td>
+                                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                <a href="/adminModifyBook/{{this.BOOK_ID}}"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <a href="/adminDeleteBook/{{this.BOOK_ID}}" onclick="
+                                                                if (!confirm('Are you sure you want to delete?'))
+                                                                {
+                                                                    return false
+                                                                }
+                                                                ">
+                                                    <i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            {{#if message}}
+                            <p class="alert alert-danger text-center p-1">{{message}}</p>
+                            {{else}}
+
+                            <section class="page-nav" aria-label="page-nav">
+                                <ul class="pagination justify-content-center" name="pageBooks">
+                                    <li class="page-item"><a class="page-link" href="/adminBooksData/1" name='1'>1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="/adminBooksData/2" name='2'>2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="/adminBooksData/3" name='3'>3</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="/adminBooksData/4" name='4'>4</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="/adminBooksData/5" name='5'>5</a>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="mx-3">
+    {{> adminFooter}}
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        $('#bar').click(function () {
+            $(this).toggleClass('open');
+            $('#page-content-wrapper, #sidebar-wrapper').toggleClass('toggled');
+        });
+    </script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

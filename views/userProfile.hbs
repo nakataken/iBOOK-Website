@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Righteous">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/mainHome.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+    <script src="https://kit.fontawesome.com/85f9dbedb7.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+    <!--Navigation Bar-->
+
+    {{> categoryHeader}}
+
+    <!--Single Product-->
+    <hr class="my-5">
+    <section class="cart-list pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="row cart-card d-flex align-items-center">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="d-block">
+                                        <div class="customer-profile d-flex align-items-center justify-content-center">
+                                            <img src='http://localhost:8080/userIcons/{{userData.0.USER_ICON}}'
+                                                alt="Profile" data-toggle="modal" data-target="#ChangePass">
+                                        </div>
+                                        <form action="/auth/user/icon/{{userData.0.USER_ID}}" method="POST"
+                                            enctype="multipart/form-data">
+                                            <div class="modal fade" role="dialog" id="ChangePass">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h3 class="modal-title">
+                                                                <i class="fa fa-user">
+                                                                </i>
+                                                                CHANGE PROFILE PICTURE
+                                                            </h3>
+                                                            <button type="button" class="close"
+                                                                data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body px-5">
+                                                            <div
+                                                                class="customer-profile d-flex align-items-center justify-content-center">
+                                                                <img src='http://localhost:8080/userIcons/{{userData.0.USER_ICON}}'
+                                                                    alt="Profile">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-between p-3">
+                                                            <form id="form1" runat="server">
+                                                                <input type='file' id="imgInp" name="userIcon" />
+                                                                <img id="blah" src="/images/userEmpty.jpg"
+                                                                    alt="your image" height="100" width="100" />
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-end p-3">
+                                                            <div>
+                                                                <button class="cancel-btn mr-2"
+                                                                    data-dismiss="modal">Cancel</button>
+                                                                <button class="save-btn" type="submit">Save</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 py-2">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="side-tab d-block align-items-center">
+                                        <span class="d-flex justify-content-center"><label class="checkname">
+                                                <h5 class="font-weight-bold">{{userData.0.USER_NAME}}</h5>
+                                            </label></span>
+                                        <span>
+                                            <hr class="my-4"></span>
+                                        <div class="customer-details active container d-flex align justify-content-start"
+                                            type="button" onclick="openContent(event, 'customer-info')">
+                                            <div class="d-block align-items-center mr-3">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="d-block">
+                                                <h5>My Details</h5>
+                                                <p class="text-muted">Update your name and email address</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="customer-details container d-flex align justify-content-start"
+                                            type="button" onclick="openContent(event, 'customer-books')">
+                                            <div class="d-block align-items-center mr-3">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="d-block">
+                                                <h5>My Library</h5>
+                                                <p class="text-muted">View the lists of books or PDF downloaded</p>
+                                            </div>
+                                        </div>
+                                        <span>
+                                            <hr class="my-4"></span>
+                                        <div class="customer-details container d-flex align justify-content-start"
+                                            type="button" onclick="openContent(event, 'customer-change-pass')">
+                                            <div class="d-block align-items-center mr-3">
+                                                <i class="fas fa-user-cog"></i>
+                                            </div>
+                                            <div class="d-block">
+                                                <h5>Account Settings</h5>
+                                                <p class="text-muted">Change password</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+
+                    <div class="row cart-card d-flex align-items-center">
+                        <div id="customer-info" class="customer-detail-card side-content-tab col-md-12">
+                            <div class="card-1 card p-3">
+                                <div class="card-body">
+                                    {{#if messageSuccess}}
+                                    <p class="alert alert-success text-center p-1">{{messageSuccess}}</p>
+                                    {{/if}}
+                                    {{#if message}}
+                                    <p class="alert alert-danger text-center p-1">{{message}}</p>
+                                    {{/if}}
+                                    <div class="container p-3">
+                                        <form class="form-box container px-3"
+                                            action="/auth/user/change/{{userData.0.USER_ID}}" method="POST">
+                                            <h4 class="font-weight-bold">Information Details</h4>
+                                            <hr class="my-4">
+                                            <div class="username d-flex align-items-center">
+                                                <label for="">Username: <h5 class="font-weight-bold">
+                                                        {{userData.0.USER_NAME}}</h5>
+                                                </label>
+                                            </div>
+                                            <div class="email-address d-flex align-items-center">
+                                                <label for="">Email Address: <h5 class="font-weight-bold">
+                                                        {{userData.0.USER_EMAIL}}</h5>
+                                                </label>
+                                            </div>
+
+                                            <hr class="my-4">
+                                            <p class="text-muted mr-2">
+                                                To change your username and email address.
+                                            </p>
+                                            <div class="d-flex">
+                                                <label for="" class="text-muted mr-2">Click</label>
+                                                <p type="button" class="enable-btn" onclick="openInfoField()">change.
+                                                </p>
+                                            </div>
+                                            <hr class="my-4">
+
+                                            <div class="info-update" id="info-update">
+
+                                                <h6 class="font-weight-bold pb-3">Manage Information</h6>
+                                                <div class="form-input">
+                                                    <span><i class="fa fa-book-reader"></i></span>
+                                                    <input type="username" name="userUsername"
+                                                        placeholder="New Username" tabindex="10" minlength="1"
+                                                        maxlength="10" required>
+                                                </div>
+                                                <div class="form-input">
+                                                    <span><i class="fa fa-envelope-o"></i></span>
+                                                    <input type="email" name="userEmail" placeholder="New Email Address"
+                                                        tabindex="10" required maxlength="50">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-block text-uppercase">
+                                                        Save Changes
+                                                    </button>
+                                                </div>
+                                                <hr class="my-4">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{#if messages.success}}
+                            <script>
+                                alert("Your purchase is successful! Check the book on your library.")
+                            </script>
+                        {{/if}}
+                        <div id="customer-books" class="customer-order-card side-content-tab col-md-12">
+                            <div class="card-2 card p-3">
+                                <div class="tab row pt-3">
+                                    <div class="my-books-tab active tablinks col-md-6 col-sm-6 col-6 d-block text-center"
+                                        type="button" onclick="openTab(event, 'my-books')">
+                                        <h4 class="font-weight-bold"><i class="fas fa-book"></i> My Books</h4>
+                                    </div>
+                                    <div class="my-wishlists-tab tablinks col-md-6 col-sm-6 col-6 d-block text-center"
+                                        type="button" onclick="openTab(event, 'my-wishlists')">
+                                        <h4 class="font-weight-bold"><i class="fas fa-heart"></i> My Wishlists</h4>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <div id="my-books" class="tabcontent">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                {{#each libraryBooks}}
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="http://localhost:8080/viewPdf/{{this.title}}"><img
+                                                                src="http://localhost:8080/uploadedImages/{{this.cover}}"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>{{this.title}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="my-wishlists" class="tabcontent">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="product_description.html"><img
+                                                                    src="/images/dw-cover.jpg"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>Doctor Who</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="product_description.html"><img
+                                                                    src="/images/tswg-cover.jpg"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>Thn She Was Gone</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="product_description.html"><img
+                                                                    src="/images/gi-cover.jpg"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>Girl In The Ice</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="product_description.html"><img
+                                                                    src="/images/hg-cover.jpg"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>The Hunger Games</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
+                                                    <div class="d-block align-items-center justify-content-center">
+                                                        <div class="product-top d-flex justify-content-center mb-2">
+                                                            <a href="product_description.html"><img
+                                                                    src="/images/r&j-cover.jpg"></a>
+                                                        </div>
+                                                        <div class="product-bottom text-center">
+                                                            <h6>Romeo & Juliet</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-pagination">
+                                        <hr class="my-4">
+                                        <section class="page-nav" aria-label="page-nav">
+                                            <ul class="pagination justify-content-center">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#" tabindex="-1"
+                                                        aria-disabled="true">Previous</a>
+                                                </li>
+                                                <li class="page-item disabled"><a class="page-link active bg-primary"
+                                                        href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">Next</a>
+                                                </li>
+                                            </ul>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="customer-change-pass" class="customer-password-card side-content-tab col-md-12">
+                            <div class="card-1 card p-3">
+                                <div class="card-body">
+                                    <div class="container p-3">
+                                        <form class="form-box container px-3"
+                                            action="/auth/user/change-password/{{userData.0.USER_ID}}" method="POST">
+                                            <h4 class="font-weight-bold">Change Password</h4>
+                                            <hr class="my-4">
+                                            <p class="text-muted mr-2">
+                                                It's a good idea to use a strong password that you don't use elsewhere.
+                                            </p>
+                                            <div class="d-flex">
+                                                <label for="" class="text-muted mr-2">Click</label>
+                                                <p type="button" class="enable-btn" onclick="openChangePass()">change.
+                                                </p>
+                                            </div>
+                                            <hr class="my-4">
+                                            <div class="info-update" id="password-update">
+                                                <h6 class="font-weight-bold pb-3">Manage Password</h6>
+                                                <div class="form-input">
+                                                    <span><i class="fa fa-lock"></i></span>
+                                                    <input type="password" name="userCurrentPassword"
+                                                        placeholder="Current Password" tabindex="10" required>
+                                                </div>
+                                                <div class="form-input">
+                                                    <span><i class="fa fa-key"></i></span>
+                                                    <input type="password" name="userPassword"
+                                                        placeholder="New Password" tabindex="10" required minlength="6"
+                                                        maxlength="10">
+                                                </div>
+                                                <div class="form-input">
+                                                    <span><i class="fa fa-key"></i></span>
+                                                    <input type="password" name="userConfirm"
+                                                        placeholder="Confirm Password" tabindex="10" required
+                                                        minlength="6" maxlength="10">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-block text-uppercase">
+                                                        Update Password
+                                                    </button>
+                                                </div>
+                                                <hr class="my-4">
+                                            </div>
+                                            <h4 class="font-weight-bold">Manage Account</h4>
+                                            <hr class="my-4">
+                                            <p class="text-muted mr-2">
+                                                Deactivation settings.
+                                            </p>
+                                            <div class="d-flex">
+                                                <label for="" class="text-muted mr-2">Click</label>
+                                                <p type="button" class="enable-btn" onclick="openDeactivation()">here.
+                                                </p>
+                                            </div>
+                                            <hr class="my-3">
+                                            <div class="info-update" id="deactivation">
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="font-weight-bold">Account</p>
+                                                    <a class="deactivation-btn" type="button"
+                                                        href="/userDeactivate/{{userData.0.USER_ID}}" onclick="
+                                                                if (!confirm('Are you sure you want to deactivate your account?'))
+                                                                {
+                                                                    return false
+                                                                }
+                                                                ">Deactivate</a>
+                                                </div>
+                                                <hr class="my-2">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Product Description-->
+
+
+
+    <!--Footer-->
+    <section class="footer">
+        <div class="container text-left">
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>Useful Links</h1>
+                    <p>Privacy Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Return Policy</p>
+                    <p>Discount Coupons</p>
+                </div>
+                <div class="col-md-4">
+                    <h1>Company</h1>
+                    <p>About Us</p>
+                    <p>Contact Us</p>
+                    <p>Career</p>
+                    <p>Affiliate</p>
+                </div>
+                <div class="col-md-4">
+                    <h1>Follow Us On</h1>
+                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
+                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
+                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
+                    <p><i class="fa fa-twitter"></i> Twitter</p>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
+                by iBOOK
+            </p>
+        </div>
+
+
+
+        <script type="text/javascript">
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop()) {
+                    $('nav').addClass('black');
+                } else {
+                    $('nav').removeClass('black');
+                }
+            })
+        </script>
+
+        <script>
+            /* Open when someone clicks on the span element */
+            function openNav() {
+                if (document.getElementById("myNav").style.width == "100%") {
+                    document.getElementById("myNav").style.width = "0";
+                } else {
+                    document.getElementById("myNav").style.width = "100%";
+                }
+            }
+        </script>
+
+        <script>
+            function closeNav() {
+                if (document.getElementById("myNav").style.width == "100%") {
+                    document.getElementById("myNav").style.width = "0";
+                } else {
+                    document.getElementById("myNav").style.width = "100%";
+                }
+            }
+        </script>
+
+        <script>
+            const scrollUp = document.querySelector('.scrollUp');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 100) {
+                    scrollUp.classList.add("active");
+                } else {
+                    scrollUp.classList.remove("active");
+                }
+            })
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle=search-form]').click(function () {
+                    $('.search-form-wrapper').toggleClass('open');
+                    $('.search-form-wrapper .search').focus();
+                    $('html').toggleClass('search-form-open');
+                });
+                $('[data-toggle=search-form-close]').click(function () {
+                    $('.search-form-wrapper').removeClass('open');
+                    $('html').removeClass('search-form-open');
+                });
+                $('.search-form-wrapper .search').keypress(function (event) {
+                    if ($(this).val() == "Search") $(this).val("");
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                // Add smooth scrolling to all links
+                $("a").on('click', function (event) {
+
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+
+                        // Store hash
+                        var hash = this.hash;
+
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 800, function () {
+
+                            // Add hash (#) to URL when done scrolling (default click behavior)
+                            window.location.hash = hash;
+                        });
+                    } // End if
+                });
+            });
+        </script>
+
+        <script>
+            function openInfoField() {
+                var x = document.getElementById("info-update");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "block";
+                }
+            }
+
+            function openChangePass() {
+                var x = document.getElementById("password-update");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "block";
+                }
+            }
+
+            function openDeactivation() {
+                var x = document.getElementById("deactivation");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "block";
+                }
+            }
+        </script>
+
+        <script>
+            function openTab(evt, tabButton) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(tabButton).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+        <script>
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+
+                    if (!input.files[0].type.match(/.(jpg|jpeg|png|gif)$/i)) {
+                        alert('not an image');
+
+                    }
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function () {
+                readURL(this);
+            });
+        </script>
+
+        <script>
+            function openContent(evt, contentTab) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("side-content-tab");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("customer-details");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(contentTab).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
