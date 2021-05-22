@@ -11,12 +11,19 @@ const {Sequelize} = require('sequelize');
 const SequelizeAuto = require('sequelize-auto-models')
 
 
+const flash = require('express-flash')
+
+
+
 //Private file
 dotenv.config({
     path: './.env'
 });
 
 const app = express();
+
+// In order to flash messages
+app.use(flash())
 
 //Connection with the database
 const db = mysql.createPool({

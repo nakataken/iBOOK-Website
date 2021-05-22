@@ -13,7 +13,16 @@ const db = mysql.createPool({
 
 //CHECKOUT THROUGH GCASH
 exports.checkoutGcash = async (req, res, next) => {
-    var params = [req.params.arr].concat(req.params[0].split('/').slice(1));
+    //previouscode //var params = [req.params.arr].concat(req.params[0].split('/').slice(1));
+    //debugged code
+    var params=[];
+    params = req.params[0].split('/');
+    params[0] = req.params.arr.concat(params[0]);
+    //console.log(req.params)
+    //console.log(req.params[0])
+    //console.log(req.params.arr)
+    //console.log(params)
+
     const gcash = req.body.gcashNum;
     const userID = req.params.userID;
     const mop = 'Gcash';
@@ -56,7 +65,8 @@ exports.checkoutGcash = async (req, res, next) => {
                     })
                }
                     req.session.cart = null;
-                    res.redirect('/');
+                    req.flash('success', 'Your purchase is successful! Check the book on your library.')
+                    res.redirect('/userProfile');
 
         }
 
@@ -66,7 +76,11 @@ exports.checkoutGcash = async (req, res, next) => {
 }
 //CHECKOUT THROUGH CARD
 exports.checkoutCard = async (req, res, next) => {
-    var params = [req.params.arr].concat(req.params[0].split('/').slice(1));
+    //var params = [req.params.arr].concat(req.params[0].split('/').slice(1));
+    var params=[];
+    params = req.params[0].split('/');
+    params[0] = req.params.arr.concat(params[0]);
+    
     const cardName = req.body.cardName;
     const cardNum = req.body.cardNum;
     const cardSec = req.body.cardCCV;
@@ -115,7 +129,8 @@ exports.checkoutCard = async (req, res, next) => {
                     })
                }
                     req.session.cart = null;
-                    res.redirect('/');
+                    req.flash('success', 'Your purchase is successful! Check the book on your library.')
+                    res.redirect('/userProfile');
 
         }
 

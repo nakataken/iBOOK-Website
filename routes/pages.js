@@ -185,9 +185,48 @@ router.get('/cart', authController.isLoggedIn, (req, res, next) => {
 })
 
 //ADD TO CART 
-router.get('/add/:bookID', function (req, res, next) {
-    const bookID = req.params.bookID;
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
+router.get('/add/:bookID', authController.isLoggedIn, (req, res) => {
+    // DEBUGGED:
+    //  Is online?
+    if (req.user) {
+
+        const userID = req.user.USER_ID;
+        const bookID = req.params.bookID;
+        
+        db.query('SELECT DISTINCT BOOK_ID FROM checkout_items_table WHERE USER_ID = ?', [userID], (error, result) => {
+            if (error) {
+                throw error;
+            } else {
+                let isExist = false;
+                result.forEach((id) => {
+                    if (bookID == id.BOOK_ID) {
+                        isExist = true;
+                    }
+                })
+
+                // Check if book already in the library
+                if (isExist == true){
+                    req.flash('info', 'You already have it on your library.')
+                    return res.redirect('back')
+                } else {
+                    const cart = new Cart(req.session.cart ? req.session.cart : {});
+                    console.log(bookID);
+                    models.books_table.findByPk(bookID).then(book => {
+
+                        //console.log(book);
+                        cart.add(book, book.BOOK_ID);
+                        req.session.cart = cart;
+                        console.log(req.session.cart)
+                        res.redirect('back')
+                    })
+                }
+            }
+        });
+    } else {
+        res.redirect('/userLoginPage');
+    }
+    // Previous Code
+    /*const cart = new Cart(req.session.cart ? req.session.cart : {});
     console.log(bookID);
     models.books_table.findByPk(bookID).then(book => {
 
@@ -196,7 +235,7 @@ router.get('/add/:bookID', function (req, res, next) {
         req.session.cart = cart;
         console.log(req.session.cart)
         res.redirect('back')
-    })
+    })*/
 })
 
 //CHECKOUT ROUTER

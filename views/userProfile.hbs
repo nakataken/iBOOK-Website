@@ -195,6 +195,11 @@
                                 </div>
                             </div>
                         </div>
+                        {{#if messages.success}}
+                            <script>
+                                alert("Your purchase is successful! Check the book on your library.")
+                            </script>
+                        {{/if}}
                         <div id="customer-books" class="customer-order-card side-content-tab col-md-12">
                             <div class="card-2 card p-3">
                                 <div class="tab row pt-3">
