@@ -23,21 +23,22 @@
             <div class="col-12">
                 <header class="row">
                     <!--Start Header-->
-                    <div class="top-nav col-12 g-white pt-3">
+                    <div class="top-nav col-12 pt-3">
                         <header>
                             <div class="responsive-bar">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="logo">
-                                            <a href="/"><img src="images/logo.png"></a>
+                                            <a href="/"><img src="images/new/logo.png"></a>
                                         </div>
+
                                         <div class="menu">
                                             <span onclick="openNav()"><i class="fas fa-bars"></i></span>
                                         </div>
+
                                         <div class="shop-cart">
-                                            <a href="/cart"><i class="fas fa-shopping-bag fa-2x"></i>
-                                                <span class='badge badge-warning' id='lblCartCount'
-                                                    value="cartCount">{{session.cart.totalQty}}</span>
+                                            <a href="/cart"> <i class="fas fa-shopping-cart"></i>
+                                                <span class='badge badge-warning' id='lblCartCount' value="cartCount">{{session.cart.totalQty}}</span>
                                             </a>
                                         </div>
                                     </div>
@@ -46,10 +47,12 @@
 
                             <nav>
                                 <div class="logo">
-                                    <a href="/"><img src="images/logo.png"></a>
+                                    <a href="/"><img src="images/new/logo.png"></a>
                                 </div>
+
                                 <div>
                                     <ul>
+                                        <!--
                                         <li id="navbar-search-btn"><a href="#search" class="search-form-tigger"
                                                 data-toggle="search-form"><i class="fa fa-search"
                                                     aria-hidden="true"></i> browse</a>
@@ -69,43 +72,63 @@
                                                 </form>
                                             </div>
                                         </li>
+                                        -->
                                         <li><a href="/">Home</a></li>
-                                        <li>
-                                            <a href="#">Category</a>
-                                            <ul class="category-list">
-                                                <li><a href="/category/action-adventure">Action and Adventure</a></li>
-                                                <li><a href="/category/childrens-fiction">Children's Fiction</a></li>
-                                                <li><a href="/category/comic-graphic">Comic and Graphic Novel</a></li>
-                                                <li><a href="/category/drama">Drama</a></li>
-                                                <li><a href="/category/fairytale">Fairy Tale</a></li>
-                                                <li><a href="/category/fantasy-scifi">Fantasy and Sci-Fi</a></li>
-                                                <li><a href="/category/horror-thriller">Horror and Thriller</a></li>
-                                                <li><a href="/category/mystery">Mystery</a></li>
-                                                <li><a href="/category/romance">Romance</a></li>
-                                                <li><a href="/category/young-adult">Young Adult</a></li>
-                                            </ul>
+                                        <li class="dropdown dropdown-menu-right">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CATEGORIES<b class="caret"></b></a>  
+                                            
+                                                <ul class="dropdown-menu mega-menu column dropdown-menu-right" >
+                                                    <li><a href="/category/comic-graphic">ARTS AND APPLIED</a></li>
+                                                    <li><a href="/category/drama">BUSINESS, ECONOMICS, FINANCE, and ACCOUNTING</a></li>
+                                                    <li><a href="/category/fairytale">CHEMISTRY</a></li>
+                                                    <li><a href="/category/fantasy-scifi">COMPUTER SCIENCE AND INFORMATION TECHNOLOGY</a></li>
+                                                    <li><a href="/category/horror-thriller">EARTH, SPACE, AND ENVIRONMENTAL SCIENCE</a></li>
+                                                    <li><a href="/category/mystery">HUMANITIES</a></li>
+                                                    <li><a href="/category/romance">LAW AND CRIMINOLOGY</a></li>
+                                                    <li><a href="/category/young-adult">LIFE SCIENCE</a></li>
+                                                    <li><a href="/category/action-adventure">MATHEMATICS AND STATISTICS</a></li>
+                                                    <li><a href="/category/childrens-fiction">MEDICINE</a></li>
+                                                    <li><a href="/category/comic-graphic">NOVEL</a></li>
+                                                    <li><a href="/category/drama">NURSING, DENTISTRY, AND HEALTHCARE</a></li>
+                                                    <li><a href="/category/fairytale">PHYSICAL SCIENCE AND ENGINEERING</a></li>
+                                                    <li><a href="/category/fantasy-scifi">PSYCHOLOGY</a></li>
+                                                    <li><a href="/category/horror-thriller">SOCIAL AND BEHAVIORAL SCIENCE</a></li>
+                                                    <li><a href="/category/mystery">VETERINARY MEDICINE</a></li>
+                                                </ul>    
+                                            
                                         </li>
-                                        <li><a href="/cart"><i class="fas fa-shopping-bag fa-2x"></i>
-                                                <span class='badge badge-warning' id='lblCartCount'
-                                                    value="cartCount">{{session.cart.totalQty}}</span>
-                                            </a></li>
                                         <li>
-                                            <a href="#"><i class="far fa-user-circle fa-2x"></i></a>
                                             {{#if user}}
+                                                <a href="/cart">
+                                                <i class="fas fa-shopping-cart "></i>
+                                                    <span class='badge badge-warning' id='lblCartCount'
+                                                        value="cartCount">{{session.cart.totalQty}}</span>
+                                                </a>
+                                            {{else}}
+                                                
+                                            {{/if}}
+                                        </li>
+                                        <li>
+
+                                            
+                                            {{#if user}}
+                                            <a href="#"><i class="fas fa-user"></i></a>
                                             <ul class="user-log">
                                                 <li><a href="/userProfile">Profile</a></li>
                                                 <li><a href="/auth/logout">Logout</a></li>
                                             </ul>
                                             {{else}}
-                                            <ul class="user-log">
-                                                <li><a href="/userLoginPage">Login</a></li>
-                                                <li><a href="/userRegisterPage">Sign-Up</a></li>
-                                            </ul>
+                                                <li >
+                                                    <a href="/userLoginPage" class="my-auto p-0">
+                                                        <button type="button" class="btn my-auto btn-login py-1 px-5">LOG-IN</button>
+                                                    </a>
+                                                </li>
                                             {{/if}}
                                         </li>
                                     </ul>
                                 </div>
                             </nav>
+                            
                             <!-- The overlay -->
                             <div id="myNav" class="overlay text-left">
                                 <!-- Overlay content -->
@@ -114,7 +137,7 @@
                                         <span onclick="closeNav()"><i class="fa fa-times"></i></span>
                                     </div>
                                     <div class="overlay-logo">
-                                        <img src="images/logo.png">
+                                        <img src="images/new/logo-white.png">
                                     </div>
                                     <form class="search-form" id="" action="/data/searchBooks" method="POST">
                                         <div class="overlay-box">
@@ -123,16 +146,24 @@
                                         </div>
                                     </form>
                                     <hr>
-                                    <a href="/category/action-adventure">Action and Adventure</a>
-                                    <a href="/category/childrens-fiction">Children's Fiction</a>
-                                    <a href="/category/comic-graphic">Comic and Graphic Novel</a>
-                                    <a href="/category/drama">Drama</a>
-                                    <a href="/category/fairytale">Fairy Tale</a>
-                                    <a href="/category/fantasy-scifi">Fantasy and Sci-Fi</a>
-                                    <a href="/category/horror-thriller">Horror and Thriller</a>
-                                    <a href="/category/mystery">Mystery</a>
-                                    <a href="/category/romance">Romance</a>
-                                    <a href="/category/young-adult">Young Adult</a>
+                                        <a href="/category/action-adventure">AGRICULTURE, AQUACULTURE, AND FOOD SERVICE</a></li>
+                                        <a href="/category/childrens-fiction">ARCHITECTURE AND PLANNING</a></li>
+                                        <a href="/category/comic-graphic">ARTS AND APPLIED</a>
+                                        <a href="/category/drama">BUSINESS, ECONOMICS, FINANCE, and ACCOUNTING</a>
+                                        <a href="/category/fairytale">CHEMISTRY</a>
+                                        <a href="/category/fantasy-scifi">COMPUTER SCIENCE AND INFORMATION TECHNOLOGY</a>
+                                        <a href="/category/horror-thriller">EARTH, SPACE, AND ENVIRONMENTAL SCIENCE</a>
+                                        <a href="/category/mystery">HUMANITIES</a>
+                                        <a href="/category/romance">LAW AND CRIMINOLOGY</a>
+                                        <a href="/category/young-adult">LIFE SCIENCE</a>
+                                        <a href="/category/action-adventure">MATHEMATICS AND STATISTICS</a>
+                                        <a href="/category/childrens-fiction">MEDICINE</a>
+                                        <a href="/category/comic-graphic">NOVEL</a>
+                                        <a href="/category/drama">NURSING, DENTISTRY, AND HEALTHCARE</a>
+                                        <a href="/category/fairytale">PHYSICAL SCIENCE AND ENGINEERING</a>
+                                        <a href="/category/fantasy-scifi">PSYCHOLOGY</a>
+                                        <a href="/category/horror-thriller">SOCIAL AND BEHAVIORAL SCIENCE</a>
+                                        <a href="/category/mystery">VETERINARY MEDICINE</a>
                                     <hr>
                                     {{#if user}}
                                     <a href="/userProfile"><i class="fas fa-sign-in-alt"></i><span></span> Profile</a>
@@ -157,370 +188,255 @@
         </div>
     </div>
 
-    <a href="#head" class="scrollUp">
-        <i class="fa fa-chevron-up"></i>
-    </a>
 
-    <div class="head-title text-center px-3">
-        <h1>Explore New Books!</h1>
-        <h2>Shop online with iBOOK</h2>
+    <!-- HEADER NEW -->
+    <div class="container-fluid   col-12 head pt-5">
+        <div class="row col-12">
+            <div class="column col-md-6 col-12 mx-auto my-auto no-gutter">
 
-        <form class="search-form" id="" action="/data/searchBooks" method="POST">
-            <div class="head-box">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <input type="text" name="searchBook" placeholder="Search...">
+                    <div class=" col-lg-8 col-12 mx-auto" >
+                           <img class="col-12" src="images/new/tag.png">
+                    </div>
+                 
+                    <div class="row col-lg-8 col-12 mx-auto no-gutters">
+                        <form class="form-group col-md-10 col-8 pr-2" id="" action="/data/searchBooks" method="POST">
+                            <input type="text" name="searchBook" placeholder="Search..."  class="form-control col-12 py-2 px-4" >
+                        </form>
+                        <div class="col-md-2 col-3 ">
+                            <button type="button" class="btn btn-search col-12"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
             </div>
-        </form>
-        <div class="arrow">
-            <span></span>
-            <span></span>
-            <span></span>
+
+            <div class="col-md-6 col-12">
+                <img class="col-12  d-md-block  d-none" src="images/new/header-img.png">
+                <div class="mb-5 d-md-none"></div>
+            </div>
         </div>
-        <a href="#section1" class="down-btn"><i class="fas fa-chevron-down"></i></a>
+        
+    </div>
+    <!-- HEADER NEW -->
+
+
+   <!--Section-1-->
+    <div id="sectionnew" class="mx-auto pt-5 container-fluid col-12  new mb-3">
+ 
+        <div class="container mx-auto col-12">
+            <div class="title-box mx-auto col-12">
+                <p class="text-center">E-BOOKASYON'S</p>
+                <h2 class="text-center">BEST SELLING BOOKS</h2>
+            </div>
+            
+            <div class="container row col-sm-12 col-10 mt-4 mx-auto">
+                 {{#each rand}}
+               
+                    <div class="mx-auto  best-card col-xl-8 col-md-10 col-sm-10 col-12 p-4 align-items-center">
+                        <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}"></a>
+                        <div class="row">
+
+                            <div class="col-xl-4 col-lg-6 col-md-10  right mb-5 mt-sm-5 mx-auto">
+                                <div class="book-cover-new col-12">
+                                        <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}' class="img-fluid img">
+                                </div>
+                            </div>
+
+                            <div class="left column col-xl-8 col-lg-6 col-md-10 mx-auto"> 
+                                <h1  class="pt-4">#1</h1>
+                              
+                                <button type="button" class="btn btn-autor px-5"> {{this.BOOK_AUTHOR}}</button>
+                                <h3> {{this.BOOK_TITLE}}</h3>
+                                <h4 class="">P {{this.BOOK_PRICE}}</h4>
+                                <p>{{this.BOOK_DESC}}</p>
+                                
+                                <form action="/add/{{this.BOOK_ID}}" method="GET" >
+                                    <button type="button" class="btn btn-search col-12 mx-auto float-right"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
+                                </form>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+                {{/each}}
+            </div>
+               
+        </div>
+        
     </div>
 
-    <!--Main Body-->
-
-    <!--Slider-->
-    <section>
-        <span>
-            <hr></span>
-        <div class="container">
-            <div class="title-box">
-                <h2>Try these!</h2>
-            </div>
-            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-12">
-                                <a href="/display/all-books/1"><img src="images/ad-1.png" class="d-block w-100"
-                                        alt="..."></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-12">
-                                <a href="/display/all-books/1"><img src="images/ad-2.png" class="d-block w-100"
-                                        alt="..."></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-12">
-                                <a href="/display/all-books/1"><img src="images/ad-3.gif" class="d-block w-100"
-                                        alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--Section-1-->
-    <section id="section1" class="on-sale pt-5">
-        <span>
-            <hr></span>
-        <div class="container">
-            <div class="title-box">
-                <h2>Must Reads!</h2>
-            </div>
-            <div class="row">
-                 {{#each rand}}
-                <div class="col-md-3 col-sm-6 col-6">
-                    <div class="product-top">
-                        <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
-                        <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}'></a>
-                        <div class="overlay-right">
-                            <button type="button" class="btn btn-secondary" title="Quick Shop"
-                                onclick="location.href='http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}'">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                            <button type="button" class="btn btn-secondary" title="Add to Wishlist">
-                                <i class="fa fa-heart-o"></i>
-                            </button>
-                            <form action="/add/{{this.BOOK_ID}}" method="GET">
-                                <button type="submit" class="btn btn-secondary" title="Add to Cart"
-                                    onclick="this.form.submit()">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="product-bottom text-center">
-                        <h3>{{this.BOOK_TITLE}}</h3>
-                        <h5>P{{this.BOOK_PRICE}}</h5>
-                    </div>
-                </div>
-                {{/each}}
-                </div>
-                <div class="col-lg-12 text-center">
-                    <div class="section-arrow">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <a href="#section2" class="down-btn mb-2"><i class="fas fa-chevron-down fa-2x"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
     <!--Section-2-->
-    <section id="section2" class="on-sale mt-5 pt-5">
-        <span>
-            <hr></span>
-        <div class="container">
-            <div class="title-box">
-                <h2>On Sale</h2>
+    <div class=" must-sec mx-auto pt-5 container-fluid col-12  new my-5">
+ 
+        <div class="container mx-auto col-12">
+            <div class="must-title-box mx-auto col-12">
+                <p class="text-center">E-BOOKASYON'S</p>
+                <h2 class="text-center">MUST READ</h2>
             </div>
-            <div class="row">
-                {{#each sale}}
-                <div class="col-md-3 col-sm-6 col-6">
-                    <div class="product-top">
-                        <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
-                        <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}'></a>
-                        <div class="overlay-right">
-                            <button type="button" class="btn btn-secondary" title="Quick Shop"
-                                onclick="location.href='http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}'">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                            <button type="button" class="btn btn-secondary" title="Add to Wishlist">
-                                <i class="fa fa-heart-o"></i>
-                            </button>
-                            <form action="/add/{{this.BOOK_ID}}" method="GET">
-                                <button type="submit" class="btn btn-secondary" title="Add to Cart"
-                                    onclick="this.form.submit()">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="product-bottom text-center">
-                        <h3>{{this.BOOK_TITLE}}</h3>
-                        <h5>P{{this.BOOK_PRICE}}</h5>
-                    </div>
-                </div>
-                {{/each}}
-                </div>
-                <div class="col-lg-12 text-center">
-                    <div class="section-arrow">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <a href="#section3" class="down-btn"><i class="fas fa-chevron-down fa-2x"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Section-4-->
-    <section id="section4" class="on-sale mt-5 pt-5">
-        <span>
-            <hr></span>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-6 col-sm-6 col-12">
-                    <div class="title-box">
-                        <h2>New Releases</h2>
-                    </div>
-                </div>
-                <div class="ml-auto col-lg-6 col-md-6 col-sm-6 col-12">
-                </div>
-            </div>
-            <div class="row">
-                <div class="horizontal-slider">
-                    <div class="slider-container">
-                        {{#each newBook}}
-                        <div class="item">
-                            <div class="slide-box">
-                                <!--img-box-->
-                                <div class="slide-img">
-                                    <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
-                                    <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}'></a>
-                                    <!--overlayer-->
-                                    <div class="overlay-right">
-                                        <button type="button" class="btn btn-secondary" title="Quick Shop"
-                                            onclick="location.href='http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}'">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-secondary" title="Add to Wishlist">
-                                            <i class="fa fa-heart-o"></i>
-                                        </button>
-                                        <form action="/add/{{this.BOOK_ID}}" method="GET">
-                                            <button type="submit" class="btn btn-secondary" title="Add to Cart"
-                                                onclick="this.form.submit()">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </button>
-                                        </form>
+            
+            <div class="container row  col-xl-10 col-12 p-0  mt-4 mx-auto">
+                   {{#each newBook}}
+               
+                    <div class="col-lg-4 col-md-6 col-12 pd-lg-3 p-md-4 p-sm-5 p-4 ">
+                        
+                        <div class=" must-read col-12">
+                             
+                                <div class=" col-12  right mb-1 mt-sm-5 mx-auto">
+                                    <div class="book-cover col-12">
+                                         <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
+                                            <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}' class="img-fluid img">
+                                         </a>
                                     </div>
                                 </div>
-                                <!--detail-box-->
-                            </div>
-                        </div>
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="col-lg-12 text-center mt-3">
-                    <div class="section-arrow">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <a href="#section5" class="down-btn"><i class="fas fa-chevron-down fa-2x"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!--Section-5-->
-    <section id="section5" class="on-sale mt-5 pt-5">
-        <span>
-            <hr></span>
-        <div class="container">
-            <div class="title-box">
-                <h2>Browse</h2>
+                                <div class="left column col-10 mx-auto pb-5"> 
+                                
+                                    <div class="col-12 d-flex justify-content-center "><button type="button" class="btn btn-autor  px-5 mt-4 "> {{this.BOOK_AUTHOR}}</button></div>
+                                    <h3 class="mb-0 text-center"> {{this.BOOK_TITLE}}</h3>
+                                    <h4 class="mb-0 text-center">P {{this.BOOK_PRICE}}</h4>
+                                     
+                                    <form action="/add/{{this.BOOK_ID}}" method="GET" >
+                                        <button type="button" class="btn btn-add col-12 mx-auto  float-right mb-3" onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
+                                    </form>
+                                   
+                                    <div class="space-2 pb-4"></div>
+                                </div>
+                           
+                        </div>
+                    </div>
+                    
+                
+                {{/each}}
+         
             </div>
-            <div class="row">
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/r&j-cover.jpg">
-                                <h3>romance</h3>
-                            </div>
-                            <div class="flip-card-back" id="romance-card">
-                                <a href="/category/romance" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/it-cover.jpg">
-                                <h3>horror & thriller</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/horror-thriller" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/dowk-cover.jpg">
-                                <h3>children's fiction</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/childrens-fiction" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/hg-cover.jpg">
-                                <h3>action & adventure</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/action-adventure" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/gi-cover.jpg">
-                                <h3>mystery</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/mystery" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/tswg-cover.jpg">
-                                <h3>drama</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/drama" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="images/dw-cover.jpg">
-                                <h3>comic & graphic novel</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/category/comic-graphic" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front-more">
-                                <h3><i class="fa fa-plus"></i> more</h3>
-                            </div>
-                            <div class="flip-card-back">
-                                <a href="/display/all-books/1" class="browse-btn">Browse all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+               <div class="space pb-4"></div>
         </div>
-    </section>
+        
+    </div>
+
+    <!--Section-3-->
+    <div class=" new-sec mx-auto pt-5 container-fluid col-12  new my-5">
+ 
+        <div class="container mx-auto col-12">
+            <div class="new-title-box mx-auto col-12">
+                <p class="text-center">E-BOOKASYON'S</p>
+                <h2 class="text-center">NEW ARRIVAL</h2>
+            </div>
+            
+            <div class="container row  col-xl-10 col-12 p-0  mt-4 mx-auto">
+                   {{#each newBook}}
+               
+                    <div class="col-lg-4 col-md-6 col-12 pd-lg-3 p-md-4 p-sm-5 p-4 ">
+                        
+                        <div class=" new-read col-12">
+                             
+                                <div class=" col-12  right mb-1 mt-sm-5 mx-auto">
+                                    <div class="book-cover-2 col-12">
+                                         <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
+                                            <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}' class="img-fluid img">
+                                         </a>
+                                    </div>
+                                </div>
+
+                                <div class="left column col-10 mx-auto pb-5 "> 
+                                    <div class="col-12 d-flex justify-content-center "><button type="button" class="btn btn-autor  px-5 mt-4 "> {{this.BOOK_AUTHOR}}</button></div>
+                                    <h3 class="mb-0 text-center"> {{this.BOOK_TITLE}}</h3>
+                                    <h4 class="mt-0 text-center">P {{this.BOOK_PRICE}}</h4>
+                                    
+                                    <form action="/add/{{this.BOOK_ID}}" method="GET" >
+                                        <button type="submit" class="btn btn-add col-12 mx-auto  float-right mb-3"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
+                                    </form>
+                                   
+                                    <div class="space-2 pb-4"></div>
+                                </div>
+                           
+                        </div>
+                    </div>
+                    
+                
+                {{/each}}
+         
+            </div>
+               
+        </div>
+        
+    </div>
+   
 
     <!--Footer-->
     <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
+        <div class="container-fluid text-left mx-auto col-12 ">
+            <div class="row col-xl-8 col-lg-12 col-10 mx-auto py-4">
+                <div class=" col-lg-4 col-10 my-1 mx-auto">
+                    <div class="col-8 p-0 ">
+                        <a href="/">
+                            <img src="images/new/logo-white-2.png" class="col-10"></a>
+                    </div>
+
+                     <div class="col-12 mx-auto mt-3">
+                                <i class="fab fa-facebook-square fa-2x pr-1"></i>
+                                <i class="fab fa-twitter-square fa-2x px-1"></i>
+                                <i class="fab fa-instagram-square fa-2x px-1"></i>
+                                <i class="fab fa-linkedin  fa-2x pl-1"></i>
+                    </div>
+                    <div class="column col-12 mt-3">
+                        <h3>Contact Us</h3>
+                        <p class="mb-1">Questions? We've got answers.</p>
+                        <button type="button" class="btn btn-contact-us py-1 px-2 ">Contact Us</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>About Us</h3>
+                        <div class="row col-12">
+                            <div class="col-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">7525 Carriage Ave.Dekalb, IL 60115 7525 Carriage Ave.Dekalb, IL 60115</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-1">
+                            <div class="col-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">+1-202-555-0151</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-2">
+                            <div class="col-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">e-bookasyon.us@domain.com</p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>Subscribe</h3>
+                        <div class="form-group col-12 p-0">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-12 p-0">
+                              <button type="submit" class="btn btn-subscribe col-12">Subscribe</button>
+                        </div>
+                      
+                        
+                        
+                        
+                    </div>
                 </div>
+
+                
             </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
+           
         </div>
     </section>
 
@@ -565,7 +481,6 @@
                 document.getElementById("myNav").style.width = "100%";
             }
         }
-
         function closeNav() {
             if (document.getElementById("myNav").style.width == "100%") {
                 document.getElementById("myNav").style.width = "0";
@@ -574,7 +489,6 @@
             }
         }
     </script>
-
 
     <script>
         $(document).ready(function () {
@@ -597,21 +511,17 @@
         $(document).ready(function () {
             // Add smooth scrolling to all links
             $("a").on('click', function (event) {
-
                 // Make sure this.hash has a value before overriding default behavior
                 if (this.hash !== "") {
                     // Prevent default anchor click behavior
                     event.preventDefault();
-
                     // Store hash
                     var hash = this.hash;
-
                     // Using jQuery's animate() method to add smooth page scroll
                     // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
                     $('html, body').animate({
                         scrollTop: $(hash).offset().top
                     }, 800, function () {
-
                         // Add hash (#) to URL when done scrolling (default click behavior)
                         window.location.hash = hash;
                     });
@@ -620,12 +530,15 @@
         });
     </script>
 
+   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+
+
     {{> alertMessage}}
 
 </body>
