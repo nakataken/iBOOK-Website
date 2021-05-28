@@ -119,14 +119,57 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
 
                     var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
                     db.query(salesTotal, function (err, result3) {
-                        console.log(result3)
+                        // console.log(result3)
+                        // Newly added code
+                        let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
+                        db.query(bookNames, (err, book) => {
+                            let bookData = book.map((book) => {
+                                return book.book_title;
+                            });
+                            let bookSales = [];
+                            let books = [...new Set(bookData)]
 
-                        res.render('adminPage', {
-                            usersCount: result2,
-                            bookData: data,
-                            booksCount: result,
-                            totalSales: result3
-                        });
+                            for(let i=0; i<books.length; i++) {
+                                let sales = 0;
+                                for(let j=0; j<bookData.length; j++) {
+                                    if(books[i] === bookData[j]) {
+                                        sales++;
+                                    }
+                                }
+                                bookSales.push(sales);
+                            }
+
+                            for (let i=bookSales.length; i>=0; i--) {
+                                for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                                    if (bookSales[j] > bookSales[j-1]) {
+                                        // Swap orders of sales
+                                        let salesSwap = bookSales[j];
+                                        bookSales[j] = bookSales[j - 1];
+                                        bookSales[j - 1] = salesSwap;
+                                        // Swap orders of books
+                                        let bookSwap = books[j];
+                                        books[j] = books[j - 1];
+                                        books[j - 1] = bookSwap;
+                                    }
+                                }
+                            }
+
+                            books = books.slice(0,10);
+                            bookSales = bookSales.slice(0,10);
+
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                res.render('adminPage', {
+                                    usersCount: result2,
+                                    bookData: data,
+                                    booksCount: result,
+                                    totalSales: result3,
+                                    books: encodeURI(JSON.stringify(books)),
+                                    bookSales: encodeURI(JSON.stringify(bookSales))
+                                });
+                            }
+                        })
                     });
                 });
             });
@@ -644,7 +687,5 @@ router.get('/adminUsersData', function (req, res, next) {
         });
     });
 });
-
-
 
 module.exports = router;
