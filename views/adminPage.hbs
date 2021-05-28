@@ -89,6 +89,27 @@
                         </div>
                     </div>
                     {{!-- Chart --}}
+
+
+                    <form action="/adminSelectChart" method="POST">
+                        <div class="dl float-left">
+                            <select class="custom-select" name="selectTop" id="selectTop" onchange="this.form.submit()">
+                                <option class="text-muted" name="default" value="default">Top</option>
+                                <option name="3" value="3">3</option>
+                                <option name="5" value="5">5</option>
+                                <option name="10" value="10">10</option>
+                            </select>
+                        </div>
+                        {{!-- <div class="dl float-left">
+                            <select class="custom-select" name="selectTimely" id="selectTimely" onchange="this.form.submit()">
+                                <option class="text-muted" name="default" value="default">Timely</option>
+                                <option name="daily" value="daily">Daily</option>
+                                <option name="weekly" value="weekly">Weekly</option>
+                                <option name="monthly" value="monthly">Monthly</option>
+                            </select>
+                        </div> --}}
+                    </form>
+
                     <div>
                         <canvas id="myChart" width="800" height="300"></canvas>
                     </div>
