@@ -1,132 +1,170 @@
-  <div class="container-fluid">
-      <div class="row" id="head">
-          <div class="col-12">
-              <header class="row">
-                  <!--Start Header-->
-                  <div class="top-nav col-12 g-white pt-3">
-                      <header>
-                          <div class="responsive-bar z-50">
-                              <div class="logo">
-                                  <a href="/"><img src="images/logo.png"></a>
-                              </div>
-                              <div class="menu">
-                                  <span onclick="openNav()"><i class="fas fa-bars"></i></span>
-                              </div>
-                              <div class="shop-cart">
-                                  <span><a href="/cart"><i class="fas fa-shopping-bag fa-2x"></i>
-                                    <span class='badge badge-warning' id='lblCartCount' value = "cartCount">{{session.cart.totalQty}}</span>         
-                                     </a></span>
-                              </div>
-                          </div>
+<div class="container-fluid">
+        <div class="row header" id="head">
+            <div class="col-12">
+                <header class="row">
+                    <!--Start Header-->
+                    <div class="top-nav col-12 pt-3">
+                        <header>
+                            <div class="responsive-bar">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="logo">
+                                            <a href="/"><img src="../public/images/new/logo.png"></a>
+                                        </div>
 
-                          <nav>
-                              <div class="logo">
-                                  <a href="/"><img src="/images/logo.png"></a>
-                              </div>
-                              <div>
-                                  <ul>
-                                      <li><a href="#search" class="search-form-tigger" data-toggle="search-form"><i
-                                                  class="fa fa-search" aria-hidden="true"></i> browse</a>
-                                          <div class="search-form-wrapper">
-                                              <form class="search-form" id="" action="/data/searchBooks" method="POST">
-                                                  <div class="input-group">
-                                                      <i class="fa fa-search" aria-hidden="true"></i>
-                                                      <input type="text" name="searchBook" class="search form-control"
-                                                          placeholder="Search..." maxlength="50">
+                                        <div class="menu">
+                                            <span onclick="openNav()"><i class="fas fa-bars"></i></span>
+                                        </div>
 
-                                                      <span class="input-group-addon" data-toggle="search-form-close"
-                                                          id="basic-addon2"><i class="fa fa-times"
-                                                              aria-hidden="true"></i>
-                                                      </span>
-                                                  </div>
-                                              </form>
-                                          </div>
-                                      </li>
-                                      <li><a href="/">Home</a></li>
-                                      <li>
-                                          <a href="#">Category</a>
-                                          <ul class="category-list">
-                                              <li><a href="/category/action-adventure">Action and Adventure</a></li>
-                                              <li><a href="/category/childrens-fiction">Children's Fiction</a></li>
-                                              <li><a href="/category/comic-graphic">Comic and Graphic Novel</a></li>
-                                              <li><a href="/category/drama">Drama</a></li>
-                                              <li><a href="/category/fairytale">Fairy Tale</a></li>
-                                              <li><a href="/category/fantasy-scifi">Fantasy and Sci-Fi</a></li>
-                                              <li><a href="/category/horror-thriller">Horror and Thriller</a></li>
-                                              <li><a href="/category/mystery">Mystery</a></li>
-                                              <li><a href="/category/romance">Romance</a></li>
-                                              <li><a href="/category/young-adult">Young Adult</a></li>
-                                          </ul>
-                                      </li>
-                                      <li><a href="/cart"><i class="fas fa-shopping-bag fa-2x"></i>
-                                        <span class='badge badge-warning' id='lblCartCount' value = "cartCount">{{session.cart.totalQty}}</span>                                      
-                                        </a></li>
-                                      <li>
-                                          <a href="#"><i class="far fa-user-circle fa-2x"></i></a>
-                                          {{#if user}}
-                                          <ul class="user-log">
-                                              <li><a href="/userProfile">Profile</a></li>
-                                              <li><a href="/auth/logout">Logout</a></li>
-                                          </ul>
-                                          {{else}}
-                                          <ul class="user-log">
-                                              <li><a href="/userLoginPage">Login</a></li>
-                                              <li><a href="/userRegisterPage">Sign-Up</a></li>
-                                          </ul>
-                                          {{/if}}
-                                      </li>
-                                  </ul>
-                              </div>
-                          </nav>
-                          <!-- The overlay -->
-                          <div id="myNav" class="overlay text-left">
-                              <!-- Overlay content -->
-                              <div class="overlay-content">
-                                  <div class="close-nav">
-                                      <span onclick="closeNav()"><i class="fa fa-times"></i></span>
-                                  </div>
-                                  <div class="overlay-logo">
-                                      <img src="/images/logo.png">
-                                  </div>
-                                  <div class="overlay-box">
-                                      <i class="fa fa-search" aria-hidden="true"></i>
-                                      <input type="text" name="" placeholder="Search...">
-                                  </div>
-                                  <hr>
-                                  <a href="/category/action-adventure">Action and Adventure</a>
-                                  <a href="/category/childrens-fiction">Children's Fiction</a>
-                                  <a href="/category/comic-graphic">Comic and Graphic Novel</a>
-                                  <a href="/category/drama">Drama</a>
-                                  <a href="/category/fairytale">Fairy Tale</a>
-                                  <a href="/category/fantasy-scifi">Fantasy and Sci-Fi</a>
-                                  <a href="/category/horror-thriller">Horror and Thriller</a>
-                                  <a href="/category/mystery">Mystery</a>
-                                  <a href="/category/romance">Romance</a>
-                                  <a href="/category/young-adult">Young Adult</a>
-                                  <hr>
-                                  {{#if user}}
-                                  <a href="#"><i class="fas fa-sign-in-alt"></i><span></span> Profile</a>
-                                  <a href="/auth/logout"><i class="fas fa-user-edit"></i><span></span> Logout</a>
-                                  {{else}}
-                                  <a href="#"><i class="fas fa-sign-in-alt"></i><span></span> Login</a>
-                                  <a href="#"><i class="fas fa-user-edit"></i><span></span> Sign-Up</a>
-                                  {{/if}}
-                                  <hr>
-                              </div>
-                          </div>
-                      </header>
-                      <!--End Header-->
+                                        <div class="shop-cart">
+                                            <a href="/cart"> <i class="fas fa-shopping-cart"></i>
+                                                <span class='badge badge-warning' id='lblCartCount' value="cartCount">{{session.cart.totalQty}}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                      <!--Nav-->
+                            <nav>
+                                <div class="logo">
+                                    <a href="/"><img src="images/new/logo.png"></a>
+                                </div>
 
-                      <!--End Nav-->
-                  </div>
-                  <!--End Header-->
-              </header>
-          </div>
-      </div>
-  </div>
+                                <div>
+                                    <ul>
+                                        <!--
+                                        <li id="navbar-search-btn"><a href="#search" class="search-form-tigger"
+                                                data-toggle="search-form"><i class="fa fa-search"
+                                                    aria-hidden="true"></i> browse</a>
+                                            <div class="search-form-wrapper">
+                                                <form class="search-form" id="" action="/data/searchBooks"
+                                                    method="POST">
+                                                    <div class="input-group">
+                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                        <input type="text" name="searchBook" class="search form-control"
+                                                            placeholder="Search...">
 
-  <a href="#head" class="scrollUp">
-      <i class="fa fa-chevron-up"></i>
-  </a>
+                                                        <span class="input-group-addon" data-toggle="search-form-close"
+                                                            id="basic-addon2"><i class="fa fa-times"
+                                                                aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </li>
+                                        -->
+                                        <li><a href="/">Home</a></li>
+                                        <li class="dropdown dropdown-menu-right">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CATEGORIES<b class="caret"></b></a>  
+                                            
+                                                <ul class="dropdown-menu mega-menu column dropdown-menu-right" >
+                                                    <li><a href="/category/action-adventure">AGRICULTURE, AQUACULTURE, AND FOOD SERVICE</a></li>
+                                                    <li><a href="/category/comic-graphic">ARTS AND APPLIED</a></li>
+                                                    <li><a href="/category/drama">BUSINESS, ECONOMICS, FINANCE, and ACCOUNTING</a></li>
+                                                    <li><a href="/category/fairytale">CHEMISTRY</a></li>
+                                                    <li><a href="/category/fantasy-scifi">COMPUTER SCIENCE AND INFORMATION TECHNOLOGY</a></li>
+                                                    <li><a href="/category/horror-thriller">EARTH, SPACE, AND ENVIRONMENTAL SCIENCE</a></li>
+                                                    <li><a href="/category/mystery">HUMANITIES</a></li>
+                                                    <li><a href="/category/romance">LAW AND CRIMINOLOGY</a></li>
+                                                    <li><a href="/category/young-adult">LIFE SCIENCE</a></li>
+                                                    <li><a href="/category/action-adventure">MATHEMATICS AND STATISTICS</a></li>
+                                                    <li><a href="/category/childrens-fiction">MEDICINE</a></li>
+                                                    <li><a href="/category/comic-graphic">NOVEL</a></li>
+                                                    <li><a href="/category/drama">NURSING, DENTISTRY, AND HEALTHCARE</a></li>
+                                                    <li><a href="/category/fairytale">PHYSICAL SCIENCE AND ENGINEERING</a></li>
+                                                    <li><a href="/category/fantasy-scifi">PSYCHOLOGY</a></li>
+                                                    <li><a href="/category/horror-thriller">SOCIAL AND BEHAVIORAL SCIENCE</a></li>
+                                                    <li><a href="/category/mystery">VETERINARY MEDICINE</a></li>
+                                                </ul>    
+                                            
+                                        </li>
+                                        <li>
+                                            {{#if user}}
+                                                <a href="/cart">
+                                                <i class="fas fa-shopping-cart "></i>
+                                                    <span class='badge badge-warning' id='lblCartCount'
+                                                        value="cartCount">{{session.cart.totalQty}}</span>
+                                                </a>
+                                            {{else}}
+                                                
+                                            {{/if}}
+                                        </li>
+                                        <li>
+
+                                            
+                                            {{#if user}}
+                                            <a href="#"><i class="fas fa-user"></i></a>
+                                            <ul class="user-log">
+                                                <li><a href="/userProfile">Profile</a></li>
+                                                <li><a href="/auth/logout">Logout</a></li>
+                                            </ul>
+                                            {{else}}
+                                                <li >
+                                                    <a href="/userLoginPage" class="my-auto p-0">
+                                                        <button type="button" class="btn my-auto btn-login py-1 px-5">LOG-IN</button>
+                                                    </a>
+                                                </li>
+                                            {{/if}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                            
+                            <!-- The overlay -->
+                            <div id="myNav" class="overlay text-left">
+                                <!-- Overlay content -->
+                                <div class="overlay-content">
+                                    <div class="close-nav">
+                                        <span onclick="closeNav()"><i class="fa fa-times"></i></span>
+                                    </div>
+                                    <div class="overlay-logo">
+                                        <img src="images/new/logo-white.png">
+                                    </div>
+                                    <form class="search-form" id="" action="/data/searchBooks" method="POST">
+                                        <div class="overlay-box">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <input type="text" name="searchBook" placeholder="Search...">
+                                        </div>
+                                    </form>
+                                    <hr>
+                                        <a href="/category/action-adventure">AGRICULTURE, AQUACULTURE, AND FOOD SERVICE</a>
+                                        <a href="/category/childrens-fiction">ARCHITECTURE AND PLANNING</a>
+                                        <a href="/category/comic-graphic">ARTS AND APPLIED</a>
+                                        <a href="/category/drama">BUSINESS, ECONOMICS, FINANCE, and ACCOUNTING</a>
+                                        <a href="/category/fairytale">CHEMISTRY</a>
+                                        <a href="/category/fantasy-scifi">COMPUTER SCIENCE AND INFORMATION TECHNOLOGY</a>
+                                        <a href="/category/horror-thriller">EARTH, SPACE, AND ENVIRONMENTAL SCIENCE</a>
+                                        <a href="/category/mystery">HUMANITIES</a>
+                                        <a href="/category/romance">LAW AND CRIMINOLOGY</a>
+                                        <a href="/category/young-adult">LIFE SCIENCE</a>
+                                        <a href="/category/action-adventure">MATHEMATICS AND STATISTICS</a>
+                                        <a href="/category/childrens-fiction">MEDICINE</a>
+                                        <a href="/category/comic-graphic">NOVEL</a>
+                                        <a href="/category/drama">NURSING, DENTISTRY, AND HEALTHCARE</a>
+                                        <a href="/category/fairytale">PHYSICAL SCIENCE AND ENGINEERING</a>
+                                        <a href="/category/fantasy-scifi">PSYCHOLOGY</a>
+                                        <a href="/category/horror-thriller">SOCIAL AND BEHAVIORAL SCIENCE</a>
+                                        <a href="/category/mystery">VETERINARY MEDICINE</a>
+                                    <hr>
+                                    {{#if user}}
+                                    <a href="/userProfile"><i class="fas fa-sign-in-alt"></i><span></span> Profile</a>
+                                    <a href="/auth/logout"><i class="fas fa-user-edit"></i><span></span> Logout</a>
+                                    {{else}}
+                                    <a href="#"><i class="fas fa-sign-in-alt"></i><span></span> Login</a>
+                                    <a href="#"><i class="fas fa-user-edit"></i><span></span> Sign-Up</a>
+                                    {{/if}}
+                                    <hr>
+                                </div>
+                            </div>
+                        </header>
+                        <!--End Header-->
+
+                        <!--Nav-->
+
+                        <!--End Nav-->
+                    </div>
+                    <!--End Header-->
+                </header>
+            </div>
+        </div>
+    </div>
