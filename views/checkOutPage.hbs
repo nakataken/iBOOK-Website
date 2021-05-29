@@ -15,246 +15,227 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 
-<body>
+<body >
     {{> categoryHeader}}
-
-
     <!--Single Product-->
-    <hr class="my-5">
-    <section class="cart-list pt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
+    <div class="space"></div>
 
-                    <h4>Items</h4>
+    <section class="min-h container-fluid mx-auto">
+        <div class="row inline-block cart col-xl-8 col-lg-12 col-md-8 col-12 mx-auto">
+            
+            <h1 class="col-12 mx-auto mt-4 "><a href="/">Home /</a> <a href="/cart">Cart /</a> Checkout</h1>
+            <!--Summary-->
+            <div class="row col-lg-8 col-12 mx-auto p-0">
+                <div class="col-12">
                     {{#each book}}
-                    <div class="row cart-card py-1">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <span>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-md-5 col-sm-4 col-5">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <span><img
-                                                                src='http://localhost:8080/uploadedImages/{{this.item.BOOK_COVER}}'></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7 col-sm-8 col-7">
-                                                    <div class="d-block">
-                                                        <a href="#">
-                                                            <h6 class="font-weight-bold">{{this.item.BOOK_TITLE}}</h6>
-                                                        </a>
-                                                        <p>{{this.item.BOOK_AUTHOR}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5 d-flex align-items-center justify-content-around">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-12 d-flex align-items-center py-3">
-                                                    <div class="d-block">
-                                                        <h5 class="font-weight-bold">P{{this.BOOK_PRICE}}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row quantity-picker">
-                                                <div class="col-md-12 col-sm-12 col-12">
-                                                   <!-- <div class="handle-counter d-flex d-inline-block"
-                                                        id="handleCounter">
-                                                        <h6 class="text-muted"></h6>
-                                                        <input type="text" class="font-weight-bold" value={{this.qty}} disabled>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div id="os-cart" class="col-12 px-4 mb-2 row mx-auto">
+                            <div class="col-2 p-3 my-auto">
+                                <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.item.BOOK_TITLE}}">
+                                    <img src='http://localhost:8080/uploadedImages/{{this.item.BOOK_COVER}}' class="img-fluid">
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                {{/each}}
-                </div>
-                <div class="col-lg-4">
-                    <div class="row cart-card d-flex align-items-center">
-                        <div class="col-md-12 py-2">
-                            <div class="card check-out">
-                                 
-                                <div class="card-body">
-                                    <div class="d-block align-items-center">
-                                        <span>
-                                            <hr class="my-1"></span>
-                                        <span class="d-flex justify-content-center"><label>
-                                                <h5 class="font-weight-bold">Order Summary</h5>
-                                            </label></span>
-                                        <span>
-                                            <hr class="my-4"></span>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="text-muted">Total</h6>
-                                            <span><label for="total-amount"
-                                                    class="font-weight-bold">P{{total}}</label></span>
-                                        </div>
-                                        <span>
-                                            <hr class="my-4"></span>
-                                            
-                                        <span class="d-flex justify-content-center"><label>
-                                                <h5 class="font-weight-bold">Payment Method</h5>
-                                            </label></span>
-                                             {{#if message}}
-                                                <p class="alert alert-danger text-center p-1">{{message}}</p>
-                                            {{/if}}
-                                        <span>
-                                            <hr class="my-3"></span>
-                                        <div class="payment-method d-block justify-content-start">
-                                            <div class="d-block mt-3">
-                                                
-                                                    <div id="paymentRadioGrp"
-                                                        class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input" type="radio" name="payment"
-                                                            value="payment1" >
-                                                        <span><img src="/images/gcash-icon.jpg" alt=""></span>
-                                                        <label class="form-check-label font-weight-bold"
-                                                            for="exampleRadios1">
-                                                            GCASH
-                                                        </label>
-                                                    </div>
-                                                    
-                                                    <form action="/shop/checkout/gcash/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST">
-                                                    <div class="desc" id="payment1">
-                                                        <div class="d-inline-block align-items-center py-2 ml-3 gCashMethod"
-                                                            id="gCashMethod">
-                                                            <p class="method-text">Mobile number (11 digit):</p>
-                                                            <input type="text" placeholder="+63" name="gcashNum" class="method-input"
-                                                                minlength="11" maxlength="11" required>
-                                                        
-                                                          
-                                                           
-                                                            <button class="btn btn-primary mt-3 w-100 p-2" type="submit">
-                                                                <h6 class="font-weight-bold">CHECKOUT</h6>
-                                                            </button>
-                                                            
-                                                             <hr class="mx-2">
-                                                        </div>
-                                                    </div>
-                                                     </form>
-                                                   
-                                                     
-                                                    <div  id="paymentRadioGrp" class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input" type="radio" name="payment"
-                                                            value="payment2">
-                                                        <img src="/images/debit-cards.jpg" alt="">
-                                                        <label class="form-check-label font-weight-bold"
-                                                            for="exampleRadios2">
-                                                            Credit/Debit Card
-                                                        </label> 
-                                                    </div>
+                            <div class="row col-10 p-3 mxy-auto ">
+                                <div class="col-8 my-auto mx-auto">
+                                    <button type="button" class="btn btn-autor ">{{this.item.BOOK_AUTHOR}}</button>
+                                    <h3 class="py-0 ">{{this.item.BOOK_TITLE}}</h3>
+                                </div>
+                                <div class="col-4 my-auto mx-auto ">
+                                    <h2 class="py-0 ">P {{this.item.BOOK_PRICE}}</h2>
+                                </div>
+                                
+                            </div>
+                        </div>                       
 
-                                                    <form action="/shop/checkout/card/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST">
-                                                    <div class="desc" id="payment2">
-                                                        <div class="d-block align-items-center py-2 ml-3 creditCardMethod"
-                                                            id="creditCardMethod">
-                                                            <p class="method-text">Name on card:</p>
-                                                            <input type="text" class="method-input" minlength="2" name="cardName" maxlength="40"
-                                                                required>
-                                                            <p class="method-text mt-3">Card number:</p>
-                                                            <input type="text" class="method-input" minlength="10" name="cardNum"
-                                                                maxlength="16" required>
-                                                            <p class="method-text mt-3">Security code:</p>
-                                                            <input type="text" name="cardCCV" class="method-input" minlength="3"
-                                                                maxlength="4" required>
-                                                            <p class="method-text mt-3">Expiry date:</p>
-                                                            <div
-                                                                class="d-flex justify-content-around align-items-center">
-                                                                <div class="d-block">
-                                                                    <p class="method-text">Month</p>
-                                                                    <select name="expMonth" class="expMonth">
-                                                                        <option value="01" selected>01</option>
-                                                                        <option value="02">02</option>
-                                                                        <option value="03">03</option>
-                                                                        <option value="04">04</option>
-                                                                        <option value="05">05</option>
-                                                                        <option value="06">06</option>
-                                                                        <option value="07">07</option>
-                                                                        <option value="08">08</option>
-                                                                        <option value="09">09</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="11">11</option>
-                                                                        <option value="12">12</option>
-                                                                    </select>
-                                                                </div>
-                                                                <p class="method-text">/</p>
-                                                                <div class="d-block">
-                                                                    <p class="method-text">Year</p>
-                                                                    <select name="expYear" class="expYear">
-                                                                        <option value="2020" selected>2020</option>
-                                                                        <option value="2021">2021</option>
-                                                                        <option value="2022">2022</option>
-                                                                        <option value="2023">2023</option>
-                                                                        <option value="2024">2024</option>
-                                                                        <option value="2025">2025</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                           
-                                                            <button class="btn btn-primary mt-3 w-100 p-2" type="submit">
-                                                                <h6 class="font-weight-bold">CHECKOUT</h6>
-                                                            </button>
-                                                            
-                                                             <hr class="mx-2">
-                                                        </div>
-                                                    </div>
-                                                </form>
+                    {{/each}}
+                    
+                       
+
+                        
+                </div>
+            </div>
+
+            <!--Checkout-->
+
+            <div class="row col-lg-4 col-12 mx-auto pm-div">
+                <div class="col-12 os-check-out p-0 row mx-auto">
+                        <div class="top-os mt-4 mx-auto mb-2">
+                             <h5 class="col-12  p-0 m-0">PAYMENT METHOD </h5>
+                        </div>
+                        
+                       
+                        
+                        
+                        {{#if message}}
+                            <p class="alert alert-danger text-center p-1">{{message}}</p>
+                        {{/if}}
+                                    
+                        
+                    <!--Payment Method-->
+                        
+                        <div id="payMeth" class="col-12 payment-method column my-3 ">
+                            <div class="col-12 mx-auto mx-auto mb-2 ">
+                                <div class="col-10 mx-auto p-0">
+                                    <button type="button" id="formButton1" class="btn btn-payment col-12 p-0">
+                                        <img src="/images/new/gcash.png" alt="" class="col-12 img-fluid" >
+                                    </button>
+                                </div>
+                                <form action="/shop/checkout/gcash/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form1" class="col-12 mx-auto mt-4 p-0">
+                                        <div class="col-12 os-total column p-0 mx-auto mb-3"> 
+                                            <p class="mb-0">You have to pay: </p> 
+                                            <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                        </div>
+                                        <div class="col-12 mx-auto gCashMethod" id="gCashMethod" >
+                                            <p class="method-text mb-0">Mobile number (11 digit):</p>
+                                            <input type="text" placeholder="+63" name="gcashNum" class="form-control method-input col-12 mt-0" minlength="11" maxlength="11" required>
+                                        
+                                            <button class="btn  btn-checkout  mt-3 w-100 p-2" type="submit"> CHECKOUT </button>
+                                              
+                                        </div>
+                                         
+                                </form>
+                            </div>
+                            <div  class="col-12 mx-auto mx-auto mb-2">
+                                <div class="col-10 mx-auto p-0">
+                                    <button type="button" id="formButton2" class="btn btn-payment col-12 p-0">
+                                        <img  src="/images/new/mastercard.png" alt=""  class="col-12 img-fluid">
+                                    </button>
+                                </div>
+                                <form  action="/shop/checkout/card/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form2">
+                                    <div class="col-12 os-total column p-0 mx-auto mt-3 mb-2"> 
+                                            <p class="mb-0">You have to pay: </p> 
+                                            <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                    </div>
+                                    <div class=" creditCardMethod" id="creditCardMethod">
+                                        <p class="method-text mb-0">Name on card:</p>
+                                        <input type="text" class="form-control col-12 mt-0" minlength="2" name="cardName" maxlength="40" required>
+                                        
+                                        <p class="method-text mt-3 mb-0">Card number:</p>
+                                        <input type="text" class="form-control col-12 mt-0" minlength="10" name="cardNum" maxlength="16" required>
+
+                                        <p class="method-text mt-3 mb-0">Security code:</p>
+                                        <input type="text" name="cardCCV" class="form-control col-12 mt-0" minlength="3" maxlength="4" required>
+                                        
+                                        <p class="method-text mt-3">Expiry date:</p>
+                                        <div class="row col-12 mx-auto">
+                                            <div class="col-6 p-1 mx-auto">
+                                                <p class="method-text mb-0">Month</p>
+                                                <select name="expMonth" class="expMonth form-control col-12">
+                                                    <option value="01" selected>01</option>
+                                                    <option value="02">02</option>
+                                                    <option value="03">03</option>
+                                                    <option value="04">04</option>
+                                                    <option value="05">05</option>
+                                                    <option value="06">06</option>
+                                                    <option value="07">07</option>
+                                                    <option value="08">08</option>
+                                                    <option value="09">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 p-1 mx-auto">
+                                                <p class="method-text mb-0">Year</p>
+                                                <select name="expYear" class="expYear form-control col-12">
+                                                    <option value="2020" selected>2020</option>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                </select>
                                             </div>
                                         </div>
                                         
+                                        <button class="btn btn-checkout mt-3 col-12 p-2" type="submit"> CHECKOUT </button>
+                                        
                                         
                                     </div>
-                                </div>
+                                </form>
+                            </div>
+                            
+                           
+                        </div>
+                        
+                </div> 
+            </div>
+
+        </div>
+    </section>
+
+    <!--Footer-->
+    <section class="footer">
+        <div class="container-fluid text-left mx-auto col-12 ">
+            <div class="row col-xl-8 col-lg-12 col-10 mx-auto py-4">
+                <div class=" col-lg-4 col-10 my-1 mx-auto">
+                    <div class="col-8 p-0 ">
+                        <a href="/">
+                            <img src="images/new/logo-white-2.png" class="col-10"></a>
+                    </div>
+
+                     <div class="col-12 mx-auto mt-3">
+                                <i class="fab fa-facebook-square fa-2x pr-1"></i>
+                                <i class="fab fa-twitter-square fa-2x px-1"></i>
+                                <i class="fab fa-instagram-square fa-2x px-1"></i>
+                                <i class="fab fa-linkedin  fa-2x pl-1"></i>
+                    </div>
+                    <div class="column col-12 mt-3">
+                        <h3>Contact Us</h3>
+                        <p class="mb-1">Questions? We've got answers.</p>
+                        <button type="button" class="btn btn-contact-us py-1 px-2 ">Contact Us</button>
+                    </div>
+                </div>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>About Us</h3>
+                        <div class="row col-12">
+                            <div class="col-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">7525 Carriage Ave.Dekalb, IL 60115 7525 Carriage Ave.Dekalb, IL 60115</p>
                             </div>
                         </div>
+                        <div class="row col-12 mt-1">
+                            <div class="col-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">+1-202-555-0151</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-2">
+                            <div class="col-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">e-bookasyon.us@domain.com</p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>Subscribe</h3>
+                        <div class="form-group col-12 p-0">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-12 p-0">
+                              <button type="submit" class="btn btn-subscribe col-12">Subscribe</button>
+                        </div>
+                      
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!--Product Description-->
-
-
-
-    <!--Footer-->
-    <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
-                </div>
-            </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
-        </div>
 
 
 
@@ -354,7 +335,24 @@
                 });
             });
         </script>
+        
+        <script>
+          
 
+            $("#formButton2").click(function(){
+                $("#form2").slideDown("slow");
+                $("#form1").slideUp("slow");
+            });
+        </script>
+
+        <script>
+            $("#formButton1").click(function(){
+                 $("#form1").slideDown("slow");
+                 $("#form2").slideUp("slow");
+            });
+        </script>
+
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
