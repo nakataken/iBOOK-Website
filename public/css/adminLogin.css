@@ -12,17 +12,19 @@ header,section{
 }
 
 header a{
-    font-family: sans-serif;
+    font-family: 'montserrat', sans-serif;
     font-size: 16px;
     color: #fff;
 }
 
-header{
-    background: #fff;
-}
 
+
+body{
+    background: #ffd63b;
+
+}
 #stickyNavbar {
-    background: royalblue;
+    background: #ffd63b;
     position: absolute; /* Make it stick/fixed */
     top: 0; /* Stay on top */
     width: 100%; /* Full width */
@@ -42,7 +44,7 @@ header{
 .img-left{
     width: 50%;
     background: #1E90FF;
-    background: url('/images/img8.png') center;
+
     background-size: cover;
 }
 
@@ -64,31 +66,34 @@ header{
 
 .form-input input{
     width: 100%;
-    height: 45px;
+    height: 30px;
     padding-left: 40px;
     margin-bottom: 20px;
     box-sizing: border-box;
     box-shadow: none;
-    border: 1px solid #00000020;
-    border-radius: 50px;
+    border: none;
+    border-bottom: 1px solid #bfbfbf;
     outline: none;
     background: transparent;
+    text-align: left;
+}
+
+.medium.material-icons{
+    position: absolute;
+    padding-left: 0px;
+    color: #bfbfbf;
+    font-size: 20px;
 }
 
 .form-input span{
     position: absolute;
-    top: 10px;
-    padding-left: 15px;
-    color: #007bff;
-}
-
-.form-input input::placeholder{
-    color: #000;
-    padding-left: 0px;
+    padding-left: 10px;
+    color: #bfbfbf;
 }
 
 .form-input input:focus, .form-input input:valid{
-    border: 2px solid #007bff;
+    border: none;
+    border-bottom: 2px solid #3c3c3c;
 }
 
 .form-input input:focus::placeholder{
@@ -105,15 +110,18 @@ header{
     border: none;
     cursor: pointer;
     border-radius: 50px;
-    background: #007bff;
-    color: #fff;
+    background: #ffd63b;
+    color: #3c3c3c;
     font-size: 90%;
     font-weight: bold;
     letter-spacing: .1rem;
     transition: 0.5s;
     padding: 12px;
+    font-family: 'montserrat', sans-serif;
   }
   
   .form-box button[type="submit"]:hover{
-    background: #0069d9;
+    background: #3c3c3c;
+    color: #ffd63b;
+    outline: none;
   }

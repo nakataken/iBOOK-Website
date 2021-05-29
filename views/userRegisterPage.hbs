@@ -10,6 +10,8 @@
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     <script src="https://kit.fontawesome.com/85f9dbedb7.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
@@ -19,17 +21,17 @@
     <main>
         <div class="container">
             <div class="row px-3">
-                <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-                    <div class="img-left d-none d-md-flex">
-
-                    </div>
+                <div class="col-lg-12 col-xl-11 card flex-row mx-auto px-0">
                     <div class="card-body">
-                        <h4 class="title text-center mt-4">
-                            Create an account
+                        <h4 class="title text-left mt-4">
+                            Sign Up
                         </h4>
-                        <form class="register form-box px-3" action="/auth/userRegisterPage" method="POST">
+                        <h6 class="title text-left mt-n4">
+                            Let's create your account
+                        </h6>
+                        <form class="register form-box pl-1 pr-2" action="/auth/userRegisterPage" method="POST">
                             <div class="form-input mb-3">
-                                <span><i class="fa fa-book-reader"></i></span>
+                           <span><i class="far fa-user"></i></span>
                                 <input class="mb-1" id="userUsername" type="username" name="userUsername"
                                     placeholder="Username" tabindex="10" required onsubmit="/auth/userRegisterPage"
                                     minlength="1" maxlength="10">
@@ -38,7 +40,7 @@
                                 {{/if}}
                             </div>
                             <div class="form-input">
-                                <span><i class="fa fa-envelope-o"></i></span>
+                            <span><i class="far fa-envelope"></i></span>    
                                 <input type="email" name="userEmail" placeholder="Email Address" tabindex="10"
                                     maxlength="50" required>
                                 {{#if emailMessage}}
@@ -46,7 +48,7 @@
                                 {{/if}}
                             </div>
                             <div class="form-input">
-                                <span><i class="fa fa-key"></i></span>
+                            <span><i class="medium material-icons">lock_outline</i></span>
                                 <input type="password" id="userPassword" name="userPassword" minlength="6"
                                     maxlength="10" placeholder="Password" tabindex="10" required>
                                 {{#if passwordMessage}}
@@ -54,7 +56,7 @@
                                 {{/if}}
                             </div>
                             <div class="form-input">
-                                <span><i class="fa fa-lock"></i></span>
+                             <span><i class="medium material-icons">lock_outline</i></span>
                                 <input type="password" name="userPasswordConfirm" placeholder="Confirm Password"
                                     minlength="6" maxlength="10"tabindex="10" required>
                             </div>
@@ -69,88 +71,29 @@
                             <hr class="my-4">
                             <div class="text-center mb-2">
                                 Already have an account?
-                                <a href="/userLoginPage" class="login-link">Login here</a>
+                                <a href="/userLoginPage" class="login-link">Sign in here</a>
                             </div>
                         </form>
                     </div>
+                    
+                       <div class="img-left d-none d-md-flex">
+                            <h5>Join our</h5>
+                            <h4 class="signup text-left">
+                            E-bookada Community! 
+                            </h4> 
+                            <img class = "sign-img" src="/images/signup.jpeg">
+                           
+                    </div> 
+
                 </div>
+
             </div>
         </div>
     </main>
 
-    <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
-                </div>
-            </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
-        </div>
-    </section>
+    
 
-    <script type="text/javascript">
-        $(window).on('scroll', function () {
-            if ($(window).scrollTop()) {
-                $('nav').addClass('black');
-            } else {
-                $('nav').removeClass('black');
-            }
-        })
-    </script>
-
-    <script>
-        /* Open when someone clicks on the span element */
-        function openNav() {
-            if (document.getElementById("myNav").style.width == "100%") {
-                document.getElementById("myNav").style.width = "0";
-            } else {
-                document.getElementById("myNav").style.width = "100%";
-            }
-        }
-    </script>
-
-    <script>
-        function closeNav() {
-            if (document.getElementById("myNav").style.width == "100%") {
-                document.getElementById("myNav").style.width = "0";
-            } else {
-                document.getElementById("myNav").style.width = "100%";
-            }
-        }
-    </script>
-
-    <script>
-        const scrollUp = document.querySelector('.scrollUp');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 100) {
-                scrollUp.classList.add("active");
-            } else {
-                scrollUp.classList.remove("active");
-            }
-        })
-    </script>
+    
 
     <script>
         $(document).ready(function () {

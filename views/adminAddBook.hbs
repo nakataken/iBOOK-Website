@@ -18,36 +18,79 @@
 <body>
 
    {{> adminHeader}}
-
+ 
                     <!--Begin page content-->
                     <div class="container-fluid px-lg-4">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-lg-12 col-xl-10 card flex-row mt-5 mx-auto px-0">
-                                        <div class="img-left d-none d-md-flex">
+                                    <div class="col-lg-10 col-xl-8 card flex-row mt-5 mx-auto px-0">
 
-                                        </div>
-                                        <div class="card-body">
-                                            <h4 class="title text-left mt-4">
-                                                ADD A BOOK
+                                         
+                                            <div class="col-lg-6 col-xl-5 mx-auto mt-3 px-0">   
+                                            <h4>
+                                                Add a book
                                             </h4>
                                             <form class="addBook form-box px-3" action="/data/adminAddBook"
                                                 method="POST" enctype="multipart/form-data">
                                                 <div class="form-input">
-                                                    <span><i class="fas fa-book"></i></i></span>
+                                                    <label for="" class="form-inline font-bold">Title</label>
+                                                    
                                                     <input type="text" name="bookTitle" placeholder="Title"
                                                         tabindex="10" maxlength="30" required>
                                                 </div>
                                                 <div class="form-input">
-                                                    <span><i class="fas fa-address-book"></i></span>
+                                                    
                                                     <input type="text" name="bookAuthor" placeholder="Author"
                                                         tabindex="10" maxlength="30" required>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <span>
-                                                        <hr class="mx-1">
-                                                    </span>
+                                                 <div class="form-input">
+                                                    <textarea name="bookDesc" placeholder="Description"
+                                                        required maxlength="300"></textarea>
+                                                </div>
+                                                                                                <div class="mb-3">
+                                                    <label for="" class="form-inline">Book Category:
+                                                        <span>
+                                                            <hr class="mx-2">
+                                                            </span>
+                                                        <select class="custom-select" name="bookCategory"
+                                                            id="bookCategory">
+                                                            <option value="Agriculture, Aquaculture, and Food Service">Agriculture, Aquaculture, and Food Service
+                                                            </option>
+                                                            <option value="Architecture and Planning">Architecture and Planning
+                                                            </option>
+                                                            <option value="Arts and Applied">Arts and Applied
+                                                            </option>
+                                                            <option value="Business, Economics, Finance, And Accounting">Business, Economics, Finance, And Accounting</option>
+                                                            <option value="Chemistry">Chemistry</option>
+                                                           
+                                                            <option value="Computer Science and Information Technology">Computer Science and Information Technology
+                                                            </option>
+                                                            <option value="Earth, Space, and Environmental Science">Earth, Space, and Environmental Science</option>
+                                                            <option value="Humanities">Humanities</option>
+                                                            <option value="Law and Criminology">Law and Criminology</option>
+                                                             <option value="Life Science">Life Science
+                                                            </option>
+                                                            <option value="Mathematics and Statistics">Mathematics and Statistics
+                                                            </option>
+                                                            <option value="Medicine">Medicine
+                                                            </option>
+                                                            <option value="Novel">Novel</option>
+                                                            <option value="Nursing, Dentistry, and Healthcare">Nursing, Dentistry, and Healthcare</option>
+                                                            <option value="Physical Science and Engineering">Physical Science and Engineering
+                                                            </option>
+                                                            <option value="Psychology">Psychology
+                                                            </option>
+                                                            <option value="Social and Behavioral Science">Social and Behavioral Science</option>
+                                                            <option value="Veterinary Medicine">Veterinary Medicine</option>
+                                                            
+                                                        </select>
+                                                    </label>
+                                                </div>
+                                                
+                                                </div>
+                                            <div class="col-lg-6 col-xl-5 mt-5 mx-auto px-0">
+                                               <div class="mb-3">
                                                      <h6 class="title text-left mt-2 ml-n1 mb-2">
                                                      BOOK COVER
                                                      </h6>
@@ -55,9 +98,7 @@
                                                         required>
                                                 </div>
                                                  <div class="mb-3">
-                                                    <span>
-                                                        <hr class="mx-1">
-                                                    </span>
+
                                                     <h6 class="title text-left mt-2 ml-n1 mb-2">
                                                      BOOK FILE
                                                     </h6>
@@ -65,72 +106,45 @@
                                                         required>
                                                 </div>
                                                 <div class="form-input">
-                                                    <textarea name="bookDesc" placeholder="Description"
-                                                        required maxlength="300"></textarea>
-                                                </div>
-                                                <div class="form-input">
                                                     <span><i class="fas fa-tag"></i></span>
                                                     <input type="text" name="bookPrice" placeholder="Price"
                                                         tabindex="10"  required maxlength="8" required>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="" class="form-inline">Book Category:
-                                                        <span>
-                                                            <hr class="mx-2"></span>
-                                                        <select class="custom-select" name="bookCategory"
-                                                            id="bookCategory">
-                                                            <option value="Action and Adventure">Action and Adventure
-                                                            </option>
-                                                            <option value="Childrens Fiction">Children's Fiction
-                                                            </option>
-                                                            <option value="Comic and Graphic Novel">Comic and Graphic
-                                                                Novel</option>
-                                                            <option value="Drama">Drama</option>
-                                                            <option value="Fairy Tale">Fairy Tale</option>
-                                                            <option value="Fantasy and Sci-Fi">Fantasy and Sci-Fi
-                                                            </option>
-                                                            <option value="Horror and Thriller">Horror and Thriller
-                                                            </option>
-                                                            <option value="Mystery">Mystery</option>
-                                                            <option value="Romance">Romance</option>
-                                                            <option value="Young Adult">Young Adult</option>
-                                                        </select>
-                                                    </label>
-                                                </div>
-                                                <div class="mb-3 text-left">
-                                                    <button type="submit" class="btn text-uppercase">
-                                                        Save
-                                                    </button>
+
+                                                <div class="my-5 text-right">
+                                                 
                                                     <a href="/adminBooksData/1"
-                                                        class="btn text-uppercase ml-3" 
+                                                        class="btn" 
                                                         onclick="
                                                                 if (!confirm('Are you sure you want to cancel?'))
                                                                 {
                                                                     return false
                                                                 }"
-                                                        
-                                                        
-                                                        >cancel</a>
+                                                        >Cancel</a>   
+                                                    <button type="submit" class="btn2">
+                                                         Save 
+                                                    </button>
                                                 </div>
-                                                <hr class="my-4">
+
                                                 {{#if message}}
                                                 <p class="alert alert-danger text-center p-1">{{message}}</p>
                                                 {{/if}}
+                                                </div>
                                             </form>
                                         </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {{> adminFooter}}
 
                 </div>
             </div>
         </div>
     </div>
 
+                    {{> adminFooter}}
 
 
     <script type="text/javascript">

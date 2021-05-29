@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/css/adminLogin.css">
     <script src="https://kit.fontawesome.com/85f9dbedb7.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
@@ -27,28 +29,26 @@
     <main>
         <div class="container">
             <div class="row px-3">
-                <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-                    <div class="img-left d-none d-md-flex">
+                <div class="col-lg-6 col-xl-5 card flex-row mx-auto px-0">
 
-                    </div>
                     <div class="card-body">
                         <h4 class="title text-center mt-4">
-                            Administration Login
+                            Admin Sign In
                         </h4>
                         <form class="form-box px-3 " action="/auth/adminLoginPage" method="POST">
                             <div class="form-input">
-                                <span><i class="fa fa-book-reader"></i></span>
+                                 <span><i class="far fa-user"></i></span>
                                 <input type="username" name="adminUsername" placeholder="Username" tabindex="10"
                                     required>
                             </div>
                             <div class="form-input">
-                                <span><i class="fa fa-key"></i></span>
+                                <span><i class="medium material-icons">lock_outline</i></span>
                                 <input type="password" name="adminPassword" placeholder="Password" tabindex="10"
                                     required>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-block text-uppercase">
-                                    Login
+                                    Sign In
                                 </button>
                             </div>
 

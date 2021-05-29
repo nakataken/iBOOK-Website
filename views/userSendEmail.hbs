@@ -19,26 +19,25 @@
     <main>
         <div class="container">
             <div class="row px-3">
-                <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-                    <div class="img-left d-none d-md-flex ">
-
-                    </div>
+                <div class="col-lg-6 col-xl-5 card flex-row mx-auto px-0">
                     <div class="card-body">
 
                         <h4 class="title text-center mt-4">
                             Account Recovery
                         </h4>
-                        <p>Enter your email address and we'll send you a link to reset your password.</p>
+                        <p class="mb-5">Please enter your registered email address. We'll send you a link to reset your password.</p>
                         <form class="form-box px-3" action="/auth/userSendEmail" method="POST">
                             <div class="form-input">
-                                <input type="text" name="userEmail" class="form-control"
+                                 <span><i class="far fa-envelope"></i></span>  
+                                <input type="text" name="userEmail" 
                                     placeholder="e.g. email@domain.com" tabindex="10" required>
                             </div>
                             <div class="mb-3">
-                                <button type="submit" id="reset" class="reset_btn reset_btn-success btn-outline-0">Reset
-                                    Password</button>
+                                <button type="submit" class="btn btn-block text-uppercase">
+                                    Reset Password
+                                </button>
                             </div>
-                            <hr class="my-4">
+
                             {{#if message}}
                             <p class="alert alert-danger text-center p-1 text-danger">{{message}}</p>
                             {{/if}}
@@ -56,37 +55,7 @@
         </div>
     </main>
 
-    <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
-                </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
-                </div>
-            </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
-        </div>
-    </section>
+
 
     <script type="text/javascript">
         $(window).on('scroll', function () {
