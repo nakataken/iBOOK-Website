@@ -14,166 +14,175 @@
     <script src="https://kit.fontawesome.com/85f9dbedb7.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
-
+<!--
+    {{this.item.BOOK_TITLE}}
+-->
 <body>
     {{> categoryHeader}}
+    
     <!--Single Product-->
-    <hr class="my-5">
-    <section class="cart-list pt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-
-                    {{#if book}}
-                    <div class="row cart-card d-flex align-items-center">
-                        <div class="col-md-12 py-2">
-                            <div class="card">
-
-                                <div class="card-body">
-                                    <h5>Items</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{#each book}}
-
-                    <div class="row cart-card py-1">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-md-5 col-sm-4 col-5">
-                                                    <div class="d-flex align-items-center justify-content-between">
-
-                                                        <span><img
-                                                                src='http://localhost:8080/uploadedImages/{{this.item.BOOK_COVER}}'></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7 col-sm-8 col-7">
-                                                    <div class="d-block">
-                                                        <a href="#">
-                                                            <h6 class="font-weight-bold">{{this.item.BOOK_TITLE}}</h6>
-                                                        </a>
-                                                        <p>{{this.item.BOOK_AUTHOR}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5 d-flex align-items-center justify-content-around">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-12 d-flex align-items-center py-3">
-                                                    <div class="d-block">
-                                                        <h5 class="font-weight-bold">P{{this.BOOK_PRICE}}</h5>
-                                                        <div class="d-inline-block d-flex justify-content-between p-2">
-
-                                                            <a href="/shop/remove/{{this.item.BOOK_ID}}"><i
-                                                                    class="far fa-trash-alt" type="button"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-
-                    {{else}}
-
-                    <div class="row cart-card d-flex align-items-center">
-                        <div class="col-md-12 py-2">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div>
-                                        <h4>No books in the cart</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/if}}
+    <div class="space"></div>
+    <section class="min-h container-fluid ">
+        <div class="column cart col-md-10 col-12 mx-auto">
+            
+            <h1 class="col-10 mx-auto mt-4"><a href="/">Home /</a> Cart</h1>
+            <!--Summary-->
+            <div class="row col-md-8 col-12 mx-auto p-0">
+                <div class="col-12 row top-title">
                     
-                    </form>
+                    <div class="row col-12 p-3 mxy-auto ">
+                        <div class="col-4 text-center my-auto mx-auto">
+                            <h5 class="py-0 text-left">Book Details</h3>
+                        </div>
+                        <div class="col-4 my-auto mx-auto ">
+                            <h5 class="py-0 text-center">Price</h2>
+                        </div>
+                        
+                        <div class="col-2 my-auto text-center">
+                            <h5 class="py-0 text-center">Remove</h2>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="row cart-card d-flex align-items-center">
-                        <div class="col-md-12 py-2">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-block align-items-center">
-                                        <span class="d-flex justify-content-center"><label class="checkname">
-                                                <h5 class="font-weight-bold">Order Summary</h5>
-                                            </label></span>
-                                        <span>
-                                            <hr class="my-4"></span>
+                {{#if book}}
+                    {{#each book}}
+                        <div class="col-12 cart-item mt-5 row">
+                            <div class="col-2 p-3">
+                                <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
+                                    <img src='http://localhost:8080/uploadedImages/{{this.item.BOOK_COVER}}' class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="row col-10 p-3 mxy-auto ">
+                                <div class="col-6 my-auto mx-auto">
+                                    <button type="button" class="btn btn-autor ">{{this.item.BOOK_AUTHOR}}</button>
+                                    <h3 class="py-0 ">{{this.item.BOOK_TITLE}}</h3>
+                                </div>
+                                <div class="col-4 my-auto mx-auto ">
+                                    <h2 class="py-0 ">P {{this.item.BOOK_PRICE}}</h2>
+                                </div>
+                                
+                                <div class="col-2 my-auto text-center">
+                                     <a href="/shop/remove/{{this.item.BOOK_ID}}"><i class="fas fa-times fa-2x"></i></a>
+                                </div>
+                            </div>
+                        </div>                       
 
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="text-muted">Total</h6>
-                                            <span><label for="total-amount"
-                                                    class="font-weight-bold">P{{totalPrice}}</label></span>
+                    {{/each}}
+                {{else}}
+                        <div class="col-12 mx-auto p-0">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-md-12 py-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div>
+                                                <h4>No books in the cart</h4>
+                                            </div>
                                         </div>
-                                        <span>
-                                            <hr class="my-4"></span>
-                                        <form action="/check-out" method="GET">
-                                            <span class="d-flex align-items-center justify-content-between">
-
-                                                <button class="btn btn-primary w-100 p-2 btn-block" type="submit"
-                                                    onclick="this.form.submit()">
-                                                    <h6 class="font-weight-bold">PROCEED TO CHECKOUT</h6>
-                                                </button>
-
-                                            </span>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
+                {{/if}}
+                
+               
             </div>
+
+            <!--Total-->
+
+            <div class="row col-md-8 col-12 mx-auto p-0">
+                     <div class="col-12 check-out mt-5 p-0 row">
+                        
+                        <div class="col-6 row ml-auto mt-3">
+                           <h4 class="ml-auto my-auto mr-2">TOTAL: </h4>
+                           <h3 for="total-amount" class="my-auto"> {{totalPrice}}</h3>
+                        </div>
+                       
+                        <form action="/check-out" method="GET" class="col-12 text-right mt-3 p-0">
+                            <button class=" btn p-3 " type="submit" onclick="this.form.submit()"> PROCEED TO CHECKOUT </button>
+                        </form>
+                </div> 
+            </div>
+
         </div>
     </section>
 
     <!--Product Description-->
 
-
+    <div class="space"></div>
 
     <!--Footer-->
     <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
+        <div class="container-fluid text-left mx-auto col-12 ">
+            <div class="row col-xl-8 col-lg-12 col-10 mx-auto py-4">
+                <div class=" col-lg-4 col-10 my-1 mx-auto">
+                    <div class="col-8 p-0 ">
+                        <a href="/">
+                            <img src="images/new/logo-white-2.png" class="col-10"></a>
+                    </div>
+
+                     <div class="col-12 mx-auto mt-3">
+                                <i class="fab fa-facebook-square fa-2x pr-1"></i>
+                                <i class="fab fa-twitter-square fa-2x px-1"></i>
+                                <i class="fab fa-instagram-square fa-2x px-1"></i>
+                                <i class="fab fa-linkedin  fa-2x pl-1"></i>
+                    </div>
+                    <div class="column col-12 mt-3">
+                        <h3>Contact Us</h3>
+                        <p class="mb-1">Questions? We've got answers.</p>
+                        <button type="button" class="btn btn-contact-us py-1 px-2 ">Contact Us</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>About Us</h3>
+                        <div class="row col-12">
+                            <div class="col-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">7525 Carriage Ave.Dekalb, IL 60115 7525 Carriage Ave.Dekalb, IL 60115</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-1">
+                            <div class="col-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">+1-202-555-0151</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-2">
+                            <div class="col-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">e-bookasyon.us@domain.com</p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>Subscribe</h3>
+                        <div class="form-group col-12 p-0">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-12 p-0">
+                              <button type="submit" class="btn btn-subscribe col-12">Subscribe</button>
+                        </div>
+                      
+                        
+                        
+                        
+                    </div>
                 </div>
             </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
         </div>
+    </section>
+    
 
 
 
