@@ -14,6 +14,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <script src="https://kit.fontawesome.com/85f9dbedb7.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js"></script>
 </head>
 
 <body>
@@ -87,8 +88,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 mt-4">
+                    {{!-- Chart --}}
 
+
+                    <form action="/adminSelectChart" method="POST">
+                        <div class="dl float-left">
+                            <select class="custom-select" name="selectTop" id="selectTop" onchange="this.form.submit()">
+                                <option class="text-muted" name="default" value="default">Top</option>
+                                <option name="3" value="3">3</option>
+                                <option name="5" value="5">5</option>
+                                <option name="10" value="10">10</option>
+                            </select>
+                        </div>
+                        {{!-- <div class="dl float-left">
+                            <select class="custom-select" name="selectTimely" id="selectTimely" onchange="this.form.submit()">
+                                <option class="text-muted" name="default" value="default">Timely</option>
+                                <option name="daily" value="daily">Daily</option>
+                                <option name="weekly" value="weekly">Weekly</option>
+                                <option name="monthly" value="monthly">Monthly</option>
+                            </select>
+                        </div> --}}
+                    </form>
+
+                    <div>
+                        <canvas id="myChart" width="800" height="300"></canvas>
+                    </div>
+                    <div class="col-md-12 mt-4">
                         <div class="table-responsive">
                             <table class="table v-middle">
                                 <thead>
@@ -157,8 +182,57 @@
     </div>
     </div>
     </div>
-
-
+{{!-- ['book1', 'book2', 'book3'] [1,2,3] --}}
+    <script>
+        let books = JSON.parse(decodeURI("{{books}}"));
+        let bookSales = JSON.parse(decodeURI("{{bookSales}}"));
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: books,
+                datasets: [{
+                    data: bookSales,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        align: 'center',
+                        display: 'true',
+                        text: "Top Selling Books",
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 
     <script type="text/javascript">
         $('#bar').click(function () {
