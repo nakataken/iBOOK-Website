@@ -18,60 +18,141 @@
 <body>
 
     {{> categoryHeader}}
+<!--
+    <div class="container-fluid head pt-5">
+        <div class="row col-10 mx-auto no-gutter " >
+         
+                {{#each book}}
+                    <div class=" col-4  mx-auto my-5">
+                          <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}' class="pdf-view-book-cov col-8  mx-auto img-fluid img">
+                    </div>
+                    <div class="row col-8 mx-auto no-gutters my-5">
+                        <div class="pdf-view-book-title mx-auto col-10  mt-5">
+                            <button type="button" class="btn btn-autor  px-5 "> {{this.BOOK_AUTHOR}}</button>
+                            <h3 class="mb-0"> {{this.BOOK_TITLE}}</h3>
+                           
+                        </div>
+                    </div>
+                {{/each}}
 
+           
+
+            
+        </div>
+        
+    </div>
+   -->
+   <div class="container-fluid   col-12 head pt-5">
+        <div class="row col-12">
+            <div class="column col-12 mx-auto my-auto no-gutter">
+                    <div class="categ-title-box mx-auto col-10  my-5">
+                         {{#each book}}
+                            <p class="text-center">You are reading:</p>
+                            <h2 class="text-center">{{this.BOOK_TITLE}}</h2>
+                            <div class="col-12 d-flex justify-content-center "><button type="button" class="btn btn-autor-pdf  px-5 "> {{this.BOOK_AUTHOR}}</button></div>
+                         {{/each}}
+                    </div>
+                    
+            </div>
+
+            
+        </div>
+        
+    </div>
     <!--Single Product-->
-    <hr class="my-5">
-    <section class="pdf-view px-5 py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
 
+    <section class="pdf-view container-fluid mt-4">
+        
+            <div class="row col-12 p-0">
+                <div></div>
+                <div class="col-md-6 col-12 p-0 mx-auto" >
                     <h1>{{userID}}</h1>
-
                     {{#each book}}
-                    <embed class="pdf-frame" src="http://localhost:8080/uploadedFiles/{{this.BOOK_FILE}}#page=1&zoom=65" width="70%" height="400%">
+                            
+                           <embed id="img-book-view"  class="col-12 p-0" src="http://localhost:8080/uploadedFiles/{{this.BOOK_FILE}}#page=1&" height="500%">
                     {{/each}}
 
                 </div>
             </div>
-        </div>
+        
     </section>
 
-   
-
     <!--Footer-->
-    <section class="footer pt-5">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
+    <section class="footer">
+        <div class="container-fluid text-left mx-auto col-12 ">
+            <div class="row col-xl-8 col-lg-12 col-10 mx-auto py-4">
+                <div class=" col-lg-4 col-10 my-1 mx-auto">
+                    <div class="col-8 p-0 ">
+                        <a href="/">
+                            <img src="/images/new/logo-white-2.png" class="col-10"></a>
+                    </div>
+
+                     <div class="col-12 mx-auto mt-3">
+                                <i class="fab fa-facebook-square fa-2x pr-1"></i>
+                                <i class="fab fa-twitter-square fa-2x px-1"></i>
+                                <i class="fab fa-instagram-square fa-2x px-1"></i>
+                                <i class="fab fa-linkedin  fa-2x pl-1"></i>
+                    </div>
+                    <div class="column col-12 mt-3">
+                        <h3>Contact Us</h3>
+                        <p class="mb-1">Questions? We've got answers.</p>
+                        <button type="button" class="btn btn-contact-us py-1 px-2 ">Contact Us</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>About Us</h3>
+                        <div class="row col-12">
+                            <div class="col-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">7525 Carriage Ave.Dekalb, IL 60115 7525 Carriage Ave.Dekalb, IL 60115</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-1">
+                            <div class="col-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">+1-202-555-0151</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-2">
+                            <div class="col-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">e-bookasyon.us@domain.com</p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>Subscribe</h3>
+                        <div class="form-group col-12 p-0">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-12 p-0">
+                              <button type="submit" class="btn btn-subscribe col-12">Subscribe</button>
+                        </div>
+                      
+                        
+                        
+                        
+                    </div>
                 </div>
+
+                
             </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
+           
         </div>
-
-
+    </section>
 
         <script type="text/javascript">
             $(window).on('scroll', function () {
