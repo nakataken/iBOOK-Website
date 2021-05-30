@@ -55,110 +55,113 @@
             </div>
 
             <!--Checkout-->
-
             <div class="row col-lg-4 col-12 mx-auto pm-div">
-                <div class="col-12 os-check-out p-0 row mx-auto">
-                        <div class="top-os mt-4 mx-auto mb-2">
-                             <h5 class="col-12  p-0 m-0">PAYMENT METHOD </h5>
-                        </div>
-                        
-                       
-                        
-                        
-                        {{#if message}}
-                            <p class="alert alert-danger text-center p-1">{{message}}</p>
-                        {{/if}}
-                                    
-                        
-                    <!--Payment Method-->
-                        
-                        <div id="payMeth" class="col-12 payment-method column my-3 ">
-                            <div class="col-12 mx-auto mx-auto mb-2 ">
-                                <div class="col-10 mx-auto p-0">
-                                    <button type="button" id="formButton1" class="btn btn-payment col-12 p-0">
-                                        <img src="/images/new/gcash.png" alt="" class="col-12 img-fluid" >
-                                    </button>
-                                </div>
-                                <form action="/shop/checkout/gcash/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form1" class="col-12 mx-auto mt-4 p-0">
-                                        <div class="col-12 os-total column p-0 mx-auto mb-3"> 
-                                            <p class="mb-0">You have to pay: </p> 
-                                            <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
-                                        </div>
-                                        <div class="col-12 mx-auto gCashMethod" id="gCashMethod" >
-                                            <p class="method-text mb-0">Mobile number (11 digit):</p>
-                                            <input type="text" placeholder="+63" name="gcashNum" class="form-control method-input col-12 mt-0" minlength="11" maxlength="11" required>
-                                        
-                                            <button class="btn  btn-checkout  mt-3 w-100 p-2" type="submit"> CHECKOUT </button>
-                                              
-                                        </div>
-                                         
-                                </form>
-                            </div>
-                            <div  class="col-12 mx-auto mx-auto mb-2">
-                                <div class="col-10 mx-auto p-0">
-                                    <button type="button" id="formButton2" class="btn btn-payment col-12 p-0">
-                                        <img  src="/images/new/mastercard.png" alt=""  class="col-12 img-fluid">
-                                    </button>
-                                </div>
-                                <form  action="/shop/checkout/card/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form2">
-                                    <div class="col-12 os-total column p-0 mx-auto mt-3 mb-2"> 
-                                            <p class="mb-0">You have to pay: </p> 
-                                            <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
-                                    </div>
-                                    <div class=" creditCardMethod" id="creditCardMethod">
-                                        <p class="method-text mb-0">Name on card:</p>
-                                        <input type="text" class="form-control col-12 mt-0" minlength="2" name="cardName" maxlength="40" required>
-                                        
-                                        <p class="method-text mt-3 mb-0">Card number:</p>
-                                        <input type="text" class="form-control col-12 mt-0" minlength="10" name="cardNum" maxlength="16" required>
-
-                                        <p class="method-text mt-3 mb-0">Security code:</p>
-                                        <input type="text" name="cardCCV" class="form-control col-12 mt-0" minlength="3" maxlength="4" required>
-                                        
-                                        <p class="method-text mt-3">Expiry date:</p>
-                                        <div class="row col-12 mx-auto">
-                                            <div class="col-6 p-1 mx-auto">
-                                                <p class="method-text mb-0">Month</p>
-                                                <select name="expMonth" class="expMonth form-control col-12">
-                                                    <option value="01" selected>01</option>
-                                                    <option value="02">02</option>
-                                                    <option value="03">03</option>
-                                                    <option value="04">04</option>
-                                                    <option value="05">05</option>
-                                                    <option value="06">06</option>
-                                                    <option value="07">07</option>
-                                                    <option value="08">08</option>
-                                                    <option value="09">09</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-6 p-1 mx-auto">
-                                                <p class="method-text mb-0">Year</p>
-                                                <select name="expYear" class="expYear form-control col-12">
-                                                    <option value="2020" selected>2020</option>
-                                                    <option value="2021">2021</option>
-                                                    <option value="2022">2022</option>
-                                                    <option value="2023">2023</option>
-                                                    <option value="2024">2024</option>
-                                                    <option value="2025">2025</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <button class="btn btn-checkout mt-3 col-12 p-2" type="submit"> CHECKOUT </button>
-                                        
-                                        
-                                    </div>
-                                </form>
+                <div class="col-12 p-0">
+                    <div class="col-12 os-check-out p-0 row mx-auto">
+                            <div class="top-os mt-4 mx-auto mb-2">
+                                <h5 class="col-12  p-0 m-0">PAYMENT METHOD </h5>
+                                <p>(choose your preferred payment method below)</p>
                             </div>
                             
-                           
-                        </div>
                         
-                </div> 
+                            
+                            
+                            {{#if message}}
+                                <p class="alert alert-danger text-center p-1">{{message}}</p>
+                            {{/if}}
+                                        
+                            
+                        <!--Payment Method-->
+                            
+                            <div id="payMeth" class="col-12 payment-method column mt-3 mb-4">
+                                <div class="col-12 mx-auto mx-auto mb-2 ">
+                                    <div class="col-10 mx-auto p-0">
+                                        <button type="button" id="formButton1" class="btn btn-payment col-12 p-0">
+                                            <img src="/images/new/gcash.png" alt="" class="col-12 img-fluid" >
+                                        </button>
+                                    </div>
+                                    <form action="/shop/checkout/gcash/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form1" class="col-12 mx-auto mt-4 p-0">
+                                            <div class="col-12 os-total column p-0 mx-auto mb-3"> 
+                                                <p class="mb-0">You have to pay: </p> 
+                                                <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                            </div>
+                                            <div class="col-12 mx-auto gCashMethod" id="gCashMethod" >
+                                                <p class="method-text mb-0">Mobile number (11 digit):</p>
+                                                <input type="text" placeholder="+63" name="gcashNum" class="form-control method-input col-12 mt-0" minlength="11" maxlength="11" required>
+                                            
+                                                <button class="btn  btn-checkout  mt-3 w-100 p-2" type="submit"> CHECKOUT </button>
+                                                
+                                            </div>
+                                            
+                                    </form>
+                                </div>
+                                <div  class="col-12 mx-auto mx-auto mb-2">
+                                    <div class="col-10 mx-auto p-0">
+                                        <button type="button" id="formButton2" class="btn btn-payment col-12 p-0">
+                                            <img  src="/images/new/mastercard.png" alt=""  class="col-12 img-fluid">
+                                        </button>
+                                    </div>
+                                    <form  action="/shop/checkout/card/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form2">
+                                        <div class="col-12 os-total column p-0 mx-auto mt-3 mb-2"> 
+                                                <p class="mb-0">You have to pay: </p> 
+                                                <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                        </div>
+                                        <div class=" creditCardMethod" id="creditCardMethod">
+                                            <p class="method-text mb-0">Name on card:</p>
+                                            <input type="text" class="form-control col-12 mt-0" minlength="2" name="cardName" maxlength="40" required>
+                                            
+                                            <p class="method-text mt-3 mb-0">Card number:</p>
+                                            <input type="text" class="form-control col-12 mt-0" minlength="10" name="cardNum" maxlength="16" required>
+
+                                            <p class="method-text mt-3 mb-0">Security code:</p>
+                                            <input type="text" name="cardCCV" class="form-control col-12 mt-0" minlength="3" maxlength="4" required>
+                                            
+                                            <p class="method-text mt-3">Expiry date:</p>
+                                            <div class="row col-12 mx-auto">
+                                                <div class="col-6 p-1 mx-auto">
+                                                    <p class="method-text mb-0">Month</p>
+                                                    <select name="expMonth" class="expMonth form-control col-12">
+                                                        <option value="01" selected>01</option>
+                                                        <option value="02">02</option>
+                                                        <option value="03">03</option>
+                                                        <option value="04">04</option>
+                                                        <option value="05">05</option>
+                                                        <option value="06">06</option>
+                                                        <option value="07">07</option>
+                                                        <option value="08">08</option>
+                                                        <option value="09">09</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 p-1 mx-auto">
+                                                    <p class="method-text mb-0">Year</p>
+                                                    <select name="expYear" class="expYear form-control col-12">
+                                                        <option value="2020" selected>2020</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2025">2025</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <button class="btn btn-checkout mt-3 col-12 p-2" type="submit"> CHECKOUT </button>
+                                            
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                            
+                            </div>
+                            
+                    </div> 
+                </div>
             </div>
+            
 
         </div>
     </section>
