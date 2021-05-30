@@ -306,6 +306,8 @@ html {
     border: none;
     display: inline-flex;
     font-size: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .card #sales-box {
@@ -373,8 +375,11 @@ html {
     font-weight: bold;
 }
 
+h5{
+    font-weight: bold;
+}
 .form-input input {
-    width: 100%;
+    width: 104%;
     height: 45px;
     padding-left: 10px;
     margin-bottom: 20px;
@@ -452,6 +457,7 @@ html {
     outline: none;
 }
 
+
 ul.breadcrumb {
     padding: 10px 16px;
     list-style: none;
@@ -484,7 +490,7 @@ ul.breadcrumb li a:hover {
 
 .btn {
     align-self: right;
-    margin-top: 10px;
+    margin-top: 30px;
     border: none;
     cursor: pointer;
     border-radius: 50px;
@@ -497,7 +503,7 @@ ul.breadcrumb li a:hover {
     padding: .6rem 4rem;
     font-family: 'montserrat', sans-serif;
     outline: none;
-    margin-bottom: 8px;
+    margin-bottom: 30px;
 }
 .btn:active {
     background: #3c3c3c;
@@ -507,7 +513,7 @@ ul.breadcrumb li a:hover {
 
 .btn2 {
     align-self: right;
-    margin-top: 10px;
+    margin-top: 30px;
     border: none;
     cursor: pointer;
     border-radius: 50px;
@@ -517,7 +523,7 @@ ul.breadcrumb li a:hover {
     font-weight: bold;
     letter-spacing: .1rem;
     transition: 0.5s;
-    padding: .6rem 4.4rem;
+    padding: .6rem 4.5rem;
     font-family: 'montserrat', sans-serif;
     outline: none;
 }

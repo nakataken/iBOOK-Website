@@ -1,12 +1,12 @@
 const Sequelize = require("sequelize");
 var SequelizeAuto = require('sequelize-auto-models')
 
-const sequelize = new Sequelize("ibook_db", "root", "", {
+const sequelize = new Sequelize("ebookasyon_db", "root", "", {
   host: "localhost",
   dialect: "mysql"
 });
 
-var auto = new SequelizeAuto('ibook_db', 'root', '', {
+var auto = new SequelizeAuto('ebookasyon_db', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
   directory: false, // prevents the program from writing to disk
