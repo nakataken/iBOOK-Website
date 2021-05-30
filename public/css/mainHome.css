@@ -711,6 +711,18 @@ body {
 }
 
 
+.categ-title-box h2 {
+    font-family: Poppins;
+    font-size: 40px;
+    color: white;
+}
+
+.categ-title-box p{
+    font-family: Poppins;
+    color: #3e3a37;
+    font-size: 24px;
+    margin-bottom: -15px !important;
+}
 /*******************************/
 /*******************************/
 /**********VIEW BOOK************/
@@ -1519,11 +1531,7 @@ nav.black .search-form-wrapper .input-group {
 
 
 /*--Product Description + PDF view*/
-.pdf-view {
-    margin-top: 50px;
-    margin-bottom: 70px;
-    height: 800px;
-}
+
 .pdf-frame {
     border: .75rem solid #3f87da;
 }
@@ -1608,7 +1616,7 @@ nav.black .search-form-wrapper .input-group {
 /******************************************/
 
 .a{
-    background-color: #000000;
+    background-color: #525659;
 }
 
 .min-h{
@@ -2022,10 +2030,58 @@ p.deactivation-btn:hover,
     color: dodgerblue;
 }
 
-
-.a{
-    background-color: orange;
+#img-book-view{
+    border-radius: 18px !important;
 }
+
+.pdf-view-book{
+    overflow: hidden !important;
+    border-radius: 18px;
+}
+
+.btn-autor-pdf{
+    background-color: #3e3a37 ;
+    border-radius: 5px;
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 700;
+    color:  white;
+    text-transform: uppercase;
+    padding: 0 !important; 
+    padding: 0px 5px !important;
+    box-shadow: none !important;
+
+}
+
+
+.pdf-view-book-title h2{
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 700;
+    color:  #3e3a37;
+    text-transform: uppercase;
+    padding: 0 !important;    
+}
+
+.pdf-view-book-title h3{
+    font-family: Poppins;
+    font-size: 21px;
+    font-weight: 700;
+    color:  #3e3a37;
+    text-overflow: ellipsis !important;
+    white-space:nowrap !important;
+    overflow: hidden !important;
+}
+
+.pdf-view-book-cov{
+    border-radius: 18px;
+}
+
+.pdf-view {
+    height: 800px;
+}
+
+
 
 .b{
     background-color: pink;
