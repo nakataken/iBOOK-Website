@@ -419,18 +419,42 @@ router.get('/adminAddBook', (req, res) => {
     res.render('adminAddBook');
 })
 
+// Compute the total of selected time frame
+const compressSalesData = (salesData) => {
+    let sales = salesData.reduce((accumulator, sales) => {
+        return accumulator + sales.payment_amount;
+    }, 0);
+    return sales;
+}
+
 //ADMIN SALES DATA PAGE ROUTER
 router.get('/adminSalesData', function (req, res, next) {
     var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
             checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%m/%d/%y') AS date
             FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID ORDER BY checkout_table.PAYMENT_DATE`;
+
     db.query(sql, function (err, data, fields) {
         if (err) throw err;
-
-        res.render('adminSalesData', {
-            title: 'Sales List',
-            salesData: data
-        });
+        let year = new Date().getFullYear();
+        let yearString = year.toString();
+        let yearNumber = parseInt(yearString);
+        let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+        let annualSales = [];
+        for(let i=5;i>=0;i--) {
+            let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+            db.query(querySales, (err, salesData) => {
+                if (err) throw err;
+                annualSales[i] = compressSalesData(salesData);
+                if(i==0) {
+                    res.render('adminSalesData', {
+                        title: 'Sales List',
+                        salesData: data,
+                        salesLabel: encodeURI(JSON.stringify(annualLabel)),
+                        totalSales: encodeURI(JSON.stringify(annualSales.reverse()))
+                    });
+                }
+            })
+        }
     });
 });
 
