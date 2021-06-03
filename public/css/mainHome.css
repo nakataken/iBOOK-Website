@@ -2081,7 +2081,30 @@ p.deactivation-btn:hover,
     height: 800px;
 }
 
+.b-conf{
+    background-color: #ffd63b;
+}
+.confmes-div{
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: -1px -1px 15px 2px rgba(170,170,170,0.72);
+}
 
+.confmes-div h1{
+    font-family: Poppins;
+    font-size: 36px;
+    font-weight: 700;
+    color:  #3e3a37;
+}
+
+.btn-library{
+        background-color: #3e3a37;
+        color: white ;
+        box-shadow: none !important;
+        border-radius: 18px;
+        font-weight: Bold;
+        font-family: Montserrat;
+}
 
 .b{
     background-color: pink;
