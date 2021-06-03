@@ -203,7 +203,6 @@ exports.dailySales = async (req, res) => {
         let dailySales = [];
         for(let i=1;i<=lastDay;i++) {
             let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-${i}%"` : `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-0${i}%"`;
-            console.log(querySales);
             db.query(querySales, (err, salesData) => {
                 if (err) throw err;
                 dailyLabel[i-1] = i;
@@ -336,32 +335,31 @@ exports.annualSales = async (req, res) => {
     checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%y/%m/%d') AS date
     FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
     WHERE YEAR(checkout_table.PAYMENT_DATE) = YEAR(CURDATE()) ORDER BY checkout_table.PAYMENT_DATE`, async (error, data) => {
-        console.log(data);
-        if (data.length < 1) {
-            return res.status(401).render('adminSalesData', {
-                message: 'There are no purchases for this month.'
-            });
-        } else {
-            let year = new Date().getFullYear();
-            let yearString = year.toString();
-            let yearNumber = parseInt(yearString);
-            let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
-            let annualSales = [];
-            for(let i=5;i>=0;i--) {
-                let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-i}%"`;
-                db.query(querySales, (err, salesData) => {
-                    if (err) throw err;
-                    annualSales[i] = compressSalesData(salesData);
-                    if(i==0) {
-                        res.render('adminSalesData', {
-                            title: 'User List',
-                            salesData: data,
-                            salesLabel: encodeURI(JSON.stringify(annualLabel)),
-                            totalSales: encodeURI(JSON.stringify(annualSales.reverse()))
-                        });
-                    }
-                })
-            }
+        // console.log(data);
+        // if (data.length < 1) {
+        //     return res.status(401).render('adminSalesData', {
+        //         message: 'There are no purchases for this month.'
+        //     });
+        let year = new Date().getFullYear();
+        let yearString = year.toString();
+        let yearNumber = parseInt(yearString);
+        let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+        let annualSales = [];
+        for(let i=5;i>=0;i--) {
+            let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+            db.query(querySales, (err, salesData) => {
+                if (err) throw err;
+                annualSales[i] = compressSalesData(salesData);
+                if(i==0) {
+                    res.render('adminSalesData', {
+                        title: 'Sales List',
+                        salesData: data,
+                        salesLabel: encodeURI(JSON.stringify(annualLabel)),
+                        totalSales: encodeURI(JSON.stringify(annualSales.reverse()))
+                    });
+                }
+            })
+        }
         //     let year1 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-4}%"`
         //     let year2 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-3}%"`
         //     let year3 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-2}%"`
@@ -395,7 +393,7 @@ exports.annualSales = async (req, res) => {
         //             });
         //         });
         //     });
-        }
+        // }
     })
 }
 
