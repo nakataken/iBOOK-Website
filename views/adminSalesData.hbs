@@ -23,6 +23,45 @@
 
     <!--Begin page content-->
     {{!-- CHART --}}
+    {{#if daily}}
+    <form action="/adminSalesChart" method="POST">
+        <div class="dl float-left">
+            <select class="custom-select" name="selectedDaily" id="selectedDaily" onchange="this.form.submit()">
+                <option class="text-muted" name="default" value="default">All</option>
+                {{#each dailyLabel}}
+                    <option name={{this}} value={{this}}>{{this}}</option>
+                {{/each}}
+                <input type="hidden" name="timeframe" value="daily" />
+            </select>
+        </div>
+    </form>
+    {{/if}}
+    {{#if monthly}}
+    <form action="/adminSalesChart" method="POST">
+        <div class="dl float-left">
+            <select class="custom-select" name="selectedMonthly" id="selectedMonthly" onchange="this.form.submit()">
+                <option class="text-muted" name="default" value="default">All</option>
+                {{#each monthLabel}}
+                <option name={{this}} value={{this}}>{{this}}</option>
+                {{/each}}
+                <input type="hidden" name="timeframe" value="monthly" />
+            </select>
+        </div>
+    </form>
+    {{/if}}
+    {{#if annual}}
+    <form action="/adminSalesChart" method="POST">
+        <div class="dl float-left">
+            <select class="custom-select" name="selectedAnnualy" id="selectedAnnualy" onchange="this.form.submit()">
+                <option class="text-muted" name="default" value="default">All</option>
+                {{#each annualLabel}}
+                <option name={{this}} value={{this}}>{{this}}</option>
+                {{/each}}
+                <input type="hidden" name="timeframe" value="annual" />
+            </select>
+        </div>
+    </form>
+    {{/if}}
     <div>
         <canvas id="myChart" width="800" height="200"></canvas>
     </div>

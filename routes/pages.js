@@ -4,6 +4,7 @@ const router = express.Router();
 const mysql = require("mysql");
 const Cart = require('../controllers/cart');
 const models = require('../models/index');
+const { reset } = require('nodemon');
 
 
 //DATABASE CONNECTION
@@ -456,6 +457,66 @@ router.get('/adminSalesData', function (req, res, next) {
             })
         }
     });
+});
+
+router.post('/adminSalesChart', function (req, res, next) {
+    if(req.body.timeframe == "daily") {
+        res.send("daily");
+    } else if (req.body.timeframe == "monthly") {
+        let selectedMonth = req.body.selectedMonthly;
+        let year = new Date().getFullYear();
+        let monthLabel = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+        let monthNumber = (selectedMonth == "Jan") ? "01" : (selectedMonth == "Feb") ? "02" : (selectedMonth == "Mar") ? "03" : (selectedMonth == "Apr") ? "04" : (selectedMonth == "May") ? "05" : (selectedMonth == "June") ? "06" : (selectedMonth == "July") ? "07" : (selectedMonth == "Aug") ? "08" : (selectedMonth == "Sept") ? "09" :  (selectedMonth == "Oct") ? "10" : (selectedMonth == "Nov") ? "11" : (selectedMonth == "Dec") ? "12": ""
+        let yearString = year.toString();
+        let lastDay = 32 - new Date(parseInt(yearString), parseInt(monthNumber)-1, 32).getDate();
+        let dailyLabel = [];
+        let dailySales = [];
+        for(let i=1;i<=lastDay;i++) {
+            let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-${i}%"` : `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-0${i}%"`;
+            db.query(querySales, (err, salesData) => {
+                if (err) throw err;
+                dailyLabel[i-1] = i;
+                dailySales[i-1] = compressSalesData(salesData);
+                if(i==lastDay) {
+                    res.render('adminSalesData', {
+                        title: 'User List',
+                        // salesData: data,
+                        salesLabel: encodeURI(JSON.stringify(dailyLabel)),
+                        totalSales: encodeURI(JSON.stringify(dailySales)),
+                        monthly: true,
+                        monthLabel
+                    });
+                }
+            })
+        }
+    } else if (req.body.timeframe =="annual") {
+        let year = new Date().getFullYear();
+        let yearString = year.toString();
+        let yearNumber = parseInt(yearString);
+        let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+        let selectedYear = req.body.selectedAnnualy;
+        let monthLabel = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+        var monthlySales = [];
+        for(let i=1;i<=12;i++) {
+            let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${selectedYear}-${i}%"`:`SELECT payment_amount FROM checkout_table where payment_date like "${selectedYear}-0${i}%"`;
+            db.query(querySales, (err, salesData) => {
+                if (err) throw err;
+                monthlySales[i-1] = compressSalesData(salesData);
+
+                if(i==12) {
+                    res.render('adminSalesData', {
+                        title: 'User List',
+                        // salesData: data,
+                        salesLabel: encodeURI(JSON.stringify(monthLabel)),
+                        totalSales: encodeURI(JSON.stringify(monthlySales)),
+                        annual: true,
+                        annualLabel,
+                        chartName: `Total Sales - ${year}`
+                    });
+                }
+            })
+        }
+    } 
 });
 
 //DISPLAY ALL BOOKS PAGE ROUTER

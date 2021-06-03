@@ -174,11 +174,6 @@ const compressSalesData = (salesData) => {
     return sales;
 }
 
-function daysInMonth(iMonth, iYear)
-{
-    return 
-}
-
 //VIEW DAILY SALES
 exports.dailySales = async (req, res) => {
     db.query(`SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -195,10 +190,9 @@ exports.dailySales = async (req, res) => {
         let year = new Date().getFullYear();
         let month=["January","February","March","April","May","June","July","August","September","October","November","December"];
         let currentMonth = month[date.getMonth()];
-        let monthNumber = (currentMonth == "January") ? "01" : (currentMonth == "February") ? "02" : (currentMonth == "March") ? "03" : (currentMonth == "April") ? "04" : (currentMonth == "May") ? "05" : (currentMonth == "June") ? "06" : "07";
+        let monthNumber = (currentMonth == "January") ? "01" : (currentMonth == "February") ? "02" : (currentMonth == "March") ? "03" : (currentMonth == "April") ? "04" : (currentMonth == "May") ? "05" : (currentMonth == "June") ? "06" : (currentMonth == "July") ? "07" : (currentMonth == "August") ? "08" : (currentMonth == "September") ? "09" :  (currentMonth == "October") ? "10" : (currentMonth == "November") ? "11" : (currentMonth == "December") ? "12": ""
         let yearString = year.toString();
         let lastDay = 32 - new Date(parseInt(yearString), parseInt(monthNumber)-1, 32).getDate();
-        console.log(lastDay);
         let dailyLabel = [];
         let dailySales = [];
         for(let i=1;i<=lastDay;i++) {
@@ -212,7 +206,9 @@ exports.dailySales = async (req, res) => {
                         title: 'User List',
                         salesData: data,
                         salesLabel: encodeURI(JSON.stringify(dailyLabel)),
-                        totalSales: encodeURI(JSON.stringify(dailySales))
+                        totalSales: encodeURI(JSON.stringify(dailySales)),
+                        daily: true,
+                        dailyLabel
                     });
                 }
             })
@@ -266,7 +262,9 @@ exports.monthlySales = async (req, res) => {
                         title: 'User List',
                         salesData: data,
                         salesLabel: encodeURI(JSON.stringify(monthLabel)),
-                        totalSales: encodeURI(JSON.stringify(monthlySales))
+                        totalSales: encodeURI(JSON.stringify(monthlySales)),
+                        monthly: true,
+                        monthLabel
                     });
                 }
             })
@@ -355,7 +353,9 @@ exports.annualSales = async (req, res) => {
                         title: 'Sales List',
                         salesData: data,
                         salesLabel: encodeURI(JSON.stringify(annualLabel)),
-                        totalSales: encodeURI(JSON.stringify(annualSales.reverse()))
+                        totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
+                        annual: true,
+                        annualLabel
                     });
                 }
             })
