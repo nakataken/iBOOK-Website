@@ -348,7 +348,7 @@ exports.annualSales = async (req, res) => {
             let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
             let annualSales = [];
             for(let i=5;i>=0;i--) {
-                let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+                let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-i}%"`;
                 db.query(querySales, (err, salesData) => {
                     if (err) throw err;
                     annualSales[i] = compressSalesData(salesData);
