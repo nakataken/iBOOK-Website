@@ -62,45 +62,6 @@
     margin-right: 50px;
 }
 
-.container-fluid.action_adventure {
-    background: #808080;
-}
-
-.container-fluid.children_fic {
-    background: #1E90FF;
-}
-
-.container-fluid.comic_graphic {
-    background: #FF4500;
-}
-
-.container-fluid.drama {
-    background: #D3D3D3;
-}
-
-.container-fluid.fairytale {
-    background: #32CD32;
-}
-
-.container-fluid.fantasy_scifi {
-    background: #B0C4DE;
-}
-
-.container-fluid.horror_thriller {
-    background: #8B0000;
-}
-
-.container-fluid.mystery {
-    background: #000000;
-}
-
-.container-fluid.romance {
-    background: #FFB6C1;
-}
-
-.container-fluid.young_adult {
-    background: #4B0082;
-}
 
 .badge {
     padding-left: 3px;
@@ -790,19 +751,18 @@ nav .logo {
     float: left;
 }
 
-nav .logo img {
-    margin-top: 20px;
+nav .logo {
+    margin-top: 5px !important;
     margin-left: 20px;
     width: 180px;
-    height: auto !important;
     transition: .5s;
 }
-
+/*
 nav.black .logo img {
     width: 180px;
     margin-top: 10px;
 }
-
+*/
 nav ul { 
     float: right;
     margin: 0;
@@ -840,9 +800,11 @@ nav ul li a {
     border-radius: 18px !important;
     margin-TOP: -6px !important ;
     box-shadow: none !important;
-
 }
 
+.btn-login:hover{
+    color: #ffd63b;
+}
 .btn-login:active{
     color: #ffd63b;
     box-shadow: none !important;
@@ -854,7 +816,7 @@ nav.black ul li a {
 }
 
 nav ul li a:hover {
-    color: #fff;
+    color: #7e7c7c;
     text-decoration: none;
 }
 
@@ -890,6 +852,8 @@ nav ul li:hover>ul {
     top: 70px;
     opacity: 1;
     visibility: visible;
+
+
 }
 
 nav.black ul li:hover>ul {
@@ -902,7 +866,6 @@ nav ul ul li {
     
     margin: 0px;
     width: 100%;
-   
     display: list-item;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
@@ -934,6 +897,10 @@ nav ul ul li a {
     font-size: 13px;
     line-height: 40px;
     color: #3e3a37;
+}
+
+nav ul li a:hover {
+    color: #7e7c7c;
 }
 
 nav.black ul ul li a {
@@ -1071,10 +1038,9 @@ nav.black .search-form-wrapper .input-group {
     }
 
     .responsive-bar .logo img {
-        margin-top: 10px;
+  
         float: left;
-        height: 30px;
-        margin-top: -6px !important ;
+        width: 180px;
     }
 
     nav {
@@ -1206,14 +1172,15 @@ nav.black .search-form-wrapper .input-group {
     /* Sit on top */
     left: 0;
     top: 0;
-    background-color: rgb(0, 0, 0);
+    background-color: #ffd63b;
     /* Black fallback color */
-    background-color: #000;
+    background-color: #ffd63b;
     /* Black w/opacity */
     overflow-x: hidden;
     /* Disable horizontal scroll */
     transition: 0.5s;
     /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+
 }
 
 /* Position the content inside the overlay */
@@ -1239,7 +1206,7 @@ nav.black .search-form-wrapper .input-group {
 
 .close-nav i {
     float: right;
-    color: #fff;
+    color: #3e3a37;
     font-size: 24px;
     cursor: pointer;
 }
@@ -1275,10 +1242,12 @@ nav.black .search-form-wrapper .input-group {
 
 /* The navigation links inside the overlay */
 .overlay a {
+    font-family: Montserrat;
+    font-weight: bold;
     padding: 8px;
     text-decoration: none;
     font-size: 16px;
-    color: #DCDCDC;
+    color: #3e3a37;
     display: block;
     /* Display block instead of inline */
     transition: 0.3s;
@@ -1288,7 +1257,7 @@ nav.black .search-form-wrapper .input-group {
 /* When you mouse over the navigation links, change their color */
 .overlay a:hover,
 .overlay a:focus {
-    color: #f1f1f1;
+    color: white;
 }
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
@@ -1467,7 +1436,6 @@ nav.black .search-form-wrapper .input-group {
     margin-top: 50px;
     background: #3e3a37;
     color: #fff;
-    
 }
 
 .footer h3 {
@@ -1507,6 +1475,7 @@ nav.black .search-form-wrapper .input-group {
     background-color: white;
     text-decoration: none;
 }
+
 .copyright {
     margin-bottom: -80px;
     text-align: center;
@@ -1814,8 +1783,6 @@ nav.black .search-form-wrapper .input-group {
 /*Add to Cart */
 
 
-
-
 /*.card .card-body .payment-method form #gCashMethod{
     position: absolute;
     opacity: 0;
@@ -1825,6 +1792,21 @@ nav.black .search-form-wrapper .input-group {
 }*/
 
 /*Customer Profile*/
+
+.profile{
+    background-color: #ffd63b;
+    min-height: 200px;
+}
+
+.profile-div{
+    margin-top: -100px !important;
+}
+   
+.profile-div{
+     font-family: Poppins;
+     font-weight: bolder;
+     color: #3e3a37;
+ }
 
 .customer-profile img {
     min-width: 200px;
@@ -1848,12 +1830,12 @@ nav.black .search-form-wrapper .input-group {
 }
 
 .customer-details:hover {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .card-1,
 .card-2 {
-    min-height: 690px;
+    min-height: 657px;
     max-height: auto;
 }
 
@@ -1878,7 +1860,7 @@ nav.black .search-form-wrapper .input-group {
     position: absolute;
     top: 10px;
     padding-left: 15px;
-    color: #007bff;
+    color: #ffd63b;
 }
 
 .form-input input::placeholder {
@@ -1888,7 +1870,7 @@ nav.black .search-form-wrapper .input-group {
 
 .form-input input:focus,
 .form-input input:valid {
-    border: 2px solid #007bff;
+    border: 2px solid #ffd63b;
 }
 
 .form-input input:focus::placeholder {
@@ -1896,7 +1878,7 @@ nav.black .search-form-wrapper .input-group {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #007bff !important;
+    background-color: #ffd63b !important;
     border: 0px;
 }
 
@@ -1905,7 +1887,7 @@ nav.black .search-form-wrapper .input-group {
     border: none;
     cursor: pointer;
     border-radius: 50px;
-    background: #007bff;
+    background: #ffd63b;
     color: #fff;
     font-size: 90%;
     font-weight: bold;
@@ -1915,23 +1897,23 @@ nav.black .search-form-wrapper .input-group {
 }
 
 .form-box button[type="submit"]:hover {
-    background: #0069d9;
+    background: #ffd63b;
 }
 
 .forget-link,
 .login-link {
-    color: #007bff;
+    color: #ffd63b;
     font-weight: bold;
 }
 
 .forget-link:hover,
 .login-link:hover {
-    color: #0069d9;
+    color: #ffd63b;
     text-decoration: none;
 }
 
 .form-box .enable-btn {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .info-update {
@@ -1939,7 +1921,7 @@ nav.black .search-form-wrapper .input-group {
 }
 
 .enable-btn:hover {
-    color: dodgerblue;
+    color: #ffd63b;
     transition: 0.3s;
 }
 
@@ -1968,22 +1950,31 @@ nav.black .search-form-wrapper .input-group {
     border-right: 1px solid #ccc;
 }
 
+#deact{
+    background-color: #ffd63b !important;
+    font-weight: bold;
+    text-decoration: none !important;
+    color: #3e3a37;
+    border-radius: 18px;
+}
+
+
 /* Change background color of buttons on hover */
 p.deactivation-btn:hover,
 .my-books-tab:hover,
 .my-wishlists-tab:hover,
 .my-books-tab h4:hover,
 .my-wishlists-tab h4:hover {
-    color: dodgerblue;
+    color: #ffd63b ;
     transition: 0.4s;
 }
 
 .tab .active {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .side-tab .active {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 /* Style the tab content */
@@ -2003,7 +1994,7 @@ p.deactivation-btn:hover,
 .modal-footer .save-btn {
     padding: 3px 20px;
     border-radius: 5px;
-    background-color: royalblue;
+    background-color: #ffd63b;
     color: whitesmoke;
     transition: 0.4s;
 }
@@ -2022,13 +2013,15 @@ p.deactivation-btn:hover,
 }
 
 .modal-footer .save-btn:hover {
-    background-color: dodgerblue;
+    background-color: #ffd63b;
     transition: 0.4s;
 }
 
 .modal-footer .cancel-btn:hover {
-    color: dodgerblue;
+    color: #ffd63b;
 }
+
+
 
 #img-book-view{
     border-radius: 18px !important;
@@ -2105,7 +2098,6 @@ p.deactivation-btn:hover,
         font-weight: Bold;
         font-family: Montserrat;
 }
-
 .b{
     background-color: pink;
 }
