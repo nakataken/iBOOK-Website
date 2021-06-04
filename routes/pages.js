@@ -37,14 +37,55 @@ router.get('/', authController.isLoggedIn, (req, res) => {
             var sqlSale = 'SELECT * FROM books_table ORDER BY BOOK_PRICE LIMIT 4 OFFSET 0 ';
                 db.query(sqlSale, function (err, onSale, fields) {
                     var sqlRandom = 'SELECT * FROM books_table ORDER BY RAND() LIMIT 4 OFFSET 0 ';
-                        db.query(sqlRandom, function (err, random, fields) {
-                        if (err) throw err;
-                        res.render('index', {
-                            user: req.user,
-                            newBook: newrelease,
-                            sale: onSale,
-                            rand: random
-                        });
+                        // Render top sales book
+                        db.query(sqlRandom, function (err, random, fields) {    
+                        let bookQuery = "SELECT books_table.* FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"    
+                            db.query(bookQuery, (err, book) => {
+                                let bookData = JSON.parse(JSON.stringify(book))
+                                let books = {...bookData}
+                                let bookNumbers = Object.keys(books).length
+                                let bookSales = [];
+                                for(let i=0; i<bookNumbers; i++) {
+                                    let sales = 0;
+                                    for(let j=0; j<bookNumbers; j++) {
+                                        if(books[i].BOOK_TITLE === bookData[j].BOOK_TITLE) {
+                                            if(i<j || i==j) 
+                                                sales++;
+                                        }
+                                    }
+                                    bookSales.push(sales);
+                                }
+                                for (let i=bookSales.length; i>=0; i--) {
+                                    for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                                        if (bookSales[j] > bookSales[j-1]) {
+                                            // Swap orders of sales
+                                            let salesSwap = bookSales[j];
+                                            bookSales[j] = bookSales[j - 1];
+                                            bookSales[j - 1] = salesSwap;
+                                            // Swap orders of books
+                                            let bookSwap = books[j];
+                                            books[j] = books[j - 1];
+                                            books[j - 1] = bookSwap;
+                                        }
+                                    }
+                                }
+                                let topSales = [];
+                                for(let i=0; i<7; i++) {
+                                    topSales.push(books[i])
+                                }
+
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    res.render('index', {
+                                        user: req.user,
+                                        newBook: newrelease,
+                                        sale: onSale,
+                                        // rand: random,
+                                        topSaleBooks: topSales
+                                    });
+                                }
+                        })
                 })    
             })
         })
@@ -55,7 +96,7 @@ router.get('/userForgotPassword/:token/:userEmail', (req, res) => {
    // const userEmail = req.params.userEmail;   
     res.render('userForgotPassword', {
         userEmail: req.params.userEmail
-     
+    
     });
 })
 

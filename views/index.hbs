@@ -230,7 +230,7 @@
             </div>
             
             <div class="container row col-sm-12 col-10 mt-4 mx-auto">
-                 {{#each rand}}
+                 {{#each topSaleBooks}}
                
                     <div class="mx-auto  best-card col-xl-8 col-md-10 col-sm-10 col-12 p-4 align-items-center">
                         <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}"></a>
@@ -243,7 +243,7 @@
                             </div>
 
                             <div class="left column col-xl-8 col-lg-6 col-md-10 mx-auto"> 
-                                <h1  class="pt-4">#1</h1>
+                                <h1  class="pt-4">{{index}}</h1>
                               
                                 <button type="button" class="btn btn-autor px-5"> {{this.BOOK_AUTHOR}}</button>
                                 <h3> {{this.BOOK_TITLE}}</h3>
