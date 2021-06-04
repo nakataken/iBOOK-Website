@@ -70,7 +70,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                     }
                                 }
                                 let topSales = [];
-                                for(let i=0; i<7; i++) {
+                                for(let i=0; i<8; i++) {
                                     topSales.push(books[i])
                                 }
 

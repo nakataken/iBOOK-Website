@@ -88,6 +88,10 @@ const hbspartials = require('hbs')
 //View handlebars pages
 app.set('view engine', 'hbs');
 hbspartials.registerPartials(path.join(__dirname, "/views/partials"))
+hbspartials.registerHelper("inc", function(value, options)
+{
+    return parseInt(value) + 1;
+});
 
 app.use(fileUpload());
 
