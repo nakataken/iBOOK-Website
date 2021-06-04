@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 *{
     box-sizing: border-box;
 }
@@ -167,6 +169,41 @@ header .container .col-md-7 button{
   #stickyNavbar a:hover {
     color: #0000FF;
   }
+
+/*--Mega Menu--*/
+
+.mega-menu {
+	padding: 0px 0px ! important;
+	width: 540px;
+    border-radius: 0;
+    margin-top: 0px;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 75vh !important;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.mega-menu li {
+    display: inline-block;
+    font-size: 0.94rem;
+    padding: 3px 0px;
+    background-color: white;
+}
+
+.mega-menu li.mega-menu-column {
+    margin-right: 20px;
+    width: 150px;
+   
+}
+
+.mega-menu .nav-header {
+    padding: 0 !important;
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+}
 
 /*Main Body*/
 

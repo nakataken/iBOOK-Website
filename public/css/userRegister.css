@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
 *{
     box-sizing: border-box;
 }
@@ -59,6 +62,41 @@
 
 /*--Extra-Ends--*/
 
+/*--Mega Menu--*/
+
+.mega-menu {
+	padding: 0px 0px ! important;
+	width: 540px;
+    border-radius: 0;
+    margin-top: 0px;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 75vh !important;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.mega-menu li {
+    display: inline-block;
+    font-size: 0.94rem;
+    padding: 3px 0px;
+    background-color: white;
+}
+
+.mega-menu li.mega-menu-column {
+    margin-right: 20px;
+    width: 150px;
+   
+}
+
+.mega-menu .nav-header {
+    padding: 0 !important;
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -76,13 +114,11 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
     padding: 5px 100px;
     background: #ffd63b;
     box-sizing: border-box;
     transition: .5s;
     z-index: 2;
-  
 }
 
 nav:after {
@@ -92,10 +128,10 @@ nav:after {
 }
 
 nav.black {
-    background: rgba(0, 0, 0, .99);
+    background: rgba(255, 243, 243, 0.99);
     height: 60px;
     padding: 5px 80px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 8px 16px 0px rgba(62, 58, 55, 0.3);
 }
 
 nav .logo {
@@ -105,16 +141,17 @@ nav .logo {
 nav .logo img {
     margin-top: 20px;
     margin-left: 20px;
-    width: 150px;
+    width: 180px;
+    height: auto !important;
     transition: .5s;
 }
 
 nav.black .logo img {
-    width: 130px;
+    width: 180px;
     margin-top: 10px;
 }
 
-nav ul {
+nav ul { 
     float: right;
     margin: 0;
     padding: 0;
@@ -125,39 +162,59 @@ nav ul {
 nav ul li {
     list-style: none;
     display: inline-block;
+    
 }
 
 nav ul li a {
     line-height: 80px;
-    color: #3c3c3c;
-    font-size: 12px;
+    color: #3e3a37;
+    font-size: 16px;
     font-weight: bold;
     padding: 5px 20px;
-    font-family: 'montserrat';
+    font-family: Montserrat;
     text-decoration: none;
     text-transform: uppercase;
     transition: .5s;
+  
+}
+
+
+.btn-login{
+    background-color: #3e3a37;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 14px !important;
+    color: white;
+    border-radius: 18px !important;
+    margin-TOP: -6px !important ;
+    box-shadow: none !important;
+
+}
+
+.btn-login:active{
+    color: #ffd63b;
+    box-shadow: none !important;
 }
 
 nav.black ul li a {
-    color: #f3f2f0; 
+    color: #3e3a37;
     line-height: 60px;
 }
 
 nav ul li a:hover {
-    color: #f3f2f0; 
+    color: #fff;
     text-decoration: none;
 }
 
 nav ul ul li a:hover {
     box-shadow: none;
-    color: hotpink;
+    color: #ffd63b;
 }
 
 nav ul ul {
     position: absolute;
     top: 90px;
-    border-top: 3px solid deeppink;
+    border-top: 3px solid #ffd63b;
     opacity: 0;
     visibility: hidden;
     transition: .3s ease-in;
@@ -165,11 +222,12 @@ nav ul ul {
     border-radius: 5px;
     background: whitesmoke;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.3);
+
 }
 
-nav.black ul ul{
+nav.black ul ul {
     top: 50px !important;
-    border-top: 3px solid cyan;
+    border-top: 3px solid #ffd63b;
 }
 
 nav ul ul ul {
@@ -189,29 +247,29 @@ nav.black ul li:hover>ul {
 }
 
 nav ul ul li {
-    position: relative;
+    
     margin: 0px;
-    width: 250px;
-    float: none;
+    width: 100%;
+   
     display: list-item;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-nav ul ul.user-log li{
+nav ul ul.user-log li {
     width: 100px;
 }
 
-nav ul ul.search-box li{
+nav ul ul.search-box li {
     width: 250px;
 }
 
-nav ul li.fa-search{
+nav ul li.fa-search {
     font-size: 20px;
     position: absolute;
     width: 20%;
 }
 
-nav ul ul.search-box input{
+nav ul ul.search-box input {
     border: none;
     outline: none;
     padding-left: 10px;
@@ -223,7 +281,7 @@ nav ul ul.search-box input{
 nav ul ul li a {
     font-size: 13px;
     line-height: 40px;
-    color: deeppink;
+    color: #3e3a37;
 }
 
 nav.black ul ul li a {
@@ -237,6 +295,7 @@ nav ul ul ul li {
     top: -60px;
     left: 150px;
 }
+
 
 /*--Search-Bar--*/
 
