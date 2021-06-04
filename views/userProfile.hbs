@@ -20,117 +20,73 @@
 
     {{> categoryHeader}}
 
-    <!--Single Product-->
-    <hr class="my-5">
-    <section class="cart-list pt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="row cart-card d-flex align-items-center">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
 
-                                    <div class="d-block">
-                                        <div class="customer-profile d-flex align-items-center justify-content-center">
-                                            <img src='http://localhost:8080/userIcons/{{userData.0.USER_ICON}}'
-                                                alt="Profile" data-toggle="modal" data-target="#ChangePass">
-                                        </div>
-                                        <form action="/auth/user/icon/{{userData.0.USER_ID}}" method="POST"
-                                            enctype="multipart/form-data">
-                                            <div class="modal fade" role="dialog" id="ChangePass">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title">
-                                                                <i class="fa fa-user">
-                                                                </i>
-                                                                CHANGE PROFILE PICTURE
-                                                            </h3>
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <div class="modal-body px-5">
-                                                            <div
-                                                                class="customer-profile d-flex align-items-center justify-content-center">
-                                                                <img src='http://localhost:8080/userIcons/{{userData.0.USER_ICON}}'
-                                                                    alt="Profile">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer d-flex justify-content-between p-3">
-                                                            <form id="form1" runat="server">
-                                                                <input type='file' id="imgInp" name="userIcon" />
-                                                                <img id="blah" src="/images/userEmpty.jpg"
-                                                                    alt="your image" height="100" width="100" />
-                                                            </form>
-                                                        </div>
-                                                        <div class="modal-footer d-flex justify-content-end p-3">
-                                                            <div>
-                                                                <button class="cancel-btn mr-2"
-                                                                    data-dismiss="modal">Cancel</button>
-                                                                <button class="save-btn" type="submit">Save</button>
-                                                            </div>
-                                                        </div>
+    <div class="container-fluid profile p-0 ">
+ 
+    </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
+
+     <section class="profile-div container col-12">
+  
+            <div class="row col-lg-8 col-md-10 col-12 mx-auto">
+                <div class="col-md-4 col-12">
+                    
+                        <div class="card">
+              
+                            <div class="card-body">
+                                
+                                <div class="side-tab d-block align-items-center">
+                                    <div class=" mx-auto col-8">
+                                        <img src="/images/new/user.png" class="img-fluid">
                                     </div>
+                                    <span class="d-flex justify-content-center"><label class="checkname">
+                                            <h5 class="font-weight-bold">{{userData.0.USER_NAME}}</h5>
+                                        </label></span>
+                                    <span>
+                                    
+                                    <hr class="my-4"></span>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 py-2">
-                            <div class="card">
-
-                                <div class="card-body">
-                                    <div class="side-tab d-block align-items-center">
-                                        <span class="d-flex justify-content-center"><label class="checkname">
-                                                <h5 class="font-weight-bold">{{userData.0.USER_NAME}}</h5>
-                                            </label></span>
-                                        <span>
-                                            <hr class="my-4"></span>
-                                        <div class="customer-details active container d-flex align justify-content-start"
-                                            type="button" onclick="openContent(event, 'customer-info')">
-                                            <div class="d-block align-items-center mr-3">
-                                                <i class="fas fa-user-circle"></i>
-                                            </div>
-                                            <div class="d-block">
-                                                <h5>My Details</h5>
-                                                <p class="text-muted">Update your name and email address</p>
-                                            </div>
+                                    <div class="customer-details active container d-flex align justify-content-start"
+                                        type="button" onclick="openContent(event, 'customer-info')">
+                                        <div class="d-block align-items-center mr-3">
+                                            <i class="fas fa-user"></i>
                                         </div>
-                                        <hr>
-                                        <div class="customer-details container d-flex align justify-content-start"
-                                            type="button" onclick="openContent(event, 'customer-books')">
-                                            <div class="d-block align-items-center mr-3">
-                                                <i class="fas fa-book"></i>
-                                            </div>
-                                            <div class="d-block">
-                                                <h5>My Library</h5>
-                                                <p class="text-muted">View the lists of books or PDF downloaded</p>
-                                            </div>
+                                        <div class="d-block">
+                                            <h5>Account</h5>
+                                            <p class="text-muted">Update your name and email address</p>
                                         </div>
-                                        <span>
-                                            <hr class="my-4"></span>
-                                        <div class="customer-details container d-flex align justify-content-start"
-                                            type="button" onclick="openContent(event, 'customer-change-pass')">
-                                            <div class="d-block align-items-center mr-3">
-                                                <i class="fas fa-user-cog"></i>
-                                            </div>
-                                            <div class="d-block">
-                                                <h5>Account Settings</h5>
-                                                <p class="text-muted">Change password</p>
-                                            </div>
+                                    </div>
+                                    <hr>
+                                    <div class="customer-details container d-flex align justify-content-start"
+                                        type="button" onclick="openContent(event, 'customer-books')">
+                                        <div class="d-block align-items-center mr-3">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="d-block">
+                                            <h5>Wishlist</h5>
+                                            <p class="text-muted">View the lists of books you added on your wishlist</p>
+                                        </div>
+                                    </div>
+                                    <span>
+                                        <hr class="my-4"></span>
+                                    <div class="customer-details container d-flex align justify-content-start"
+                                        type="button" onclick="openContent(event, 'customer-change-pass')">
+                                        <div class="d-block align-items-center mr-3">
+                                            <i class="fas fa-cog"></i>
+                                        </div>
+                                        <div class="d-block">
+                                            <h5>Settings</h5>
+                                            <p class="text-muted">Change password</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
+                    
                 </div>
-                <div class="col-lg-8">
+
+                <div class="col-md-8 col-12">
 
                     <div class="row cart-card d-flex align-items-center">
                         <div id="customer-info" class="customer-detail-card side-content-tab col-md-12">
@@ -203,16 +159,12 @@
                         <div id="customer-books" class="customer-order-card side-content-tab col-md-12">
                             <div class="card-2 card p-3">
                                 <div class="tab row pt-3">
-                                    <div class="my-books-tab active tablinks col-md-6 col-sm-6 col-6 d-block text-center"
+                                    <div class="my-books-tab active tablinks col-12 d-block text-center"
                                         type="button" onclick="openTab(event, 'my-books')">
-                                        <h4 class="font-weight-bold"><i class="fas fa-book"></i> My Books</h4>
-                                    </div>
-                                    <div class="my-wishlists-tab tablinks col-md-6 col-sm-6 col-6 d-block text-center"
-                                        type="button" onclick="openTab(event, 'my-wishlists')">
                                         <h4 class="font-weight-bold"><i class="fas fa-heart"></i> My Wishlists</h4>
                                     </div>
                                 </div>
-                                <hr class="my-4">
+                            
                                 <div id="my-books" class="tabcontent">
                                     <div class="card-body">
                                         <div class="container">
@@ -232,87 +184,6 @@
                                                 {{/each}}
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div id="my-wishlists" class="tabcontent">
-                                    <div class="card-body">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
-                                                    <div class="d-block align-items-center justify-content-center">
-                                                        <div class="product-top d-flex justify-content-center mb-2">
-                                                            <a href="product_description.html"><img
-                                                                    src="/images/dw-cover.jpg"></a>
-                                                        </div>
-                                                        <div class="product-bottom text-center">
-                                                            <h6>Doctor Who</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
-                                                    <div class="d-block align-items-center justify-content-center">
-                                                        <div class="product-top d-flex justify-content-center mb-2">
-                                                            <a href="product_description.html"><img
-                                                                    src="/images/tswg-cover.jpg"></a>
-                                                        </div>
-                                                        <div class="product-bottom text-center">
-                                                            <h6>Thn She Was Gone</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
-                                                    <div class="d-block align-items-center justify-content-center">
-                                                        <div class="product-top d-flex justify-content-center mb-2">
-                                                            <a href="product_description.html"><img
-                                                                    src="/images/gi-cover.jpg"></a>
-                                                        </div>
-                                                        <div class="product-bottom text-center">
-                                                            <h6>Girl In The Ice</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
-                                                    <div class="d-block align-items-center justify-content-center">
-                                                        <div class="product-top d-flex justify-content-center mb-2">
-                                                            <a href="product_description.html"><img
-                                                                    src="/images/hg-cover.jpg"></a>
-                                                        </div>
-                                                        <div class="product-bottom text-center">
-                                                            <h6>The Hunger Games</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6 col-6 mb-3">
-                                                    <div class="d-block align-items-center justify-content-center">
-                                                        <div class="product-top d-flex justify-content-center mb-2">
-                                                            <a href="product_description.html"><img
-                                                                    src="/images/r&j-cover.jpg"></a>
-                                                        </div>
-                                                        <div class="product-bottom text-center">
-                                                            <h6>Romeo & Juliet</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-pagination">
-                                        <hr class="my-4">
-                                        <section class="page-nav" aria-label="page-nav">
-                                            <ul class="pagination justify-content-center">
-                                                <li class="page-item disabled">
-                                                    <a class="page-link" href="#" tabindex="-1"
-                                                        aria-disabled="true">Previous</a>
-                                                </li>
-                                                <li class="page-item disabled"><a class="page-link active bg-primary"
-                                                        href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">Next</a>
-                                                </li>
-                                            </ul>
-                                        </section>
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +251,7 @@
                                                                 {
                                                                     return false
                                                                 }
-                                                                ">Deactivate</a>
+                                                                "><button class="btn" id="deact">Deactivate</button></a>
                                                 </div>
                                                 <hr class="my-2">
                                             </div>
@@ -393,44 +264,90 @@
 
                 </div>
             </div>
-        </div>
     </section>
+    <!--Single Product-->
 
+    
     <!--Product Description-->
 
 
 
     <!--Footer-->
     <section class="footer">
-        <div class="container text-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h1>Useful Links</h1>
-                    <p>Privacy Policy</p>
-                    <p>Terms of Use</p>
-                    <p>Return Policy</p>
-                    <p>Discount Coupons</p>
+        <div class="container-fluid text-left mx-auto col-12 ">
+            <div class="row col-xl-8 col-lg-12 col-10 mx-auto py-4">
+                <div class=" col-lg-4 col-10 my-1 mx-auto">
+                    <div class="col-8 p-0 ">
+                        <a href="/">
+                            <img src="images/new/logo-white-2.png" class="col-10"></a>
+                    </div>
+
+                     <div class="col-12 mx-auto mt-3">
+                                <a href="http://localhost:8080/confirmation"><i class="fab fa-facebook-square fa-2x pr-1"></i></a>
+                                <i class="fab fa-twitter-square fa-2x px-1"></i>
+                                <i class="fab fa-instagram-square fa-2x px-1"></i>
+                                <i class="fab fa-linkedin  fa-2x pl-1"></i>
+                    </div>
+                    <div class="column col-12 mt-3">
+                        <h3>Contact Us</h3>
+                        <p class="mb-1">Questions? We've got answers.</p>
+                        <button type="button" class="btn btn-contact-us py-1 px-2 ">Contact Us</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Company</h1>
-                    <p>About Us</p>
-                    <p>Contact Us</p>
-                    <p>Career</p>
-                    <p>Affiliate</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>About Us</h3>
+                        <div class="row col-12">
+                            <div class="col-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">7525 Carriage Ave.Dekalb, IL 60115 7525 Carriage Ave.Dekalb, IL 60115</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-1">
+                            <div class="col-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">+1-202-555-0151</p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mt-2">
+                            <div class="col-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="col-10">
+                                <p class="m-1">e-bookasyon.us@domain.com</p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>Follow Us On</h1>
-                    <p><i class="fa fa-facebook-official"></i> Facebook</p>
-                    <p><i class="fa fa-youtube-play"></i> Youtube</p>
-                    <p><i class="fa fa-linkedin"></i> Linkedin</p>
-                    <p><i class="fa fa-twitter"></i> Twitter</p>
+
+                <div class="row col-lg-4 col-10 my-1 mx-auto">
+                    <div class="column col-12 ">
+                        <h3>Subscribe</h3>
+                        <div class="form-group col-12 p-0">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-12 p-0">
+                              <button type="submit" class="btn btn-subscribe col-12">Subscribe</button>
+                        </div>
+                      
+                        
+                        
+                        
+                    </div>
                 </div>
+
+                
             </div>
-            <hr>
-            <p class="copyright">Made with <i class="fa fa-heart-o"></i>
-                by iBOOK
-            </p>
+           
         </div>
+    </section>
 
 
 
