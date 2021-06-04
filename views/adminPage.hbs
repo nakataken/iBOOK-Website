@@ -94,24 +94,16 @@
                     <form action="/adminSelectChart" method="POST">
                         <div class="dl float-left">
                             <select class="custom-select" name="selectTop" id="selectTop" onchange="this.form.submit()">
-                                <option class="text-muted" name="default" value="default">Top</option>
+                                <option class="text-muted" name="default" value="default">All</option>
                                 <option name="3" value="3">3</option>
                                 <option name="5" value="5">5</option>
                                 <option name="10" value="10">10</option>
                             </select>
                         </div>
-                        {{!-- <div class="dl float-left">
-                            <select class="custom-select" name="selectTimely" id="selectTimely" onchange="this.form.submit()">
-                                <option class="text-muted" name="default" value="default">Timely</option>
-                                <option name="daily" value="daily">Daily</option>
-                                <option name="weekly" value="weekly">Weekly</option>
-                                <option name="monthly" value="monthly">Monthly</option>
-                            </select>
-                        </div> --}}
                     </form>
 
                     <div>
-                        <canvas id="myChart" width="800" height="300"></canvas>
+                        <canvas id="myChart" width="1000" height="450"></canvas>
                     </div>
                     <div class="col-md-12 mt-4">
                         <div class="table-responsive">
@@ -209,10 +201,12 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 2
+                    borderWidth: 2,
+                    barThickness: 30
                 }]
             },
             options: {
+                indexAxis: 'y',
                 plugins: {
                     title: {
                         align: 'center',

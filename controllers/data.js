@@ -194,6 +194,7 @@ exports.dailySales = async (req, res) => {
         let yearString = year.toString();
         let lastDay = 32 - new Date(parseInt(yearString), parseInt(monthNumber)-1, 32).getDate();
         let dailyLabel = [];
+        let hourOptions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
         let dailySales = [];
         for(let i=1;i<=lastDay;i++) {
             let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-${i}%"` : `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-0${i}%"`;
@@ -208,7 +209,8 @@ exports.dailySales = async (req, res) => {
                         salesLabel: encodeURI(JSON.stringify(dailyLabel)),
                         totalSales: encodeURI(JSON.stringify(dailySales)),
                         daily: true,
-                        dailyLabel
+                        dailyLabel,
+                        chartName: `Total Sales - Daily`
                     });
                 }
             })
@@ -229,27 +231,9 @@ exports.monthlySales = async (req, res) => {
         //         message: 'There are no purchases for this month.'
         //     });
         // }
-        // } else {
-        //     res.render('adminSalesData', {
-        //         title: 'User List',
-        //         salesData: data
-        //     });
-        // }
         var year = new Date().getFullYear();
         var yearString = year.toString();
         let monthLabel = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
-        // let janQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-01%"`
-        // let febQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-02%"`
-        // let marQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-03%"`
-        // let aprQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-04%"`
-        // let mayQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-05%"`
-        // let juneQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-06%"`
-        // let julyQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-07%"`
-        // let augQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-08%"`
-        // let septQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-09%"`
-        // let octQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-10%"`
-        // let novQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-11%"`
-        // let decQuery = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-12%"`
         var monthlySales = [];
         for(let i=1;i<=12;i++) {
             let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${i}%"`:`SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-0${i}%"`;
@@ -264,66 +248,12 @@ exports.monthlySales = async (req, res) => {
                         salesLabel: encodeURI(JSON.stringify(monthLabel)),
                         totalSales: encodeURI(JSON.stringify(monthlySales)),
                         monthly: true,
-                        monthLabel
+                        monthLabel,
+                        chartName: `Total Sales - Monthly`
                     });
                 }
             })
         }
-        // db.query(janQuery, (err, salesData) => {
-        //     let monthlySales = [];
-        //     if (err) throw err;
-        //     monthlySales.push(compressSalesData(salesData));
-        //     db.query(febQuery, (err, salesData) => {
-        //         if (err) throw err;
-        //         monthlySales.push(compressSalesData(salesData));
-        //         db.query(marQuery, (err, salesData) => {
-        //             if (err) throw err;
-        //             monthlySales.push(compressSalesData(salesData));
-        //             db.query(aprQuery, (err, salesData) => {
-        //                 if (err) throw err;
-        //                 monthlySales.push(compressSalesData(salesData));
-        //                 db.query(mayQuery, (err, salesData) => {
-        //                     if (err) throw err;
-        //                     monthlySales.push(compressSalesData(salesData));
-        //                     db.query(juneQuery, (err, salesData) => {
-        //                         if (err) throw err;
-        //                         monthlySales.push(compressSalesData(salesData));
-        //                         db.query(julyQuery, (err, salesData) => {
-        //                             if (err) throw err;
-        //                             monthlySales.push(compressSalesData(salesData));
-        //                             db.query(augQuery, (err, salesData) => {
-        //                                 if (err) throw err;
-        //                                 monthlySales.push(compressSalesData(salesData));
-        //                                 db.query(septQuery, (err, salesData) => {
-        //                                     if (err) throw err;
-        //                                     monthlySales.push(compressSalesData(salesData));
-        //                                     db.query(octQuery, (err, salesData) => {
-        //                                         if (err) throw err;
-        //                                         monthlySales.push(compressSalesData(salesData));
-        //                                         db.query(novQuery, (err, salesData) => {
-        //                                             if (err) throw err;
-        //                                             monthlySales.push(compressSalesData(salesData));
-        //                                             db.query(decQuery, (err, salesData) => {
-        //                                                 if (err) throw err;
-        //                                                 monthlySales.push(compressSalesData(salesData));
-        //                                                 res.render('adminSalesData', {
-        //                                                     title: 'User List',
-        //                                                     salesData: data,
-        //                                                     salesLabel: encodeURI(JSON.stringify(monthLabel)),
-        //                                                     totalSales: encodeURI(JSON.stringify(monthlySales))
-        //                                                 });
-        //                                             });
-        //                                         });
-        //                                     });
-        //                                 });
-        //                             });
-        //                         });
-        //                     });
-        //                 });
-        //             });
-        //         });
-        //     });
-        // });
     })
 }
 
@@ -355,45 +285,12 @@ exports.annualSales = async (req, res) => {
                         salesLabel: encodeURI(JSON.stringify(annualLabel)),
                         totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
                         annual: true,
-                        annualLabel
+                        annualLabel,
+                        chartName: `Total Sales - Annual`
                     });
                 }
             })
         }
-        //     let year1 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-4}%"`
-        //     let year2 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-3}%"`
-        //     let year3 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-2}%"`
-        //     let year4 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber-1}%"`
-        //     let year5 = `SELECT payment_amount FROM checkout_table where payment_date like "${yearNumber}%"`
-
-        //     db.query(year1, (err, salesData) => {
-                
-        //         if (err) throw err;
-        //         annualSales.push(compressSalesData(salesData));
-        //         db.query(year2, (err, salesData) => {
-        //             if (err) throw err;
-        //             annualSales.push(compressSalesData(salesData));
-        //             db.query(year3, (err, salesData) => {
-        //                 if (err) throw err;
-        //                 annualSales.push(compressSalesData(salesData));
-        //                 db.query(year4, (err, salesData) => {
-        //                     if (err) throw err;
-        //                     annualSales.push(compressSalesData(salesData));
-        //                 });
-        //                 db.query(year5, (err, salesData) => {
-        //                     if (err) throw err;
-        //                     annualSales.push(compressSalesData(salesData));
-        //                     res.render('adminSalesData', {
-        //                         title: 'User List',
-        //                         salesData: data,
-        //                         salesLabel: encodeURI(JSON.stringify(annualLabel)),
-        //                         totalSales: encodeURI(JSON.stringify(annualSales))
-        //                     });
-        //                 });
-        //             });
-        //         });
-        //     });
-        // }
     })
 }
 
@@ -453,11 +350,7 @@ exports.adminAddBook = (req, res) => {
                             })
                 });
             });
-
-
         });
-
-
 }
 
 //SAVE BOOK DATA
