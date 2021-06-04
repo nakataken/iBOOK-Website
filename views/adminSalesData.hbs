@@ -28,8 +28,9 @@
         <div class="dl float-left">
             <select class="custom-select" name="selectedDaily" id="selectedDaily" onchange="this.form.submit()">
                 <option class="text-muted" name="default" value="default">All</option>
+                {{!-- <option name="none" value="none">None</option> --}}
                 {{#each dailyLabel}}
-                    <option name={{this}} value={{this}}>{{this}}</option>
+                <option name={{this}} value={{this}}>{{this}}</option>
                 {{/each}}
                 <input type="hidden" name="timeframe" value="daily" />
             </select>
@@ -41,6 +42,7 @@
         <div class="dl float-left">
             <select class="custom-select" name="selectedMonthly" id="selectedMonthly" onchange="this.form.submit()">
                 <option class="text-muted" name="default" value="default">All</option>
+                {{!-- <option name="none"value="none">None</option> --}}
                 {{#each monthLabel}}
                 <option name={{this}} value={{this}}>{{this}}</option>
                 {{/each}}
@@ -245,7 +247,7 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "Total Sales",
+                        text: "{{chartName}}"
                     },
                     legend: {
                         display: false
