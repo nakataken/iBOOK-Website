@@ -3,7 +3,10 @@ var SequelizeAuto = require('sequelize-auto-models')
 
 const sequelize = new Sequelize("ebookasyon_db", "root", "", {
   host: "localhost",
-  dialect: "mysql"
+  dialect: "mysql",
+  dialectOptions: {
+      decimalNumbers: true
+  }
 });
 
 var auto = new SequelizeAuto('ebookasyon_db', 'root', '', {
@@ -14,7 +17,6 @@ var auto = new SequelizeAuto('ebookasyon_db', 'root', '', {
   additional: {
     timestamps: false,
     typescript: true
-
   },
   tables: ['books_table', 'admin_table', 'users_table', 'cart_items_table', 'cart_table', 'sessions']
 

@@ -56,7 +56,10 @@ app.use(function (req, res, next) {
 //Sequelize for database
 const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, '', {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    dialectOptions: {
+        decimalNumbers: true
+    }
 });
 
 try {

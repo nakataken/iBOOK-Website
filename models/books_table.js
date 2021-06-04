@@ -29,7 +29,7 @@ books_table.init({
 			allowNull: false
 		},
 		BOOK_PRICE: {
-			type: Sequelize.INTEGER(50),
+			type: Sequelize.DECIMAL(50,2),
 			allowNull: false
 		},
 		BOOK_DESC: {
