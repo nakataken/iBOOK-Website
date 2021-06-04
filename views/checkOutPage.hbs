@@ -83,7 +83,7 @@
                                     <form action="/shop/checkout/gcash/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form1" class="col-12 mx-auto mt-4 p-0">
                                             <div class="col-12 os-total column p-0 mx-auto mb-3"> 
                                                 <p class="mb-0">You have to pay: </p> 
-                                                <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                                <h3 for="total-amount" class="mt-0">P{{total}}</h3>
                                             </div>
                                             <div class="col-12 mx-auto gCashMethod" id="gCashMethod" >
                                                 <p class="method-text mb-0">Mobile number (11 digit):</p>
@@ -104,7 +104,7 @@
                                     <form  action="/shop/checkout/card/{{user.USER_ID}}/{{#each book}}{{this.item.BOOK_ID}}/{{/each}}" method="POST" id="form2">
                                         <div class="col-12 os-total column p-0 mx-auto mt-3 mb-2"> 
                                                 <p class="mb-0">You have to pay: </p> 
-                                                <h3 for="total-amount" class="mt-0">P{{total}}.00</h3>
+                                                <h3 for="total-amount" class="mt-0">P{{total}}</h3>
                                         </div>
                                         <div class=" creditCardMethod" id="creditCardMethod">
                                             <p class="method-text mb-0">Name on card:</p>

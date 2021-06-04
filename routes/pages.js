@@ -595,14 +595,16 @@ router.get('/viewPdf/:bookTitle', authController.isLoggedIn, (req, res) => {
 
 
 //ACTION ADVENTURE PAGE ROUTER
-router.get('/category/action-adventure', authController.isLoggedIn, (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Action and Adventure'";
-    db.query(sql, function (err, data, fields) {
+router.get('/category/:category', authController.isLoggedIn, (req, res) => {
+    const category = req.params.category;
+
+    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = ?";
+    db.query(sql, [category], function (err, data, fields) {
         if (err) throw err;
-        res.render('categoryActAdvPage', {
+        res.render('category', {
             user: req.user,
-            category: 'action-adventure',
-            title: 'Action and Adventure',
+            category: category,
+            title: category,
             bookData: data
         });
     });
