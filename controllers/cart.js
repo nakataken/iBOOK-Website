@@ -56,9 +56,16 @@ module.exports = function Cart(oldCart) {
 
 //REMOVE ITEM FROM THE CART
     this.removeItem = function(id) {
+        if (this.totalQty <= 1) {
+            this.totalQty -= this.items[id].qty;
+            delete this.items[id];
+            this.totalPrice = 0
+        }
+        else {
         this.totalQty -= this.items[id].qty;
         this.totalPrice -= this.items[id].BOOK_PRICE;
         delete this.items[id];
+        }
     }
 
 //ARRAY OF CART ITEMS

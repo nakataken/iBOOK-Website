@@ -310,11 +310,11 @@ router.get('/cart', authController.isLoggedIn, (req, res, next) => {
     }
 
     var cart = new Cart(req.session.cart);
-
+    var totalPrice = cart.totalPrice.toFixed(2)
     res.render('cartPage', {
         user: req.user,
         book: cart.generateArray(),
-        totalPrice: cart.totalPrice
+        totalPrice: totalPrice
     });
 
 })
