@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 body {
     position: relative;
     background-color: #f7f7fc;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a:hover {
@@ -24,7 +24,7 @@ html {
     left: -50%;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: royalblue;
+    background-color: #ffd63b;
     transition: 0.5s all ease;
 }
 
@@ -47,26 +47,28 @@ html {
 .sidebar-header {
     text-transform: capitalize;
     padding: 1.5rem 1.5rem .375rem !important;
-    font-size: 14px;
-    color: #cdd4da;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #3c3c3c;
 }
 
 .navbar-nav li a {
-    color: #E9E8E8 !important;
+    color: #3c3c3c !important;
     text-transform: capitalize;
     font-size: 16px;
     padding: 10px 10px 10px 20px !important;
     display: block;
-    font-weight: 400;
+    font-weight: bold;
     position: relative;
     z-index: 2;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     letter-spacing: 2px;
 }
 
 .navbar-nav li a:hover {
     color: #fff !important;
 }
+
 
 .navbar-nav .has-sub>a.collapsed::after {
     color: gray;
@@ -308,39 +310,40 @@ html {
 }
 
 .card #sales-box {
-    background-color: #2DC62D !important;
+    background-color: #3c3c3c !important;
 }
 
 .card #user-box {
-    background-color: royalblue !important;
+    background-color: #bfbfbf !important;
 }
 
 .card #book-box {
-    background-color: #FF8C00 !important;
+    background-color: #bba05c !important;
 }
 
 .card-title {
-    font-size: .875rem;
-    color: #495057;
+    color: whitesmoke;
 }
 
 .card-body h5 {
-    color: whitesmoke;
+    font-size: .990rem;
+    font-weight: 600;
+    color: #fff;
 }
 
 .card-body h1 {
     font-size: 1.75rem;
     font-weight: 400;
     line-height: 1.2;
-    color: #fff;
+    color: #ffff;
 }
 
 .card-body .text-danger {
-    color: #E9E8E8 !important;
+    color: #fff !important;
 }
 
 .card-body .text-muted {
-    color: #E1DFDF !important;
+    color: #fff !important;
 }
 
 ul.breadcrumb {

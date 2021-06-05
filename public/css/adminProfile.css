@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 body {
     position: relative;
     background-color: #f7f7fc;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a:hover {
@@ -24,7 +24,7 @@ html {
     left: -50%;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: royalblue;
+    background-color: #ffd63b;
     transition: 0.5s all ease;
 }
 
@@ -47,20 +47,21 @@ html {
 .sidebar-header {
     text-transform: capitalize;
     padding: 1.5rem 1.5rem .375rem !important;
-    font-size: 14px;
-    color: #cdd4da;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #3c3c3c;
 }
 
 .navbar-nav li a {
-    color: #E9E8E8 !important;
+    color: #3c3c3c !important;
     text-transform: capitalize;
     font-size: 16px;
     padding: 10px 10px 10px 20px !important;
     display: block;
-    font-weight: 400;
+    font-weight: bold;
     position: relative;
     z-index: 2;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     letter-spacing: 2px;
 }
 
@@ -324,7 +325,7 @@ html {
 }
 
 .customer-details:hover {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .card-1 {
@@ -358,7 +359,7 @@ html {
     position: absolute;
     top: 10px;
     padding-left: 15px;
-    color: #007bff;
+    color: #ffd63b;
 }
 
 .form-input input::placeholder {
@@ -368,7 +369,7 @@ html {
 
 .form-input input:focus,
 .form-input input:valid {
-    border: 2px solid #007bff;
+    border: 2px solid #ffd63b;
 }
 
 .form-input input:focus::placeholder {
@@ -376,7 +377,7 @@ html {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #007bff !important;
+    background-color: #ffd63b !important;
     border: 0px;
 }
 
@@ -385,7 +386,7 @@ html {
     border: none;
     cursor: pointer;
     border-radius: 50px;
-    background: #007bff;
+    background: #ffd63b;
     color: #fff;
     font-size: 90%;
     font-weight: bold;
@@ -395,23 +396,23 @@ html {
 }
 
 .form-box button[type="submit"]:hover {
-    background: #0069d9;
+    background: #ffd63b;
 }
 
 .forget-link,
 .login-link {
-    color: #007bff;
+    color: #ffd63b;
     font-weight: bold;
 }
 
 .forget-link:hover,
 .login-link:hover {
-    color: #0069d9;
+    color: #ffd63b;
     text-decoration: none;
 }
 
 .form-box .enable-btn {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .info-update {
@@ -419,7 +420,7 @@ html {
 }
 
 .enable-btn:hover {
-    color: dodgerblue;
+    color: #ffd63b;
     transition: 0.3s;
 }
 
@@ -454,16 +455,16 @@ p.deactivation-btn:hover,
 .my-wishlists-tab:hover,
 .my-books-tab h4:hover,
 .my-wishlists-tab h4:hover {
-    color: dodgerblue;
+    color: #ffd63b;
     transition: 0.4s;
 }
 
 .tab .active {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 .side-tab .active {
-    color: royalblue;
+    color: #ffd63b;
 }
 
 /* Style the tab content */
@@ -483,7 +484,7 @@ p.deactivation-btn:hover,
 .modal-footer .save-btn {
     padding: 3px 20px;
     border-radius: 5px;
-    background-color: royalblue;
+    background-color: #ffd63b;
     color: whitesmoke;
     transition: 0.4s;
 }
@@ -502,12 +503,12 @@ p.deactivation-btn:hover,
 }
 
 .modal-footer .save-btn:hover {
-    background-color: dodgerblue;
+    background-color: #ffd63b;
     transition: 0.4s;
 }
 
 .modal-footer .cancel-btn:hover {
-    color: dodgerblue;
+    color: #ffd63b;
 }
 
 /*--Main Top Card Closed--*/
@@ -516,7 +517,11 @@ p.deactivation-btn:hover,
 footer.footer {
     padding: 1rem .857rem;
     direction: ltr;
-    background-color: #fff;
+    background-color: #fff; 
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 footer.footer ul {
