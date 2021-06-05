@@ -128,6 +128,11 @@
                                         </div>
                                     </form>
                                     <hr>
+                                    {{#if user}}
+                                    <a href="/userProfile"><i class="fas fa-user-alt ml-2 mt-2"></i><span></span> PROFILE</a>
+                                    <a href="/library"><i class="fas fa-book ml-2 mt-2"></i> LIBRARY</a>
+                                    {{/if}}
+                                    <hr>
                                         <a href="/category/action-adventure">AGRICULTURE, AQUACULTURE, AND FOOD SERVICE</a>
                                         <a href="/category/childrens-fiction">ARCHITECTURE AND PLANNING</a>
                                         <a href="/category/comic-graphic">ARTS AND APPLIED</a>
@@ -148,11 +153,9 @@
                                         <a href="/category/mystery">VETERINARY MEDICINE</a>
                                     <hr>
                                     {{#if user}}
-                                    <a href="/userProfile"><i class="fas fa-sign-in-alt"></i><span></span> Profile</a>
-                                    <a href="/auth/logout"><i class="fas fa-user-edit"></i><span></span> Logout</a>
+                                    <a href="/auth/logout"><button type="button" class="btn my-auto btn-login py-1 px-5">LOGOUT</button></a>
                                     {{else}}
-                                    <a href="#"><i class="fas fa-sign-in-alt"></i><span></span> Login</a>
-                                    <a href="#"><i class="fas fa-user-edit"></i><span></span> Sign-Up</a>
+                                    <a href="#"><button type="button" class="btn my-auto btn-login py-1 px-5">LOG-IN</button></a>
                                     {{/if}}
                                     <hr>
                                 </div>
