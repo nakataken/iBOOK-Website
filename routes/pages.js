@@ -42,19 +42,24 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                         let bookQuery = "SELECT books_table.* FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"    
                             db.query(bookQuery, (err, book) => {
                                 let bookData = JSON.parse(JSON.stringify(book))
-                                let books = {...bookData}
-                                let bookNumbers = Object.keys(books).length
+                                let books = [...bookData]
+                                let bookTitles = books.map((book) => {
+                                    return book.BOOK_TITLE;
+                                });
+                                let distinctBookTitles = [...new Set(bookTitles)]
+                                let distinctBooks = removeDuplicates(books, item=>item.BOOK_ID)
+                                let bookNumbers = Object.keys(bookData).length
                                 let bookSales = [];
-                                for(let i=0; i<bookNumbers; i++) {
+                                for(let i=0; i<distinctBookTitles.length; i++) {
                                     let sales = 0;
                                     for(let j=0; j<bookNumbers; j++) {
-                                        if(books[i].BOOK_TITLE === bookData[j].BOOK_TITLE) {
-                                            if(i<j || i==j) 
-                                                sales++;
+                                        if(distinctBookTitles[i] === bookData[j].BOOK_TITLE) {
+                                            sales++;
                                         }
                                     }
                                     bookSales.push(sales);
                                 }
+                                
                                 for (let i=bookSales.length; i>=0; i--) {
                                     for (let j = bookSales.length; j > bookSales.length - i; j--) {
                                         if (bookSales[j] > bookSales[j-1]) {
@@ -63,16 +68,18 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                             bookSales[j] = bookSales[j - 1];
                                             bookSales[j - 1] = salesSwap;
                                             // Swap orders of books
-                                            let bookSwap = books[j];
-                                            books[j] = books[j - 1];
-                                            books[j - 1] = bookSwap;
+                                            let bookSwap = distinctBooks[j];
+                                            distinctBooks[j] = distinctBooks[j - 1];
+                                            distinctBooks[j - 1] = bookSwap;
                                         }
                                     }
                                 }
+
                                 let topSales = [];
                                 for(let i=0; i<8; i++) {
-                                    topSales.push(books[i])
+                                    topSales.push(distinctBooks[i])
                                 }
+                                console.log(topSales);
                                 if(req.user) {
                                     let ownedBooksQuery = `SELECT books_table.book_category FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE checkout_items_table.user_id = ${req.user.USER_ID}`
                                     db.query(ownedBooksQuery, async (err, ownedBook) => {
@@ -102,6 +109,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                                                     for(let i=0; i<8; i++) {
                                                                         recoBooks.push(shuffledBooks[i])
                                                                     }
+                                                                    console.log(topSales);
                                                                     renderHomepage(req,res,true,newrelease,onSale,topSales,recoBooks);
                                                                 }
                                                             }
@@ -122,6 +130,10 @@ router.get('/', authController.isLoggedIn, (req, res) => {
             })
         })
 })
+
+function removeDuplicates(data, key) {
+    return [...new Map(data.map(item => [key(item), item])).values()]
+};
 
 const shuffleArray = (array) => {
     var currentIndex = array.length,  randomIndex;
