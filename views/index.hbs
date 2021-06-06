@@ -272,6 +272,7 @@
     </div>
 
     <!--Section-2-->
+    {{#if recommendation}}
     <div class=" must-sec mx-auto pt-5 container-fluid col-12  new my-5">
  
         <div class="container mx-auto col-12">
@@ -281,48 +282,41 @@
             </div>
             
             <div class="container row  col-xl-10 col-12 p-0  mt-4 mx-auto">
-                   {{#each newBook}}
-               
+                {{#each recoBooks}}
                     <div class="col-lg-4 col-md-6 col-12 pd-lg-3 p-md-4 p-sm-5 p-4 ">
-                        
                         <div class=" must-read col-12">
-                             
                                 <div class=" col-12  right mb-1 mt-sm-5 mx-auto">
                                     <div class="book-cover col-12">
-                                         <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
+                                        <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">
                                             <img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}' class="img-fluid img">
-                                         </a>
+                                        </a>
                                     </div>
                                 </div>
 
                                 <div class="left column col-10 mx-auto pb-5"> 
-                                
                                     <div class="col-12 d-flex justify-content-center "><button type="button" class="btn btn-autor  px-5 mt-4 "> {{this.BOOK_AUTHOR}}</button></div>
                                     <h3 class="mb-0 text-center"> {{this.BOOK_TITLE}}</h3>
                                     <h4 class="mb-0 text-center">P {{this.BOOK_PRICE}}</h4>
-                                     
                                     <form action="/add/{{this.BOOK_ID}}" method="GET" >
                                         <button type="button" class="btn btn-add col-12 mx-auto  float-right mb-3" onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
                                     </form>
-                                   
                                     <div class="space-2 pb-4"></div>
                                 </div>
-                           
                         </div>
                     </div>
-                    
-                
                 {{/each}}
-         
-            </div>
-               <div class="space pb-4"></div>
+                </div>
+            <div class="space pb-4"></div>
         </div>
-        
     </div>
+    {{/if}}
 
+    {{#unless recommendation}}
+        {{!-- IF WALA YUNG RECOMMENDATION: ADD NALANG CODE DITO --}}
+    {{/unless}}
     <!--Section-3-->
     <div class=" new-sec mx-auto pt-5 container-fluid col-12  new my-5">
- 
+
         <div class="container mx-auto col-12">
             <div class="new-title-box mx-auto col-12">
                 <p class="text-center">E-BOOKASYON'S</p>
@@ -330,12 +324,11 @@
             </div>
             
             <div class="container row  col-xl-10 col-12 p-0  mt-4 mx-auto">
-                   {{#each newBook}}
-               
+                {{#each newBook}}
                     <div class="col-lg-4 col-md-6 col-12 pd-lg-3 p-md-4 p-sm-5 p-4 ">
                         
                         <div class=" new-read col-12">
-                             
+                        
                                 <div class=" col-12  right mb-1 mt-sm-5 mx-auto">
                                     <div class="book-cover-2 col-12">
                                          <a href="http://localhost:8080/display/{{this.BOOK_CATEGORY}}/{{this.BOOK_TITLE}}">

@@ -73,23 +73,78 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                 for(let i=0; i<8; i++) {
                                     topSales.push(books[i])
                                 }
-
-                                if(err) {
-                                    console.log(err);
+                                if(req.user) {
+                                    let ownedBooksQuery = `SELECT books_table.book_category FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE checkout_items_table.user_id = ${req.user.USER_ID}`
+                                    db.query(ownedBooksQuery, async (err, ownedBook) => {
+                                        if(err) {
+                                            console.log(err);
+                                        } else {
+                                            if(ownedBook[0] != null) {
+                                                // based on the owned books of user
+                                                let categoriesOwned = ownedBook.map((category) => {
+                                                    return category.book_category
+                                                })
+                                                let distinctCategories = [...new Set(categoriesOwned)];
+                                                let recoBooks = []
+                                                let totalRecos = 0;
+                                                // change code here to query based on the top sales on each category
+                                                for(let i=0;i<distinctCategories.length; i++) {
+                                                    let categoryQuery = `SELECT * FROM books_table WHERE book_category = "${distinctCategories[i]}" ORDER BY RAND() LIMIT 5 OFFSET 0`
+                                                    await db.query(categoryQuery, async (err,recommendation) => {
+                                                        if (err) throw err 
+                                                        else {
+                                                            for(let j=0;j<5; j++) {
+                                                                recoBooks[totalRecos] = recommendation[j]
+                                                                totalRecos++;
+                                                                if(totalRecos == distinctCategories.length*5) {
+                                                                    let shuffledBooks = shuffleArray(recoBooks);
+                                                                    recoBooks = [];
+                                                                    for(let i=0; i<8; i++) {
+                                                                        recoBooks.push(shuffledBooks[i])
+                                                                    }
+                                                                    renderHomepage(req,res,true,newrelease,onSale,topSales,recoBooks);
+                                                                }
+                                                            }
+                                                        }
+                                                    })
+                                                }
+                                            } else {
+                                                renderHomepage(req,res,false,newrelease,onSale,topSales);
+                                            }
+                                        }
+                                    })
                                 } else {
-                                    res.render('index', {
-                                        user: req.user,
-                                        newBook: newrelease,
-                                        sale: onSale,
-                                        // rand: random,
-                                        topSaleBooks: topSales
-                                    });
+                                    // no recommendation if there's no logged user
+                                    renderHomepage(req,res,false,newrelease,onSale,topSales);
                                 }
                         })
                 })    
             })
         })
 })
+
+const shuffleArray = (array) => {
+    var currentIndex = array.length,  randomIndex;
+    while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+// function to render index page
+const renderHomepage = (req, res, displayRecommendation, newrelease, onSale, topSales, recoBooks) => {
+    res.render('index', {
+        user: req.user,
+        newBook: newrelease,
+        sale: onSale,
+        topSaleBooks: topSales,
+        recommendation: displayRecommendation,
+        recoBooks
+    });
+}
 
 //FORGOT PASSWORD PAGE ROUTER
 router.get('/userForgotPassword/:token/:userEmail', (req, res) => {
