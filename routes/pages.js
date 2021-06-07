@@ -106,7 +106,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                                                 if(totalRecos == distinctCategories.length*5) {
                                                                     let shuffledBooks = shuffleArray(recoBooks);
                                                                     recoBooks = [];
-                                                                    for(let i=0; i<8; i++) {
+                                                                    for(let i=0; i<shuffledBooks.length; i++) {
                                                                         recoBooks.push(shuffledBooks[i])
                                                                     }
                                                                     console.log(topSales);

@@ -1,6 +1,19 @@
 <!-- Alert when adding existing book to cart-->
     {{#if messages.info}}
-        <script> 
-            alert('You already have it on your library.');
-        </script>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Info!</strong> {{messages.info}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/if}}
+
+<!-- Alert when purchase successful -->
+{{#if messages.success}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Your purchase was successful!</strong> {{messages.success}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     {{/if}}

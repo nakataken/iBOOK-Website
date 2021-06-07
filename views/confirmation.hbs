@@ -16,7 +16,7 @@
 </head>
 
 <body class="b-conf">
-    {{> categoryHeader}}
+    {{> categoryHeader user=user}}
 
     <div class="space mt-3 mb-2"></div> 
     <div class="container mx-auto my-5">
@@ -30,10 +30,10 @@
 
             <div class="row col-12 mx-auto mt-3">
                 <div class="col-md-6 col-10 mx-auto my-2">
-                    <button class="btn btn-library col-12"><i class="fas fa-chevron-circle-left"></i> BACK TO SITE</button>
+                    <a class="btn btn-library col-12" href="/"><i class="fas fa-chevron-circle-left"></i> BACK TO SITE</a>
                 </div>
                 <div class="col-md-6 col-10 mx-auto my-2">
-                    <button class="btn btn-library col-12"><i class="fas fa-book-open"></i> GO TO LIBRARY</button>
+                    <a class="btn btn-library col-12" href="/library"><i class="fas fa-book-open"></i> GO TO LIBRARY</a>
                 </div>
                 
             </div>

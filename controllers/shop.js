@@ -22,6 +22,8 @@ exports.checkoutGcash = async (req, res, next) => {
     //console.log(req.params[0])
     //console.log(req.params.arr)
     //console.log(params)
+    console.log("USER: ")
+    console.log(req.user)
 
     const gcash = req.body.gcashNum;
     const userID = req.params.userID;
@@ -65,9 +67,12 @@ exports.checkoutGcash = async (req, res, next) => {
                     })
                }
                     req.session.cart = null;
-                    req.flash('success', 'Your purchase is successful! Check the book on your library.')
-                    res.redirect('/userProfile');
-
+                    req.flash('success', 'You may now read the book.')
+                    res.redirect('/library')
+                    //req.flash('success', 'Your purchase is successful! Check the book on your library.')
+                    //res.render('confirmation', {
+                    //    user: req.user
+                    //});
         }
 
     })
@@ -129,9 +134,14 @@ exports.checkoutCard = async (req, res, next) => {
                     })
                }
                     req.session.cart = null;
-                    req.flash('success', 'Your purchase is successful! Check the book on your library.')
-                    res.redirect('/userProfile');
-
+                    req.flash('success', 'You may now read the book.')
+                    res.redirect('/library')
+                    //req.flash('success', 'Your purchase is successful! Check the book on your library.')
+                    //res.render('confirmation', {
+                    //    user: req.user
+                    //});
+                    //req.flash('success', 'Your purchase is successful! Check the book on your library.')
+                    //res.redirect('/userProfile');
         }
 
     })

@@ -17,7 +17,7 @@
 </head>
 
 <body>
- {{> categoryHeader}}
+ {{> categoryHeader user=user}}
     
     <!-- HEADER NEW -->
     <div class="container-fluid   col-12 head pt-5">
@@ -43,6 +43,16 @@
         
     </div>
     <!-- HEADER NEW -->
+
+
+    <!-- Alert Message -->
+    <div class=" new-sec mx-auto pt-5 container-fluid col-12  new mt-1 mb-1">
+        <div class="container mx-auto col-12">
+            {{> alertMessage}}
+        </div>
+    </div>
+    <!-- Alert Message -->
+
     <!--Section-3-->
     <div class=" new-sec mx-auto pt-5 container-fluid col-12  new mt-1 mb-5">
  
@@ -258,7 +268,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    {{> alertMessage}}
+    
     
 </body>
 

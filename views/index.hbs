@@ -74,7 +74,9 @@
                                         </li>
                                         -->
                                         <li><a href="/">Home</a></li>
+                                        {{#if user}}
                                         <li><a href="/library">Library</a></li>
+                                        {{/if}}
                                         <li class="dropdown dropdown-menu-right">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">CATEGORIES<b class="caret"></b></a>  
                                             
@@ -222,6 +224,15 @@
         
     </div>
     <!-- HEADER NEW -->
+
+
+    <!-- Alert Message -->
+    <div id="sectionnew" class="mx-auto pt-5 container-fluid col-12  new mb-3">
+        <div class="container mx-auto col-12">
+            {{> alertMessage}}
+        </div>
+    </div>
+    <!-- Alert Message -->
 
 
    <!--Section-1-->
