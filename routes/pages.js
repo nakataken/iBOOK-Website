@@ -79,7 +79,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                 for(let i=0; i<8; i++) {
                                     topSales.push(distinctBooks[i])
                                 }
-                                console.log(topSales);
+                                
                                 if(req.user) {
                                     let ownedBooksQuery = `SELECT books_table.book_category FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE checkout_items_table.user_id = ${req.user.USER_ID}`
                                     db.query(ownedBooksQuery, async (err, ownedBook) => {
