@@ -1,6 +1,8 @@
 const express = require('express');
 const database = require('../controllers/data');
 const router = express.Router();
+const authController = require('../controllers/auth');
+
 
 router.post('/sortUserData', database.sortUserData);
 
@@ -18,7 +20,9 @@ router.post('/categorySortBooks/:title', database.categorySortBooks);
 
 router.post('/displaySortBooks', database.displaySortBooks);
 
-router.post('/searchBooks', database.searchBooks);
+router.post('/searchBooks', authController.isLoggedIn, database.searchBooks);
+
+router.post('/searchInLibrary', authController.isLoggedIn, database.searchInLibrary);
 
 router.post('/adminSortSales', database.adminSortSales);
 

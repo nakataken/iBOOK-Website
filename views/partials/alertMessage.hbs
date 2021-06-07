@@ -9,9 +9,19 @@
     {{/if}}
 
 <!-- Alert when purchase successful -->
-{{#if messages.success}}
+    {{#if messages.success}}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Your purchase was successful!</strong> {{messages.success}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/if}}
+
+<!-- Alert Error -->
+    {{#if messages.error}}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{messages.error}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -823,14 +823,56 @@ exports.searchBooks = async (req, res) => {
         if (data.length < 1) {
             return res.status(401).render('searchBooks', {
                 title: searchBook,
-                message: 'There are no books with that title'
+                message: 'There are no books with that title',
+                user: req.user
             });
         } else {
             res.render('searchBooks', {
                 title: searchBook,
-                bookData: data
+                bookData: data,
+                user: req.user
             });
 
         }
+    })
+}
+
+//SEARCH BOOKS IN LIBRARY
+exports.searchInLibrary = async (req, res) => {
+    const {
+        searchBook,
+    } = req.body
+    console.log(req.body);
+
+    const userID = req.user.USER_ID;
+
+    var sql = 'SELECT * FROM users_table WHERE USER_ID = ?';
+    db.query(sql, [userID], function (err, data, fields) {
+        if (err) throw err;
+
+        var sqlLibrary = `SELECT books_table.BOOK_TITLE AS title, 
+        books_table.BOOK_COVER AS cover, books_table.BOOK_FILE AS file, books_table.BOOK_AUTHOR AS author
+        FROM books_table JOIN checkout_items_table ON books_table.BOOK_ID = checkout_items_table.BOOK_ID WHERE checkout_items_table.USER_ID = ? AND books_table.BOOK_TITLE LIKE ? ORDER BY books_table.BOOK_TITLE`
+
+        db.query(sqlLibrary, [userID, '%' + searchBook + '%'], function (err, books, fields) {
+            if (err) throw err;
+            console.log(books)
+
+            if (books.length < 1) {
+                //req.flash('error', 'Book not found!')
+                return res.status(401).render('library', {
+                    user: req.user,
+                    message: 'There are no books with that title',
+                    userData: data
+                });
+            } else {
+                res.render('library', {
+                    user: req.user,
+                    libraryBooks: books,
+                    userData: data
+                });
+            }
+            
+        })
     })
 }
