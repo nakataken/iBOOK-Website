@@ -106,10 +106,15 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                                                 if(totalRecos == distinctCategories.length*5) {
                                                                     let shuffledBooks = shuffleArray(recoBooks);
                                                                     recoBooks = [];
-                                                                    for(let i=0; i<shuffledBooks.length; i++) {
-                                                                        recoBooks.push(shuffledBooks[i])
+                                                                    if(totalRecos<=5) {
+                                                                        for(let i=0; i<shuffledBooks.length; i++) {
+                                                                            recoBooks.push(shuffledBooks[i])
+                                                                        }
+                                                                    } else {
+                                                                        for(let i=0; i<8; i++) {
+                                                                            recoBooks.push(shuffledBooks[i])
+                                                                        }
                                                                     }
-                                                                    console.log(topSales);
                                                                     renderHomepage(req,res,true,newrelease,onSale,topSales,recoBooks);
                                                                 }
                                                             }
