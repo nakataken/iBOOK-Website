@@ -79,7 +79,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                 for(let i=0; i<8; i++) {
                                     topSales.push(distinctBooks[i])
                                 }
-                                console.log(topSales);
+                                
                                 if(req.user) {
                                     let ownedBooksQuery = `SELECT books_table.book_category FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE checkout_items_table.user_id = ${req.user.USER_ID}`
                                     db.query(ownedBooksQuery, async (err, ownedBook) => {
@@ -106,10 +106,15 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                                                 if(totalRecos == distinctCategories.length*5) {
                                                                     let shuffledBooks = shuffleArray(recoBooks);
                                                                     recoBooks = [];
-                                                                    for(let i=0; i<shuffledBooks.length; i++) {
-                                                                        recoBooks.push(shuffledBooks[i])
+                                                                    if(totalRecos<=5) {
+                                                                        for(let i=0; i<shuffledBooks.length; i++) {
+                                                                            recoBooks.push(shuffledBooks[i])
+                                                                        }
+                                                                    } else {
+                                                                        for(let i=0; i<8; i++) {
+                                                                            recoBooks.push(shuffledBooks[i])
+                                                                        }
                                                                     }
-                                                                    console.log(topSales);
                                                                     renderHomepage(req,res,true,newrelease,onSale,topSales,recoBooks);
                                                                 }
                                                             }
