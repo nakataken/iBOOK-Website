@@ -77,7 +77,7 @@
                                         <form action="/add/{{this.BOOK_ID}}" method="GET" >
                                             <button type="submit" class="btn btn-add col-12 mx-auto  float-right mb-3"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
                                         </form>
-                                    
+                                     
                                         <div class="space-2 pb-4"></div>
                                     </div>
                             
@@ -229,7 +229,22 @@
             });
         });
     </script>
+    <script>
+        let input = document.querySelector(".head .form-control");
+        let button = document.querySelector(".btn-search");
 
+        button.disabled = true; //setting button state to disabled
+
+        input.addEventListener("change", stateHandle);
+
+        function stateHandle() {
+        if (document.querySelector(".head .form-control").value === "") {
+            button.disabled = true; //button remains disabled
+        } else {
+            button.disabled = false; //button is enabled
+        }
+        }
+    </script>
     <script>
         $(document).ready(function () {
             // Add smooth scrolling to all links

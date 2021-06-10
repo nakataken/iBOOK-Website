@@ -505,6 +505,8 @@ router.get('/check-out', authController.isLoggedIn, (req, res) => {
     }
 })
 
+
+
 //CHECKOUT GCASH ERROR PAGE
 router.get('/check-out/error/gcash', authController.isLoggedIn, (req, res) => {
     var cart = new Cart(req.session.cart);
@@ -795,7 +797,7 @@ router.get('/viewPdf/:bookTitle', authController.isLoggedIn, (req, res) => {
 })
 
 
-//ACTION ADVENTURE PAGE ROUTER
+//CATEGORIES PAGE ROUTER
 router.get('/category/:category', authController.isLoggedIn, (req, res) => {
     const category = req.params.category;
 
@@ -811,123 +813,6 @@ router.get('/category/:category', authController.isLoggedIn, (req, res) => {
     });
 })
 
-//CHILDRENS FICTION PAGE ROUTER
-router.get('/category/childrens-fiction',authController.isLoggedIn, (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Childrens Fiction'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryChildrensPage', {
-            category: 'childrens-fiction',
-            title: 'Childrens Fiction',
-            bookData: data,
-            user: req.user
-        });
-    });
-})
-
-//COMICS GRAPHICS PAGE ROUTER
-router.get('/category/comic-graphic', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Comic and Graphic Novel'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryComicPage', {
-            category: 'comic-graphic',
-            title: 'Comic and Graphic Novel',
-            bookData: data
-        });
-    });
-})
-
-//DRAMA PAGE ROUTER
-router.get('/category/drama', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Drama'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryDramaPage', {
-            category: 'drama',
-            title: 'Drama',
-            bookData: data
-        });
-    });
-})
-
-//FAIRYTALE PAGE ROUTER
-router.get('/category/fairytale', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Fairy Tale'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryFairyPage', {
-            category: 'fairytale',
-            title: 'Fairy Tale',
-            bookData: data
-        });
-    });
-})
-
-//FANTASY PAGE ROUTER
-router.get('/category/fantasy-scifi', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Fantasy and Sci-Fi'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryFanSciPage', {
-            category: 'fantasy-scifi',
-            title: 'Fantasy and Sci-Fi',
-            bookData: data
-        });
-    });
-})
-
-//MYSTERY PAGE ROUTER
-router.get('/category/mystery', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Mystery'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryMystPage', {
-            category: 'mystery',
-            title: 'Mystery',
-            bookData: data
-        });
-    });
-})
-
-//ROMANCE PAGE ROUTER
-router.get('/category/romance', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Romance'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryRomancePage', {
-            category: 'romance',
-            title: 'Romance',
-            bookData: data
-        });
-    });
-})
-
-//HORROR THRILLER PAGE ROUTER
-router.get('/category/horror-thriller', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Horror and Thriller'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryThrillerPage', {
-            category: 'horror-thriller',
-            title: 'Horror and Thriller',
-            bookData: data
-        });
-    });
-})
-
-//YOUNG ADULT PAGE ROUTER
-router.get('/category/young-adult', (req, res) => {
-    var sql = "SELECT * FROM books_table WHERE BOOK_CATEGORY = 'Young Adult'";
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('categoryYoungPage', {
-            category: 'young-adult',
-            title: 'Young Adult',
-            bookData: data
-        });
-    });
-})
 
 //ADMIN MODIFY BOOKS ROUTER
 router.get('/adminModifyBook/:bookID', (req, res) => {
