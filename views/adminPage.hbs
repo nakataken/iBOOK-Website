@@ -75,7 +75,7 @@
                                     Sales
                                 </h5>
                                 <h1 class="display-5 mt-1 mb-3">
-                                    {{#each totalSales}}
+                                    {{#each salesTotal}}
                                     P{{this.totalSales}}
                                     {{/each}}
                                 </h1>
@@ -88,97 +88,127 @@
                             </div>
                         </div>
                     </div>
-                    {{!-- Chart --}}
-
-
-                    <form action="/adminSelectChart" method="POST">
-                        <div class="dl float-left">
-                            <select class="custom-select" name="selectCategory" id="selectCategory" onchange="this.form.submit()">
-                                <option class="text-muted" name="category" value="default">All</option>
-                                <option class="text-muted" name="category" value="all">Select All</option>
-                                <option name="category" value="Agriculture, Aquaculture, and Food Service">Agriculture, Aquaculture, and Food Service</option>
-                                <option name="category" value="Architecture and Planning">Architecture and Planning</option>
-                                <option name="category" value="Arts and Applied">Arts and Applied</option>
-                                <option name="category" value="Business, Economics, Finance, and Accounting">Business, Economics, Finance, and Accounting
-                                </option>
-                                <option name="category" value="Chemistry">Chemistry</option>
-                                <option name="category" value="Computer Science and Information Technology">Computer Science and Information Technology</option>
-                                <option name="category" value="Chemistry">Earth, Space, and Environmental Science</option>
-                                <option name="category" value="Humanities">Humanities</option>
-                                <option name="category" value="Law and Criminology">Law and Criminology</option>
-                                <option name="category" value="Life Science">Life Science</option>
-                                <option name="category" value="Mathematics and Statistics">Mathematics and Statistics</option>
-                                <option name="category" value="Medicine">Medicine</option>
-                                <option name="category" value="Novel">Novel</option>
-                                <option name="category" value="Life Science">Nursing, Dentistry, and Healthcare</option>
-                                <option name="category" value="Physical Science and Enginering">Physical Science and Enginering</option>
-                                <option name="category" value="Psychology">Psychology</option>
-                                <option name="category" value="Social and Behavioral Science">Social and Behavioral Science</option>
-                                <option name="category" value="Veterinary Medicine">Veterinary Medicine</option>
-                            </select>
-                        </div>  
-                    </form>
-
+                    {{!-- Top sales of book bar chart --}}
                     <div>
-                        <canvas id="myChart" width="1000" height="450"></canvas>
-                    </div>
-                    <div class="col-md-12 mt-4">
-                        <div class="table-responsive">
-                            <table class="table v-middle">
-                                <thead>
-                                    <tr class="bg-light">
-                                        <th class="border-top-0">ID</th>
-                                        <th class="border-top-0">Book Cover</th>
-                                        <th class="border-top-0">Title</th>
-                                        <th class="border-top-0">Author</th>
-                                        <th class="border-top-0">Description</th>
-                                        <th class="border-top-0">Category</th>
-                                        <th class="border-top-0">Price</th>
-                                        <th class="border-top-0">Date Created</th>
-                                        <th class="border-top-0">Date Modified</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#if message}}
-                                    <p class="alert alert-danger text-center p-1">{{message}}</p>
-                                    {{/if}}
-                                    {{#each bookData}}
+                        <form action="/adminSelectChart" method="POST">
+                            <div class="dl float-left">
+                                <select class="custom-select" name="selectCategory" id="selectCategory" onchange="this.form.submit()">
+                                    <option class="text-muted" name="category" value="default">All</option>
+                                    <option class="text-muted" name="category" value="all">Select All</option>
+                                    <option name="category" value="Agriculture, Aquaculture, and Food Service">Agriculture, Aquaculture, and
+                                        Food Service</option>
+                                    <option name="category" value="Architecture and Planning">Architecture and Planning</option>
+                                    <option name="category" value="Arts and Applied">Arts and Applied</option>
+                                    <option name="category" value="Business, Economics, Finance, and Accounting">Business, Economics, Finance,
+                                        and Accounting
+                                    </option>
+                                    <option name="category" value="Chemistry">Chemistry</option>
+                                    <option name="category" value="Computer Science and Information Technology">Computer Science and Information
+                                        Technology</option>
+                                    <option name="category" value="Chemistry">Earth, Space, and Environmental Science</option>
+                                    <option name="category" value="Humanities">Humanities</option>
+                                    <option name="category" value="Law and Criminology">Law and Criminology</option>
+                                    <option name="category" value="Life Science">Life Science</option>
+                                    <option name="category" value="Mathematics and Statistics">Mathematics and Statistics</option>
+                                    <option name="category" value="Medicine">Medicine</option>
+                                    <option name="category" value="Novel">Novel</option>
+                                    <option name="category" value="Life Science">Nursing, Dentistry, and Healthcare</option>
+                                    <option name="category" value="Physical Science and Enginering">Physical Science and Enginering</option>
+                                    <option name="category" value="Psychology">Psychology</option>
+                                    <option name="category" value="Social and Behavioral Science">Social and Behavioral Science</option>
+                                    <option name="category" value="Veterinary Medicine">Veterinary Medicine</option>
+                                </select>
+                            </div>
+                        </form>
 
-                                    <tr>
-                                        <td>
-                                            {{this.BOOK_ID}}
-                                        </td>
-                                        <td>
-                                            <span><img src='http://localhost:8080/uploadedImages/{{this.BOOK_COVER}}'>
-                                        </td></span>
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_TITLE}}
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_AUTHOR}}
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_DESC}}
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_CATEGORY}}
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_PRICE}}
-                                        </td>
-                                        <td>
-                                            {{this.BOOK_CREATED_DATE}} </td>
-                                        <td>
-                                            {{this.BOOK_MODIFIED_DATE}} </td>
-                                    </tr>
-
-                                    {{/each}}
-
-                                </tbody>
-                            </table>
+                        <div>
+                            <canvas id="barChart" width="1000" height="450"></canvas>
                         </div>
-
+                    </div>
+                    {{!-- Sales line chart --}}
+                    <div class="col-lg-12 col-md-12">
+                        <div class="row d-flex align-items-center">
+                    
+                            <div class="col-lg-4 col-md-4 d-flex">
+                                <div class="card w-100 d-flex d-block align-items-center daily_sales" type="button"
+                                    onclick="location.href='http://localhost:8080/data/adminDaily'">
+                                    <div class="card-body">
+                                        <h5>Daily Sales</h5>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                            <div class="col-lg-4 col-md-4 d-flex">
+                    
+                                <div class="card w-100 d-flex d-block align-items-center monthly_sales" type="button"
+                                    onclick="location.href='http://localhost:8080/data/adminMonthly'">
+                                    <div class="card-body">
+                                        <h5>Monthly Sales</h5>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                            <div class="col-lg-4 col-md-4 d-flex">
+                    
+                                <div class="card w-100 d-flex d-block align-items-center annual_sales" type="button"
+                                    onclick="location.href='http://localhost:8080/data/adminAnnual'">
+                                    <div class="card-body">
+                                        <h5>Annual Sales</h5>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        {{#if daily}}
+                        <form action="/adminSalesChart" method="POST">
+                            <div class="dl float-left">
+                                <select class="custom-select" name="selectedDaily" id="selectedDaily" onchange="this.form.submit()">
+                                    <option class="text-muted" name="default" value="default">All</option>
+                                    {{!-- <option name="none" value="none">None</option> --}}
+                                    {{#each dailyLabel}}
+                                    <option name={{this}} value={{this}}>{{this}}</option>
+                                    {{/each}}
+                                    <input type="hidden" name="timeframe" value="daily" />
+                                </select>
+                            </div>
+                        </form>
+                        {{/if}}
+                        {{#if monthly}}
+                        <form action="/adminSalesChart" method="POST">
+                            <div class="dl float-left">
+                                <select class="custom-select" name="selectedMonthly" id="selectedMonthly" onchange="this.form.submit()">
+                                    <option class="text-muted" name="default" value="default">All</option>
+                                    {{!-- <option name="none" value="none">None</option> --}}
+                                    {{#each monthLabel}}
+                                    <option name={{this}} value={{this}}>{{this}}</option>
+                                    {{/each}}
+                                    <input type="hidden" name="timeframe" value="monthly" />
+                                </select>
+                            </div>
+                        </form>
+                        {{/if}}
+                        {{#if annual}}
+                        <form action="/adminSalesChart" method="POST">
+                            <div class="dl float-left">
+                                <select class="custom-select" name="selectedAnnualy" id="selectedAnnualy" onchange="this.form.submit()">
+                                    <option class="text-muted" name="default" value="default">All</option>
+                                    {{#each annualLabel}}
+                                    <option name={{this}} value={{this}}>{{this}}</option>
+                                    {{/each}}
+                                    <input type="hidden" name="timeframe" value="annual" />
+                                </select>
+                            </div>
+                        </form>
+                        {{/if}}
+                        <div>
+                            <canvas id="lineChart" width="800" height="200"></canvas>
+                        </div>
+                        {{!-- Insert message for prediction here --}}
+                        {{#if prediction}}
+                            <p>*{{prediction}}</p>
+                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -193,11 +223,10 @@
     </div>
 {{!-- ['book1', 'book2', 'book3'] [1,2,3] --}}
     <script>
-
         let books = JSON.parse(decodeURI("{{books}}"));
         let bookSales = JSON.parse(decodeURI("{{bookSales}}"));
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: books,
@@ -229,7 +258,52 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "{{chartName}}"
+                        text: "{{barChartName}}"
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        let salesLabel = JSON.parse(decodeURI("{{salesLabel}}"));
+        let totalSales = JSON.parse(decodeURI("{{totalSales}}"));
+        var ctx = document.getElementById('lineChart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: salesLabel,
+                datasets: [{
+                    data: totalSales,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        align: 'center',
+                        display: 'true',
+                        text: "{{lineChartName}}"
                     },
                     legend: {
                         display: false

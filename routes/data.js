@@ -34,6 +34,10 @@ router.get('/monthlySales', database.monthlySales);
 
 router.get('/annualSales', database.annualSales);
 
+router.get('/adminDaily', database.adminDaily);
 
+router.get('/adminMonthly', database.adminMonthly);
+
+router.get('/adminAnnual', database.adminAnnual);
 
 module.exports = router;

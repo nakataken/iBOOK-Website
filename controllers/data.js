@@ -81,31 +81,6 @@ exports.searchUserData = async (req, res) => {
     })
 }
 
-//SALES PAGE
-const renderSales = (res, data) => {
-    let year = new Date().getFullYear();
-    let yearString = year.toString();
-    let yearNumber = parseInt(yearString);
-    let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
-    let annualSales = [];
-    for(let i=5;i>=0;i--) {
-        let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
-        db.query(querySales, (err, salesData) => {
-            if (err) throw err;
-            annualSales[i] = compressSalesData(salesData);
-            if(i==0) {
-                res.render('adminSalesData', {
-                    title: 'Sales List',
-                    salesData: data,
-                    salesLabel: encodeURI(JSON.stringify(annualLabel)),
-                    totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
-                    chartName: `Total Sales`
-                });
-                }
-            })
-    }
-}
-
 //SORT BOOKS SALES
 exports.adminSortSales = async (req, res) => {
     const {
@@ -120,11 +95,10 @@ exports.adminSortSales = async (req, res) => {
         
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            renderSales(res,data);
-            // res.render('adminSalesData', {
-            //     title: 'User List',
-            //     salesData: data
-            // });
+            res.render('adminSalesData', {
+                title: 'User List',
+                salesData: data
+            });
         });
 
     } else if (sortSales === 'sortDateDesc') {
@@ -134,11 +108,10 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_DATE DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            renderSales(res,data);
-            // res.render('adminSalesData', {
-            //     title: 'User List',
-            //     salesData: data
-            // });
+            res.render('adminSalesData', {
+                title: 'User List',
+                salesData: data
+            });
         });
     } else if (sortSales === 'sortAmountAsc') {
         var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -147,11 +120,10 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            renderSales(res,data);
-            // res.render('adminSalesData', {
-            //     title: 'User List',
-            //     salesData: data
-            // });
+            res.render('adminSalesData', {
+                title: 'User List',
+                salesData: data
+            });
         });
     } else if (sortSales === 'sortAmountDesc') {
         var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -160,11 +132,10 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            renderSales(res,data);
-            // res.render('adminSalesData', {
-            //     title: 'User List',
-            //     salesData: data
-            // });
+            res.render('adminSalesData', {
+                title: 'User List',
+                salesData: data
+            });
         });
     }
 }
@@ -202,6 +173,250 @@ const compressSalesData = (salesData) => {
     }, 0);
     return sales;
 }
+//VIEW DAILY SALES
+exports.adminDaily = async (req, res) => {
+    var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
+    db.query(bookTotal, function (err, result) {
+        var usersTotal = "SELECT COUNT(*) AS usersCount FROM users_table";
+        db.query(usersTotal, function (err, result2) {
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, result3) {
+                let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
+                db.query(bookNames, (err, book) => {
+                    let bookData = book.map((book) => {
+                        return book.book_title;
+                    });
+                    let bookSales = [];
+                    let books = [...new Set(bookData)]
+
+                    for(let i=0; i<books.length; i++) {
+                        let sales = 0;
+                        for(let j=0; j<bookData.length; j++) {
+                            if(books[i] === bookData[j]) {
+                                sales++;
+                            }
+                        }
+                        bookSales.push(sales);
+                    }
+
+                    for (let i=bookSales.length; i>=0; i--) {
+                        for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                            if (bookSales[j] > bookSales[j-1]) {
+                                // Swap orders of sales
+                                let salesSwap = bookSales[j];
+                                bookSales[j] = bookSales[j - 1];
+                                bookSales[j - 1] = salesSwap;
+                                // Swap orders of books
+                                let bookSwap = books[j];
+                                books[j] = books[j - 1];
+                                books[j - 1] = bookSwap;
+                            }
+                        }
+                    }
+
+                    books = books.slice(0,10);
+                    bookSales = bookSales.slice(0,10);
+
+                    let date = new Date();
+                    let year = new Date().getFullYear();
+                    let month=["January","February","March","April","May","June","July","August","September","October","November","December"];
+                    let currentMonth = month[date.getMonth()];
+                    let monthNumber = (currentMonth == "January") ? "01" : (currentMonth == "February") ? "02" : (currentMonth == "March") ? "03" : (currentMonth == "April") ? "04" : (currentMonth == "May") ? "05" : (currentMonth == "June") ? "06" : (currentMonth == "July") ? "07" : (currentMonth == "August") ? "08" : (currentMonth == "September") ? "09" :  (currentMonth == "October") ? "10" : (currentMonth == "November") ? "11" : (currentMonth == "December") ? "12": ""
+                    let yearString = year.toString();
+                    let lastDay = 32 - new Date(parseInt(yearString), parseInt(monthNumber)-1, 32).getDate();
+                    let dailyLabel = [];
+                    let hourOptions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+                    let dailySales = [];
+                    for(let i=1;i<=lastDay;i++) {
+                        let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-${i}%"` : `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-0${i}%"`;
+                        db.query(querySales, (err, salesData) => {
+                            if (err) throw err;
+                            dailyLabel[i-1] = i;
+                            dailySales[i-1] = compressSalesData(salesData);
+                            
+                            if(i==lastDay) {
+                                console.log("last loop");
+                                let highestSalesDate = dailySales.indexOf(Math.max(...dailySales)) + 1;
+                                // let highestSales = dailySales[highestSalesDate-1];
+                                let suggestionDate = (highestSalesDate == 1) ? `1st`: (highestSalesDate == 2) ? `2nd`: (highestSalesDate == 3) ? `3rd`: `${highestSalesDate}th`;
+                                res.render('adminPage', {
+                                    title: 'Admin Page',
+                                    booksCount: result,
+                                    usersCount: result2,
+                                    salesTotal: result3,
+                                    salesLabel: encodeURI(JSON.stringify(hourOptions)),
+                                    totalSales: encodeURI(JSON.stringify(dailySales)),
+                                    daily: true,
+                                    dailyLabel,
+                                    lineChartName: `Total Sales - Daily`,
+                                    books: encodeURI(JSON.stringify(books)),
+                                    bookSales: encodeURI(JSON.stringify(bookSales)),
+                                    barChartName: `Top Selling Books`,
+                                    prediction: `Upload new books in ${suggestionDate} day of next month`
+                                });
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    })
+}
+
+//VIEW MONTHLY SALES
+exports.adminMonthly = async (req, res) => {
+    var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
+    db.query(bookTotal, function (err, result) {
+        var usersTotal = "SELECT COUNT(*) AS usersCount FROM users_table";
+        db.query(usersTotal, function (err, result2) {
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, result3) {
+                let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
+                db.query(bookNames, (err, book) => {
+                    let bookData = book.map((book) => {
+                        return book.book_title;
+                    });
+                    let bookSales = [];
+                    let books = [...new Set(bookData)]
+
+                    for(let i=0; i<books.length; i++) {
+                        let sales = 0;
+                        for(let j=0; j<bookData.length; j++) {
+                            if(books[i] === bookData[j]) {
+                                sales++;
+                            }
+                        }
+                        bookSales.push(sales);
+                    }
+
+                    for (let i=bookSales.length; i>=0; i--) {
+                        for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                            if (bookSales[j] > bookSales[j-1]) {
+                                // Swap orders of sales
+                                let salesSwap = bookSales[j];
+                                bookSales[j] = bookSales[j - 1];
+                                bookSales[j - 1] = salesSwap;
+                                // Swap orders of books
+                                let bookSwap = books[j];
+                                books[j] = books[j - 1];
+                                books[j - 1] = bookSwap;
+                            }
+                        }
+                    }
+
+                    books = books.slice(0,10);
+                    bookSales = bookSales.slice(0,10);
+
+                    var year = new Date().getFullYear();
+                    var yearString = year.toString();
+                    let monthLabel = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+                    var monthlySales = [];
+                    for(let i=1;i<=12;i++) {
+                        let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${i}%"`:`SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-0${i}%"`;
+                        db.query(querySales, (err, salesData) => {
+                            if (err) throw err;
+                            monthlySales[i-1] = compressSalesData(salesData);
+
+                            if(i==12) {
+                                res.render('adminPage', {
+                                    title: 'Admin Page',
+                                    booksCount: result,
+                                    usersCount: result2,
+                                    salesTotal: result3,
+                                    salesLabel: encodeURI(JSON.stringify(monthLabel)),
+                                    totalSales: encodeURI(JSON.stringify(monthlySales)),
+                                    monthly: true,
+                                    monthLabel,
+                                    lineChartName:  `Total Sales - Monthly`,
+                                    books: encodeURI(JSON.stringify(books)),
+                                    bookSales: encodeURI(JSON.stringify(bookSales)),
+                                    barChartName: `Top Selling Books`
+                                });
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    })
+}
+
+//VIEW ANNUAL SALES
+exports.adminAnnual = async (req, res) => {
+    var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
+    db.query(bookTotal, function (err, result) {
+        var usersTotal = "SELECT COUNT(*) AS usersCount FROM users_table";
+        db.query(usersTotal, function (err, result2) {
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, result3) {
+                let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
+                db.query(bookNames, (err, book) => {
+                    let bookData = book.map((book) => {
+                        return book.book_title;
+                    });
+                    let bookSales = [];
+                    let books = [...new Set(bookData)]
+
+                    for(let i=0; i<books.length; i++) {
+                        let sales = 0;
+                        for(let j=0; j<bookData.length; j++) {
+                            if(books[i] === bookData[j]) {
+                                sales++;
+                            }
+                        }
+                        bookSales.push(sales);
+                    }
+
+                    for (let i=bookSales.length; i>=0; i--) {
+                        for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                            if (bookSales[j] > bookSales[j-1]) {
+                                // Swap orders of sales
+                                let salesSwap = bookSales[j];
+                                bookSales[j] = bookSales[j - 1];
+                                bookSales[j - 1] = salesSwap;
+                                // Swap orders of books
+                                let bookSwap = books[j];
+                                books[j] = books[j - 1];
+                                books[j - 1] = bookSwap;
+                            }
+                        }
+                    }
+
+                    books = books.slice(0,10);
+                    bookSales = bookSales.slice(0,10);
+                    let year = new Date().getFullYear();
+                    let yearString = year.toString();
+                    let yearNumber = parseInt(yearString);
+                    let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+                    let annualSales = [];
+                    for(let i=5;i>=0;i--) {
+                        let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+                        db.query(querySales, (err, salesData) => {
+                            if (err) throw err;
+                            annualSales[i] = compressSalesData(salesData);
+                            if(i==0) {
+                                res.render('adminPage', {
+                                    title: 'Admin Page',
+                                    booksCount: result,
+                                    usersCount: result2,
+                                    salesTotal: result3,
+                                    salesLabel: encodeURI(JSON.stringify(annualLabel)),
+                                    totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
+                                    annual: true,
+                                    annualLabel,
+                                    lineChartName:  `Total Sales - Annual`,
+                                    books: encodeURI(JSON.stringify(books)),
+                                    bookSales: encodeURI(JSON.stringify(bookSales)),
+                                    barChartName: `Top Selling Books`
+                                });
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    })
+}
 
 //VIEW DAILY SALES
 exports.dailySales = async (req, res) => {
@@ -209,44 +424,18 @@ exports.dailySales = async (req, res) => {
     checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%y/%m/%d') AS date
     FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
     WHERE DATE(checkout_table.PAYMENT_DATE) = CURDATE() ORDER BY checkout_table.PAYMENT_DATE`, async (error, data) => {
-        // console.log(data);
-        // if (data.length < 1) {
-        //     return res.status(401).render('adminSalesData', {
-        //         message: 'There are no purchases for today.'
-        //     });
-        // }
-        let date = new Date();
-        let year = new Date().getFullYear();
-        let month=["January","February","March","April","May","June","July","August","September","October","November","December"];
-        let currentMonth = month[date.getMonth()];
-        let monthNumber = (currentMonth == "January") ? "01" : (currentMonth == "February") ? "02" : (currentMonth == "March") ? "03" : (currentMonth == "April") ? "04" : (currentMonth == "May") ? "05" : (currentMonth == "June") ? "06" : (currentMonth == "July") ? "07" : (currentMonth == "August") ? "08" : (currentMonth == "September") ? "09" :  (currentMonth == "October") ? "10" : (currentMonth == "November") ? "11" : (currentMonth == "December") ? "12": ""
-        let yearString = year.toString();
-        let lastDay = 32 - new Date(parseInt(yearString), parseInt(monthNumber)-1, 32).getDate();
-        let dailyLabel = [];
-        let hourOptions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
-        let dailySales = [];
-        for(let i=1;i<=lastDay;i++) {
-            let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-${i}%"` : `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${monthNumber}-0${i}%"`;
-            db.query(querySales, (err, salesData) => {
-                if (err) throw err;
-                dailyLabel[i-1] = i;
-                dailySales[i-1] = compressSalesData(salesData);
-                if(i==lastDay) {
-                    res.render('adminSalesData', {
-                        title: 'User List',
-                        salesData: data,
-                        salesLabel: encodeURI(JSON.stringify(dailyLabel)),
-                        totalSales: encodeURI(JSON.stringify(dailySales)),
-                        daily: true,
-                        dailyLabel,
-                        chartName: `Total Sales - Daily`
-                    });
-                }
-            })
+        if (data.length < 1) {
+            return res.status(401).render('adminSalesData', {
+                message: 'There are no purchases for today.'
+            });
         }
+        
+        res.render('adminSalesData', {
+            title: 'User List',
+            salesData: data,
+        });
     })
 }
-
 //VIEW MONTHLY SALES
 exports.monthlySales = async (req, res) => {
     db.query(`SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -254,35 +443,15 @@ exports.monthlySales = async (req, res) => {
     FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
     WHERE MONTH(checkout_table.PAYMENT_DATE) = MONTH(CURDATE()) AND YEAR(checkout_table.PAYMENT_DATE) = YEAR(CURDATE()) 
     ORDER BY checkout_table.PAYMENT_DATE`, async (error, data) => {
-        console.log(data);
-        // if (data.length < 1) {
-        //     return res.status(401).render('adminSalesData', {
-        //         message: 'There are no purchases for this month.'
-        //     });
-        // }
-        var year = new Date().getFullYear();
-        var yearString = year.toString();
-        let monthLabel = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
-        var monthlySales = [];
-        for(let i=1;i<=12;i++) {
-            let querySales = (i>9) ? `SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-${i}%"`:`SELECT payment_amount FROM checkout_table where payment_date like "${yearString}-0${i}%"`;
-            db.query(querySales, (err, salesData) => {
-                if (err) throw err;
-                monthlySales[i-1] = compressSalesData(salesData);
-
-                if(i==12) {
-                    res.render('adminSalesData', {
-                        title: 'User List',
-                        salesData: data,
-                        salesLabel: encodeURI(JSON.stringify(monthLabel)),
-                        totalSales: encodeURI(JSON.stringify(monthlySales)),
-                        monthly: true,
-                        monthLabel,
-                        chartName: `Total Sales - Monthly`
-                    });
-                }
-            })
+        if (data.length < 1) {
+            return res.status(401).render('adminSalesData', {
+                message: 'There are no purchases for this month.'
+            });
         }
+        res.render('adminSalesData', {
+            title: 'User List',
+            salesData: data,
+        });
     })
 }
 
@@ -292,34 +461,15 @@ exports.annualSales = async (req, res) => {
     checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%y/%m/%d') AS date
     FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
     WHERE YEAR(checkout_table.PAYMENT_DATE) = YEAR(CURDATE()) ORDER BY checkout_table.PAYMENT_DATE`, async (error, data) => {
-        // console.log(data);
-        // if (data.length < 1) {
-        //     return res.status(401).render('adminSalesData', {
-        //         message: 'There are no purchases for this month.'
-        //     });
-        let year = new Date().getFullYear();
-        let yearString = year.toString();
-        let yearNumber = parseInt(yearString);
-        let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
-        let annualSales = [];
-        for(let i=5;i>=0;i--) {
-            let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
-            db.query(querySales, (err, salesData) => {
-                if (err) throw err;
-                annualSales[i] = compressSalesData(salesData);
-                if(i==0) {
-                    res.render('adminSalesData', {
-                        title: 'Sales List',
-                        salesData: data,
-                        salesLabel: encodeURI(JSON.stringify(annualLabel)),
-                        totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
-                        annual: true,
-                        annualLabel,
-                        chartName: `Total Sales - Annual`
-                    });
-                }
-            })
+        if (data.length < 1) {
+                return res.status(401).render('adminSalesData', {
+                message: 'There are no purchases for this month.'
+            });
         }
+        res.render('adminSalesData', {
+            title: 'Sales List',
+            salesData: data,
+        });
     })
 }
 
