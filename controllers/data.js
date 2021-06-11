@@ -82,6 +82,29 @@ exports.searchUserData = async (req, res) => {
 }
 
 //SALES PAGE
+const renderSales = (res, data) => {
+    let year = new Date().getFullYear();
+    let yearString = year.toString();
+    let yearNumber = parseInt(yearString);
+    let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+    let annualSales = [];
+    for(let i=5;i>=0;i--) {
+        let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+        db.query(querySales, (err, salesData) => {
+            if (err) throw err;
+            annualSales[i] = compressSalesData(salesData);
+            if(i==0) {
+                res.render('adminSalesData', {
+                    title: 'Sales List',
+                    salesData: data,
+                    salesLabel: encodeURI(JSON.stringify(annualLabel)),
+                    totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
+                    chartName: `Total Sales`
+                });
+                }
+            })
+    }
+}
 
 //SORT BOOKS SALES
 exports.adminSortSales = async (req, res) => {
@@ -94,12 +117,14 @@ exports.adminSortSales = async (req, res) => {
         checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%y/%m/%d') AS date
         FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
         ORDER BY PAYMENT_DATE`;
+        
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
-            });
+            renderSales(res,data);
+            // res.render('adminSalesData', {
+            //     title: 'User List',
+            //     salesData: data
+            // });
         });
 
     } else if (sortSales === 'sortDateDesc') {
@@ -109,10 +134,11 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_DATE DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
-            });
+            renderSales(res,data);
+            // res.render('adminSalesData', {
+            //     title: 'User List',
+            //     salesData: data
+            // });
         });
     } else if (sortSales === 'sortAmountAsc') {
         var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -121,10 +147,11 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
-            });
+            renderSales(res,data);
+            // res.render('adminSalesData', {
+            //     title: 'User List',
+            //     salesData: data
+            // });
         });
     } else if (sortSales === 'sortAmountDesc') {
         var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
@@ -133,10 +160,11 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
-            });
+            renderSales(res,data);
+            // res.render('adminSalesData', {
+            //     title: 'User List',
+            //     salesData: data
+            // });
         });
     }
 }
@@ -157,10 +185,11 @@ exports.adminSearchSales = async (req, res) => {
                 message: 'There are no users with that username'
             });
         } else {
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
-            });
+            renderSales(res,data);
+            // res.render('adminSalesData', {
+            //     title: 'User List',
+            //     salesData: data
+            // });
 
         }
     })

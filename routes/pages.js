@@ -567,7 +567,7 @@ router.get('/adminSalesData', function (req, res, next) {
                         salesData: data,
                         salesLabel: encodeURI(JSON.stringify(annualLabel)),
                         totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
-                        chartName: `Total Sales}`
+                        chartName: `Total Sales`
                     });
                 }
             })
