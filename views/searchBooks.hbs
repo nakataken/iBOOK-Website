@@ -27,7 +27,13 @@
                     </div>
                     
                     <div class="row col-md-6 col-10 mx-auto no-gutters my-5">
-                        
+                        <form class="form-group col-12 row mx-auto" id="" action="/data/searchBooks" method="POST">
+                            <input type="text" name="searchBook" placeholder="Search..."  class="form-control col-10 py-2 px-4" >
+                            <div class="col-md-2 col-2 ">
+                                
+                                <button type="button" class="btn btn-search col-12" onclick="this.form.submit()"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
                     </div>
 
             </div>
@@ -69,8 +75,7 @@
                                         <h4 class="mt-0 text-center">P {{this.BOOK_PRICE}}</h4>
                                         
                                         <form action="/data/searchBooks/{{this.BOOK_ID}}" method="GET" >
-                                            <input type="hidden" name="search" value="{{title}}">
-                                            <button type="button" class="btn btn-add col-12 mx-auto  float-right mb-3"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
+                                            <button type="submit" class="btn btn-add col-12 mx-auto  float-right mb-3"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
                                         </form>
                                     
                                         <div class="space-2 pb-4"></div>
