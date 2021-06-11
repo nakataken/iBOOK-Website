@@ -88,10 +88,111 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                         } else {
                                             if(ownedBook[0] != null) {
                                                 // based on the owned books of user
-                                                let categoriesOwned = ownedBook.map((category) => {
+                                                var categoriesOwned = ownedBook.map((category) => {
                                                     return category.book_category
                                                 })
-                                                let distinctCategories = [...new Set(categoriesOwned)];
+                                                var distinctCategories = [...new Set(categoriesOwned)];
+                                                
+                                                //Start
+                                                var totalBookPerCategory = []
+                                                var noBookToDisplayPerCategory
+                                                var sum = 0
+                                                // get total number of books per category
+                                                for(let i=0; i<distinctCategories.length; i++) {
+                                                    let categoryQuery = `SELECT COUNT(book_category) as count FROM books_table WHERE book_category = "${distinctCategories[i]}"`
+                                                    await db.query(categoryQuery, async (err,count) => {
+                                                        totalBookPerCategory[i] = count[0].count
+                                                        sum = sum +  totalBookPerCategory[i]
+                                                        console.log("COUNT" + i + ": ")
+                                                        console.log(totalBookPerCategory[i])
+                                                        if (i == distinctCategories.length-1) {
+                                                            console.log(sum)
+                                                            // get 50%
+                                                            sum = Math.round(sum/2)
+                                                            console.log("SUM: " + sum)
+                                                            // get number of books to display per category
+                                                            noBookToDisplayPerCategory = Math.round(sum/distinctCategories.length)
+                                                            console.log("noToDisplay: " + noBookToDisplayPerCategory)
+
+                                                            //LOOP
+                                                            // get recommended books to display based on top sales of owned categories
+                                                            var recommendedBooks = []
+                                                            for(let j=0;j<distinctCategories.length; j++) {
+                                                                let recommendedBooksQuery = `SELECT COUNT(C.CHECKOUT_ID) as CID, C.USER_ID, B.*
+                                                                FROM  BOOKS_TABLE B JOIN CHECKOUT_ITEMS_TABLE C ON B.BOOK_ID = C.BOOK_ID 
+                                                                WHERE B.BOOK_CATEGORY = "${distinctCategories[j]}" AND  C.USER_ID != ${req.user.USER_ID}
+                                                                GROUP BY B.BOOK_ID
+                                                                ORDER BY COUNT(CHECKOUT_ID) DESC
+                                                                LIMIT ${noBookToDisplayPerCategory}`
+                                                                console.log("recommendedBooksQuery: " + recommendedBooksQuery)
+                                                                await db.query(recommendedBooksQuery, async (err,recommendation) => {
+                                                                    if (err) 
+                                                                        throw err 
+                                                                    else{
+                                                                        for (let k = 0; k < recommendation.length; k++) {
+                                                                            recommendedBooks.push(recommendation[k])
+                                                                        }
+                                                                    }
+                                                                    // on last iteration - before loop ends
+                                                                    if (j == distinctCategories.length-1) {
+                                                                        console.log("recommendedBooks: ")
+                                                                        console.log(recommendedBooks)
+                                                                        var filtered = []
+                                                                        let existingBookQuery = `SELECT DISTINCT BOOK_ID FROM CHECKOUT_ITEMS_TABLE WHERE USER_ID = ${req.user.USER_ID}`
+                                                                        await db.query(existingBookQuery, async (err,existingBooks) => {
+                                                                            if (err) throw err 
+                                                                            else {
+                                                                                for (let m = 0; m < recommendedBooks.length; m++) {
+                                                                                    var checker = false
+                                                                                    for (let l = 0; l < existingBooks.length; l++) {
+                                                                                        if (existingBooks[l].BOOK_ID == recommendedBooks[m].BOOK_ID) {
+                                                                                            checker = true
+                                                                                        }
+                                                                                    }
+                                                                                    if (!checker) {
+                                                                                        filtered.push(recommendedBooks[m])
+                                                                                    }
+                                                                                }
+                                                                                // when no content
+                                                                                if (filtered.length > 0) {
+                                                                                    renderHomepage(req,res,true,newrelease,onSale,topSales,filtered);
+                                                                                } else {
+                                                                                    var newFiltered = []
+                                                                                    for(let o=0;o<distinctCategories.length; o++) {
+                                                                                        let catecoricalBookQuery =`SELECT * FROM  BOOKS_TABLE WHERE BOOK_CATEGORY = "${distinctCategories[o]}"`
+                                                                                        await db.query(catecoricalBookQuery, async (err,catecoricalBook) => {
+                                                                                            if (err) throw err 
+                                                                                            else {
+                                                                                                for (let n = 0; n < catecoricalBook.length; n++) {
+                                                                                                    var catChecker = false
+                                                                                                    for (let p = 0; p < existingBooks.length; p++) {
+                                                                                                        if (existingBooks[p].BOOK_ID == catecoricalBook[n].BOOK_ID) {
+                                                                                                            catChecker = true
+                                                                                                        }
+                                                                                                    }
+                                                                                                    if (!catChecker) {
+                                                                                                        newFiltered.push(catecoricalBook[n])
+                                                                                                    }
+                                                                                                }
+                                                                                                // last iteration
+                                                                                                if (o == distinctCategories.length-1) {
+                                                                                                    renderHomepage(req,res,true,newrelease,onSale,topSales,newFiltered);
+                                                                                                }
+                                                                                            }
+                                                                                        })
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                            }
+                                                                        })
+                                                                        //renderHomepage(req,res,true,newrelease,onSale,topSales,recommendedBooks);
+                                                                    }
+                                                                })
+                                                            }
+                                                        }
+                                                    })                                                            
+                                                }
+                                                /*
                                                 let recoBooks = []
                                                 let totalRecos = 0;
                                                 // change code here to query based on the top sales on each category
@@ -120,7 +221,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
                                                             }
                                                         }
                                                     })
-                                                }
+                                                }*/
                                             } else {
                                                 renderHomepage(req,res,false,newrelease,onSale,topSales);
                                             }
@@ -466,6 +567,60 @@ router.get('/add/:bookID', authController.isLoggedIn, (req, res) => {
                         req.session.cart = cart;
                         console.log(req.session.cart)
                         res.redirect('back')
+                    })
+                }
+            }
+        });
+    } else {
+        res.redirect('/userLoginPage');
+    }
+    // Previous Code
+    /*const cart = new Cart(req.session.cart ? req.session.cart : {});
+    console.log(bookID);
+    models.books_table.findByPk(bookID).then(book => {
+
+        //console.log(book);
+        cart.add(book, book.BOOK_ID);
+        req.session.cart = cart;
+        console.log(req.session.cart)
+        res.redirect('back')
+    })*/
+})
+
+//ADD TO CART 
+router.get('/data/searchBooks/:bookID', authController.isLoggedIn, (req, res) => {
+    // DEBUGGED:
+    //  Is online?
+    if (req.user) {
+
+        const userID = req.user.USER_ID;
+        const bookID = req.params.bookID;
+        
+        db.query('SELECT DISTINCT BOOK_ID FROM checkout_items_table WHERE USER_ID = ?', [userID], (error, result) => {
+            if (error) {
+                throw error;
+            } else {
+                let isExist = false;
+                result.forEach((id) => {
+                    if (bookID == id.BOOK_ID) {
+                        isExist = true;
+                    }
+                })
+
+                // Check if book already in the library
+                if (isExist == true){
+                    req.flash('info', 'You already have it on your library.')
+                    return res.redirect('/library')
+                } else {
+                    const cart = new Cart(req.session.cart ? req.session.cart : {});
+                    console.log(bookID);
+                    models.books_table.findByPk(bookID).then(book => {
+
+                        //console.log(book);
+                        cart.add(book, book.BOOK_ID);
+                        req.session.cart = cart;
+                        console.log(req.session.cart)
+                        res.redirect('/cart')
                     })
                 }
             }
