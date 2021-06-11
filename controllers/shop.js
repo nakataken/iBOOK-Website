@@ -191,3 +191,80 @@ exports.remove = async (req, res, next) => {
     req.session.cart = cart;
     res.redirect('/cart');
 }
+
+
+//ADD TO CART 
+exports.searchAdd = async (req, res, next) => {
+    // DEBUGGED:
+    //  Is online?
+    
+    if (req.user) {
+
+        const userID = req.user.USER_ID;
+        const bookID = req.params.bookID;
+        const searchBook = req.params.title;
+        console.log(searchBook)
+        db.query('SELECT DISTINCT BOOK_ID FROM checkout_items_table WHERE USER_ID = ?', [userID], (error, result) => {
+            if (error) {
+                throw error;
+            } else {
+                let isExist = false;
+                result.forEach((id) => {
+                    if (bookID == id.BOOK_ID) {
+                        isExist = true;
+                    }
+                })
+
+                // Check if book already in the library
+                if (isExist == true){
+                    req.flash('info', 'You already have it on your library.')
+                    db.query('SELECT * FROM books_table WHERE BOOK_TITLE LIKE ? ORDER BY BOOK_TITLE', ['%' + searchBook + '%'], async (error, data) => {
+
+                     
+                            res.render('searchBooks', {
+                                title: searchBook,
+                                bookData: data,
+                                user: req.user
+                            });
+                
+                        
+                    })
+                } else {
+                    const cart = new Cart(req.session.cart ? req.session.cart : {});
+                    console.log(bookID);
+                    models.books_table.findByPk(bookID).then(book => {
+
+                        //console.log(book);
+                        cart.add(book, book.BOOK_ID);
+                        req.session.cart = cart;
+                        console.log(req.session.cart)
+                        db.query('SELECT * FROM books_table WHERE BOOK_TITLE LIKE ? ORDER BY BOOK_TITLE', ['%' + searchBook + '%'], async (error, data) => {
+
+
+                                res.render('searchBooks', {
+                                    title: searchBook,
+                                    bookData: data,
+                                    user: req.user
+                                });
+                    
+                            
+                        })
+                    })
+                }
+            }
+        });
+    } else {
+        res.redirect('/userLoginPage');
+    }
+    // Previous Code
+    /*const cart = new Cart(req.session.cart ? req.session.cart : {});
+    console.log(bookID);
+    models.books_table.findByPk(bookID).then(book => {
+
+        //console.log(book);
+        cart.add(book, book.BOOK_ID);
+        req.session.cart = cart;
+        console.log(req.session.cart)
+        res.redirect('back')
+    })*/
+}
