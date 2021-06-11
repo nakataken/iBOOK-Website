@@ -280,7 +280,8 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
                                     booksCount: result,
                                     totalSales: result3,
                                     books: encodeURI(JSON.stringify(books)),
-                                    bookSales: encodeURI(JSON.stringify(bookSales))
+                                    bookSales: encodeURI(JSON.stringify(bookSales)),
+                                    chartName: `Top Selling Books`
                                 });
                             }
                         })
@@ -296,14 +297,14 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
 // almost same code from above, will clean if ever
 router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
     const {
-        selectTop,
+        selectCategory
     } = req.body;
 
     if (req.admin) {
         var sql = 'SELECT * FROM books_table LIMIT 10';
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-
+            if(selectCategory != "all") {
             var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
             db.query(bookTotal, function (err, result) {
 
@@ -312,72 +313,62 @@ router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
 
                     var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
                     db.query(salesTotal, function (err, result3) {
-                        // console.log(result3)
-                        // Newly added code
-                        let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
-                        db.query(bookNames, (err, book) => {
-                            let bookData = book.map((book) => {
-                                return book.book_title;
-                            });
-                            let bookSales = [];
-                            let books = [...new Set(bookData)]
+                            let bookNames = `SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE books_table.book_category = "${selectCategory}"`
+                            db.query(bookNames, (err, book) => {
+                                let bookData = book.map((book) => {
+                                    return book.book_title;
+                                });
+                                let bookSales = [];
+                                let books = [...new Set(bookData)]
 
-                            for(let i=0; i<books.length; i++) {
-                                let sales = 0;
-                                for(let j=0; j<bookData.length; j++) {
-                                    if(books[i] === bookData[j]) {
-                                        sales++;
+                                for(let i=0; i<books.length; i++) {
+                                    let sales = 0;
+                                    for(let j=0; j<bookData.length; j++) {
+                                        if(books[i] === bookData[j]) {
+                                            sales++;
+                                        }
+                                    }
+                                    bookSales.push(sales);
+                                }
+
+                                for (let i=bookSales.length; i>=0; i--) {
+                                    for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                                        if (bookSales[j] > bookSales[j-1]) {
+                                            // Swap orders of sales
+                                            let salesSwap = bookSales[j];
+                                            bookSales[j] = bookSales[j - 1];
+                                            bookSales[j - 1] = salesSwap;
+                                            // Swap orders of books
+                                            let bookSwap = books[j];
+                                            books[j] = books[j - 1];
+                                            books[j - 1] = bookSwap;
+                                        }
                                     }
                                 }
-                                bookSales.push(sales);
-                            }
-
-                            for (let i=bookSales.length; i>=0; i--) {
-                                for (let j = bookSales.length; j > bookSales.length - i; j--) {
-                                    if (bookSales[j] > bookSales[j-1]) {
-                                        // Swap orders of sales
-                                        let salesSwap = bookSales[j];
-                                        bookSales[j] = bookSales[j - 1];
-                                        bookSales[j - 1] = salesSwap;
-                                        // Swap orders of books
-                                        let bookSwap = books[j];
-                                        books[j] = books[j - 1];
-                                        books[j - 1] = bookSwap;
-                                    }
-                                }
-                            }
-
-                            if(selectTop==3) {
-                                books = books.slice(0,3);
-                                bookSales = bookSales.slice(0,3);
-                            } else if(selectTop==5) {
+                                
                                 books = books.slice(0,5);
                                 bookSales = bookSales.slice(0,5);
-                            } else if(selectTop==10) {
-                                books = books.slice(0,10);
-                                bookSales = bookSales.slice(0,10);
-                            } else {
-                                books = books.slice(0,10);
-                                bookSales = bookSales.slice(0,10);
-                            }
-                            
-
-                            if(err) {
-                                console.log(err);
-                            } else {
-                                res.render('adminPage', {
-                                    usersCount: result2,
-                                    bookData: data,
-                                    booksCount: result,
-                                    totalSales: result3,
-                                    books: encodeURI(JSON.stringify(books)),
-                                    bookSales: encodeURI(JSON.stringify(bookSales))
-                                });
-                            }
-                        })
+                                
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    res.render('adminPage', {
+                                        usersCount: result2,
+                                        bookData: data,
+                                        booksCount: result,
+                                        totalSales: result3,
+                                        books: encodeURI(JSON.stringify(books)),
+                                        bookSales: encodeURI(JSON.stringify(bookSales)),
+                                        chartName: `Top Selling Books - ${selectCategory}`
+                                    });
+                                }
+                            })
                     });
                 });
             });
+            } else {
+                res.redirect('/adminPage')    
+            }
         })
     } else {
         res.redirect('/adminLoginPage');
@@ -433,11 +424,48 @@ router.get('/cart', authController.isLoggedIn, (req, res, next) => {
 })
 
 //ADD TO CART 
+router.post('/add/:bookID', authController.isLoggedIn, (req, res) => {
+    if (req.user) {
+        const userID = req.user.USER_ID;
+        const bookID = req.params.bookID;
+
+        db.query('SELECT DISTINCT BOOK_ID FROM checkout_items_table WHERE USER_ID = ?', [userID], (error, result) => {
+            if (error) {
+                throw error;
+            } else {
+                let isExist = false;
+                result.forEach((id) => {
+                    if (bookID == id.BOOK_ID) {
+                        isExist = true;
+                    }
+                })
+
+                // Check if book already in the library
+                if (isExist == true){
+                    req.flash('info', 'You already have it on your library.')
+                    return res.redirect('/')
+                } else {
+                    const cart = new Cart(req.session.cart ? req.session.cart : {});
+                    models.books_table.findByPk(bookID).then(book => {
+
+                        //console.log(book);
+                        cart.add(book, book.BOOK_ID);
+                        req.session.cart = cart;
+                        console.log(req.session.cart)
+                        res.redirect('/')
+                    })
+                }
+            }
+        });
+    } else {
+        res.redirect('/userLoginPage');
+    }
+})
+
 router.get('/add/:bookID', authController.isLoggedIn, (req, res) => {
     // DEBUGGED:
     //  Is online?
     if (req.user) {
-
         const userID = req.user.USER_ID;
         const bookID = req.params.bookID;
         
@@ -942,7 +970,7 @@ router.get('/adminBooksData/:page', (req, res) => {
 //ADMIN USERS DATA PAGE ROUTER
 router.get('/adminUsersData', function (req, res, next) {
     var sql = `SELECT USER_NAME, USER_EMAIL, DATE_FORMAT(USER_CREATED_DATE, '%m/%d/%y') AS created, DATE_FORMAT(USER_MODIFIED_DATE, '%m/%d/%y') AS modified
-             FROM users_table `;
+            FROM users_table `;
     db.query(sql, function (err, data, fields) {
         if (err) throw err;
         res.render('adminUsersData', {

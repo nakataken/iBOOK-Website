@@ -93,13 +93,30 @@
 
                     <form action="/adminSelectChart" method="POST">
                         <div class="dl float-left">
-                            <select class="custom-select" name="selectTop" id="selectTop" onchange="this.form.submit()">
-                                <option class="text-muted" name="default" value="default">All</option>
-                                <option name="3" value="3">3</option>
-                                <option name="5" value="5">5</option>
-                                <option name="10" value="10">10</option>
+                            <select class="custom-select" name="selectCategory" id="selectCategory" onchange="this.form.submit()">
+                                <option class="text-muted" name="category" value="default">All</option>
+                                <option class="text-muted" name="category" value="all">Select All</option>
+                                <option name="category" value="Agriculture, Aquaculture, and Food Service">Agriculture, Aquaculture, and Food Service</option>
+                                <option name="category" value="Architecture and Planning">Architecture and Planning</option>
+                                <option name="category" value="Arts and Applied">Arts and Applied</option>
+                                <option name="category" value="Business, Economics, Finance, and Accounting">Business, Economics, Finance, and Accounting
+                                </option>
+                                <option name="category" value="Chemistry">Chemistry</option>
+                                <option name="category" value="Computer Science and Information Technology">Computer Science and Information Technology</option>
+                                <option name="category" value="Chemistry">Earth, Space, and Environmental Science</option>
+                                <option name="category" value="Humanities">Humanities</option>
+                                <option name="category" value="Law and Criminology">Law and Criminology</option>
+                                <option name="category" value="Life Science">Life Science</option>
+                                <option name="category" value="Mathematics and Statistics">Mathematics and Statistics</option>
+                                <option name="category" value="Medicine">Medicine</option>
+                                <option name="category" value="Novel">Novel</option>
+                                <option name="category" value="Life Science">Nursing, Dentistry, and Healthcare</option>
+                                <option name="category" value="Physical Science and Enginering">Physical Science and Enginering</option>
+                                <option name="category" value="Psychology">Psychology</option>
+                                <option name="category" value="Social and Behavioral Science">Social and Behavioral Science</option>
+                                <option name="category" value="Veterinary Medicine">Veterinary Medicine</option>
                             </select>
-                        </div>
+                        </div>  
                     </form>
 
                     <div>
@@ -176,6 +193,7 @@
     </div>
 {{!-- ['book1', 'book2', 'book3'] [1,2,3] --}}
     <script>
+
         let books = JSON.parse(decodeURI("{{books}}"));
         let bookSales = JSON.parse(decodeURI("{{bookSales}}"));
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -211,7 +229,7 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "Top Selling Books",
+                        text: "{{chartName}}"
                     },
                     legend: {
                         display: false

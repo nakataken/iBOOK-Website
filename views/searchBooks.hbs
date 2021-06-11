@@ -74,10 +74,11 @@
                                         <h3 class="mb-0 text-center"> {{this.BOOK_TITLE}}</h3>
                                         <h4 class="mt-0 text-center">P {{this.BOOK_PRICE}}</h4>
                                         
-                                        <form action="/add/{{this.BOOK_ID}}" method="GET" >
-                                            <button type="submit" class="btn btn-add col-12 mx-auto  float-right mb-3"  onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
+                                        <form action="/add/{{this.BOOK_ID}}" method="POST" >
+                                            <input type="hidden" name="addTitle" value={{title}}>
+                                            <button type="submit" class="btn btn-add col-12 mx-auto  float-right mb-3" onclick="this.form.submit()"><i class="fas fa-plus"></i> ADD TO CART</button>
                                         </form>
-                                     
+                                    
                                         <div class="space-2 pb-4"></div>
                                     </div>
                             

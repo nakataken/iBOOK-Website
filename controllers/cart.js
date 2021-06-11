@@ -13,8 +13,6 @@ module.exports = function Cart(oldCart) {
         this.totalPrice += storedItem.BOOK_PRICE;
         storedItem.qty++;
         }
-        
-        
     } 
     
 //ADD SELECTED BOOK
