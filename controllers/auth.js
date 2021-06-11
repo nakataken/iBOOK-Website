@@ -21,8 +21,8 @@ const transport = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'ibook.scrummybears@gmail.com',
-        pass: 'scrummybears'
+        user: 'EbookasyonOfficial@gmail.com',
+        pass: 'ebookasyon2021'
     }
 });
 
@@ -450,14 +450,16 @@ exports.userSendEmail = (req, res) => {
 
         //Create Email to be sent
         const message = {
-            from: 'ibook@scrummybear.com',
+            from: 'EbookasyonOfficial@gmail.com',
             to: req.body.userEmail,
-            subject: "📘 iBOOK PASSWORD RESET",
-            html: ` <p>Hey ${req.body.userEmail}!</p>
-                <p>We heard that you lost your iBook password. Sorry about that!</p>
+            subject: " E-BOOKASYON PASSWORD RESET",
+            html: ` <p>Hey E-bookada, ${req.body.userEmail}!</p>
+                <p>We heard that you lost your password. Sorry about that!</p>
                 <p>To reset your password, please click the link below.\n\nhttp://localhost:8080/userForgotPassword/${encodeURIComponent(urlTokens)}/${req.body.userEmail}</p>
-                <p>Don't forget to read anytime and anywhere you want!</p>
-                <p>–Scrummy Bears</p>`,
+                <p>Don't forget to read anytime and anywhere you want! Read more to learn more!</p>
+                <p>Love,</p>
+                <p>your E-bookada</p>
+                `,
         };
 
         //Send email
