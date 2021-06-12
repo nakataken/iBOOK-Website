@@ -377,6 +377,8 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
                                     if(i==0) {
                                         res.render('adminPage', {
                                             title: 'Admin Page',
+                                            topBooks: encodeURI(JSON.stringify(books)),
+                                            topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                             booksCount: result,
                                             usersCount: result2,
                                             salesTotal: result3,
@@ -399,21 +401,23 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
     }
 });
 
-// selected category on admin page - bar chart
-router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
+// almost same code from above, will clean if ever
+router.post('/adminTopChart', authController.adminIsLoggedIn, (req, res) => {
     const {
-        selectCategory
+        selectTop,
     } = req.body;
 
     if (req.admin) {
-        if(selectCategory != "all") {
+        var sql = 'SELECT * FROM books_table LIMIT 10';
+        db.query(sql, function (err, data, fields) {
+            if (err) throw err;
             var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
             db.query(bookTotal, function (err, result) {
                 var usersTotal = "SELECT COUNT(*) AS usersCount FROM users_table";
                 db.query(usersTotal, function (err, result2) {
                     var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
                     db.query(salesTotal, function (err, result3) {
-                        let bookNames = `SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE books_table.book_category = "${selectCategory}"`
+                        let bookNames = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
                         db.query(bookNames, (err, book) => {
                             let bookData = book.map((book) => {
                                 return book.book_title;
@@ -445,9 +449,23 @@ router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
                                     }
                                 }
                             }
-                            
-                            books = books.slice(0,5);
-                            bookSales = bookSales.slice(0,5);
+
+                            let topBooks = books.slice(0,10);
+                            let topBookSales = bookSales.slice(0,10);
+
+                            if(selectTop==3) {
+                                books = books.slice(0,3);
+                                bookSales = bookSales.slice(0,3);
+                            } else if(selectTop==5) {
+                                books = books.slice(0,5);
+                                bookSales = bookSales.slice(0,5);
+                            } else if(selectTop==10) {
+                                books = books.slice(0,10);
+                                bookSales = bookSales.slice(0,10);
+                            } else {
+                                books = books.slice(0,10);
+                                bookSales = bookSales.slice(0,10);
+                            }
                             
                             let year = new Date().getFullYear();
                             let yearString = year.toString();
@@ -462,19 +480,146 @@ router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
                                     if(i==0) {
                                         res.render('adminPage', {
                                             title: 'Admin Page',
+                                            topBooks: encodeURI(JSON.stringify(books)),
+                                            topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                             booksCount: result,
                                             usersCount: result2,
                                             salesTotal: result3,
                                             salesLabel: encodeURI(JSON.stringify(annualLabel)),
                                             totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
                                             lineChartName: `Total Sales`,
-                                            books: encodeURI(JSON.stringify(books)),
-                                            bookSales: encodeURI(JSON.stringify(bookSales)),
-                                            barChartName: `Top Selling Books`
+                                            books: encodeURI(JSON.stringify(topBooks)),
+                                            bookSales: encodeURI(JSON.stringify(topBookSales)),
+                                            barChartName: `Top Selling Books (Category)`
                                         });
                                     }
                                 })
                             }
+                        })
+                    });
+                });
+            });
+        })
+    } else {
+        res.redirect('/adminLoginPage');
+    }
+});
+
+// selected category on admin page - bar chart
+router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
+    const {
+        selectCategory
+    } = req.body;
+
+    if (req.admin) {
+        if(selectCategory != "all") {
+            var bookTotal = "SELECT COUNT(*) AS booksCount FROM books_table";
+            db.query(bookTotal, function (err, result) {
+                var usersTotal = "SELECT COUNT(*) AS usersCount FROM users_table";
+                db.query(usersTotal, function (err, result2) {
+                    var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+                    db.query(salesTotal, function (err, result3) {
+                        let topBooksQuery = "SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id"
+                        db.query(topBooksQuery, (err, topBooks) => {
+                            let topBookData = topBooks.map((book) => {
+                                return book.book_title;
+                            });
+                            let topBookSales = [];
+                            let topBooksSet = [...new Set(topBookData)]
+
+                            for(let i=0; i<topBooksSet.length; i++) {
+                                let sales = 0;
+                                for(let j=0; j<topBookData.length; j++) {
+                                    if(topBooksSet[i] === topBookData[j]) {
+                                        sales++;
+                                    }
+                                }
+                                topBookSales.push(sales);
+                            }
+
+                            for (let i=topBookSales.length; i>=0; i--) {
+                                for (let j = topBookSales.length; j > topBookSales.length - i; j--) {
+                                    if (topBookSales[j] > topBookSales[j-1]) {
+                                        // Swap orders of sales
+                                        let salesSwap = topBookSales[j];
+                                        topBookSales[j] = topBookSales[j - 1];
+                                        topBookSales[j - 1] = salesSwap;
+                                        // Swap orders of books
+                                        let bookSwap = topBooksSet[j];
+                                        topBooksSet[j] = topBooksSet[j - 1];
+                                        topBooksSet[j - 1] = bookSwap;
+                                    }
+                                }
+                            }
+
+                            topBooksSet = topBooksSet.slice(0,10);
+                            topBookSales = topBookSales.slice(0,10);
+
+                            let bookNames = `SELECT books_table.book_title FROM books_table INNER JOIN checkout_items_table ON books_table.book_id = checkout_items_table.book_id WHERE books_table.book_category = "${selectCategory}"`
+                            db.query(bookNames, (err, book) => {
+                                let bookData = book.map((book) => {
+                                    return book.book_title;
+                                });
+                                let bookSales = [];
+                                let books = [...new Set(bookData)]
+
+                                for(let i=0; i<books.length; i++) {
+                                    let sales = 0;
+                                    for(let j=0; j<bookData.length; j++) {
+                                        if(books[i] === bookData[j]) {
+                                            sales++;
+                                        }
+                                    }
+                                    bookSales.push(sales);
+                                }
+
+                                for (let i=bookSales.length; i>=0; i--) {
+                                    for (let j = bookSales.length; j > bookSales.length - i; j--) {
+                                        if (bookSales[j] > bookSales[j-1]) {
+                                            // Swap orders of sales
+                                            let salesSwap = bookSales[j];
+                                            bookSales[j] = bookSales[j - 1];
+                                            bookSales[j - 1] = salesSwap;
+                                            // Swap orders of books
+                                            let bookSwap = books[j];
+                                            books[j] = books[j - 1];
+                                            books[j - 1] = bookSwap;
+                                        }
+                                    }
+                                }
+                                
+                                books = books.slice(0,5);
+                                bookSales = bookSales.slice(0,5);
+                                
+                                let year = new Date().getFullYear();
+                                let yearString = year.toString();
+                                let yearNumber = parseInt(yearString);
+                                let annualLabel = [yearNumber-5,yearNumber-4,yearNumber-3,yearNumber-2,yearNumber-1,yearNumber];
+                                let annualSales = [];
+                                for(let i=5;i>=0;i--) {
+                                    let querySales = `SELECT payment_amount FROM checkout_table where payment_date like "${yearString-i}%"`;
+                                    db.query(querySales, (err, salesData) => {
+                                        if (err) throw err;
+                                        annualSales[i] = compressSalesData(salesData);
+                                        if(i==0) {
+                                            res.render('adminPage', {
+                                                title: 'Admin Page',
+                                                topBooks: encodeURI(JSON.stringify(topBooksSet)),
+                                                topBooksSales: encodeURI(JSON.stringify(topBookSales)),
+                                                booksCount: result,
+                                                usersCount: result2,
+                                                salesTotal: result3,
+                                                salesLabel: encodeURI(JSON.stringify(annualLabel)),
+                                                totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
+                                                lineChartName: `Total Sales`,
+                                                books: encodeURI(JSON.stringify(books)),
+                                                bookSales: encodeURI(JSON.stringify(bookSales)),
+                                                barChartName: `Top Selling Books (Category)`
+                                            });
+                                        }
+                                    })
+                                }
+                            })
                         })
                     })
                 })
@@ -727,6 +872,8 @@ router.post('/adminSalesChart', function (req, res, next) {
                                     if(i==24) {
                                         res.render('adminPage', {
                                             title: 'Admin Page',
+                                            topBooks: encodeURI(JSON.stringify(books)),
+                                            topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                             salesLabel: encodeURI(JSON.stringify(hourOptions)),
                                             totalSales: encodeURI(JSON.stringify(hourlySales)),
                                             daily: true,
@@ -734,7 +881,7 @@ router.post('/adminSalesChart', function (req, res, next) {
                                             lineChartName: `Total Sales - Hourly Sales of ${currentYear}-${monthFormat}-${dateFormat}`,
                                             books: encodeURI(JSON.stringify(books)),
                                             bookSales: encodeURI(JSON.stringify(bookSales)),
-                                            barChartName: `Top Selling Books`,
+                                            barChartName: `Top Selling Books (Category)`,
                                         });
                                     }
                                 })
@@ -757,6 +904,8 @@ router.post('/adminSalesChart', function (req, res, next) {
                                     if(i==lastDay) {
                                         res.render('adminPage', {
                                             title: 'Admin Page',
+                                            topBooks: encodeURI(JSON.stringify(books)),
+                                            topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                             salesLabel: encodeURI(JSON.stringify(dailyLabel)),
                                             totalSales: encodeURI(JSON.stringify(dailySales)),
                                             monthly: true,
@@ -764,7 +913,7 @@ router.post('/adminSalesChart', function (req, res, next) {
                                             lineChartName: `Total Sales - Daily Sales of ${year}-${selectedMonth}`,
                                             books: encodeURI(JSON.stringify(books)),
                                             bookSales: encodeURI(JSON.stringify(bookSales)),
-                                            barChartName: `Top Selling Books`
+                                            barChartName: `Top Selling Books (Category)`
                                         });
                                     }
                                 })
@@ -787,6 +936,8 @@ router.post('/adminSalesChart', function (req, res, next) {
                                     if(i==12) {
                                         res.render('adminPage', {
                                             title: 'Admin Page',
+                                            topBooks: encodeURI(JSON.stringify(books)),
+                                            topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                             salesLabel: encodeURI(JSON.stringify(monthLabel)),
                                             totalSales: encodeURI(JSON.stringify(monthlySales)),
                                             annual: true,
@@ -794,7 +945,7 @@ router.post('/adminSalesChart', function (req, res, next) {
                                             lineChartName: `Total Sales - Annual Sales of ${year}`,
                                             books: encodeURI(JSON.stringify(books)),
                                             bookSales: encodeURI(JSON.stringify(bookSales)),
-                                            barChartName: `Top Selling Books`
+                                            barChartName: `Top Selling Books (Category)`
                                         })
                                     }
                                 })

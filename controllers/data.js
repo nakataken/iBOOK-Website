@@ -235,12 +235,13 @@ exports.adminDaily = async (req, res) => {
                             dailySales[i-1] = compressSalesData(salesData);
                             
                             if(i==lastDay) {
-                                console.log("last loop");
                                 let highestSalesDate = dailySales.indexOf(Math.max(...dailySales)) + 1;
                                 // let highestSales = dailySales[highestSalesDate-1];
                                 let suggestionDate = (highestSalesDate == 1) ? `1st`: (highestSalesDate == 2) ? `2nd`: (highestSalesDate == 3) ? `3rd`: `${highestSalesDate}th`;
                                 res.render('adminPage', {
                                     title: 'Admin Page',
+                                    topBooks: encodeURI(JSON.stringify(books)),
+                                    topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                     booksCount: result,
                                     usersCount: result2,
                                     salesTotal: result3,
@@ -251,7 +252,7 @@ exports.adminDaily = async (req, res) => {
                                     lineChartName: `Total Sales - Daily`,
                                     books: encodeURI(JSON.stringify(books)),
                                     bookSales: encodeURI(JSON.stringify(bookSales)),
-                                    barChartName: `Top Selling Books`,
+                                    barChartName: `Top Selling Books (Category)`,
                                     prediction: `Upload new books in ${suggestionDate} day of next month`
                                 });
                             }
@@ -323,6 +324,8 @@ exports.adminMonthly = async (req, res) => {
                                     booksCount: result,
                                     usersCount: result2,
                                     salesTotal: result3,
+                                    topBooks: encodeURI(JSON.stringify(books)),
+                                    topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                     salesLabel: encodeURI(JSON.stringify(monthLabel)),
                                     totalSales: encodeURI(JSON.stringify(monthlySales)),
                                     monthly: true,
@@ -330,7 +333,7 @@ exports.adminMonthly = async (req, res) => {
                                     lineChartName:  `Total Sales - Monthly`,
                                     books: encodeURI(JSON.stringify(books)),
                                     bookSales: encodeURI(JSON.stringify(bookSales)),
-                                    barChartName: `Top Selling Books`
+                                    barChartName: `Top Selling Books (Category)`
                                 });
                             }
                         })
@@ -400,6 +403,8 @@ exports.adminAnnual = async (req, res) => {
                                     booksCount: result,
                                     usersCount: result2,
                                     salesTotal: result3,
+                                    topBooks: encodeURI(JSON.stringify(books)),
+                                    topBooksSales: encodeURI(JSON.stringify(bookSales)),
                                     salesLabel: encodeURI(JSON.stringify(annualLabel)),
                                     totalSales: encodeURI(JSON.stringify(annualSales.reverse())),
                                     annual: true,
@@ -407,7 +412,7 @@ exports.adminAnnual = async (req, res) => {
                                     lineChartName:  `Total Sales - Annual`,
                                     books: encodeURI(JSON.stringify(books)),
                                     bookSales: encodeURI(JSON.stringify(bookSales)),
-                                    barChartName: `Top Selling Books`
+                                    barChartName: `Top Selling Books (Category)`
                                 });
                             }
                         })
