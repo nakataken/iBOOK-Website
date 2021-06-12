@@ -156,6 +156,20 @@
                                         </td>
                                     </tr>
                                     {{/each}}
+
+                                    {{#if totalSales}}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total Sales : P{{#if isNumber}}{{totalSales}}{{/if}}
+                                        {{#each totalSales}}
+                                        {{this.totalSales}}
+                                        {{/each}}
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                    {{/if}}
                                 </tbody>
                             </table>
                             {{#if message}}

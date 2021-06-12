@@ -795,14 +795,18 @@ router.get('/adminSalesData', function (req, res, next) {
     var sql = `SELECT users_table.USER_NAME AS user, checkout_table.PAYMENT_METHOD AS mop, 
             checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%m/%d/%y') AS date
             FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID ORDER BY checkout_table.PAYMENT_DATE`;
-
     db.query(sql, function (err, data, fields) {
         if (err) throw err;
-        res.render('adminSalesData', {
-            title: 'Sales List',
-            salesData: data
+        var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+        db.query(salesTotal, function (err, totalSales) {
+            
+            res.render('adminSalesData', {
+                title: 'Sales List',
+                salesData: data,
+                totalSales
+            });
         });
-    });
+    })
 });
 
 router.post('/adminSalesChart', function (req, res, next) {

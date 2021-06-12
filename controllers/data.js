@@ -95,9 +95,13 @@ exports.adminSortSales = async (req, res) => {
         
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, totalSales) {
+                res.render('adminSalesData', {
+                    title: 'Sales List',
+                    salesData: data,
+                    totalSales
+                });
             });
         });
 
@@ -108,9 +112,14 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_DATE DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, totalSales) {
+                
+                res.render('adminSalesData', {
+                    title: 'Sales List',
+                    salesData: data,
+                    totalSales
+                });
             });
         });
     } else if (sortSales === 'sortAmountAsc') {
@@ -120,9 +129,14 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, totalSales) {
+                
+                res.render('adminSalesData', {
+                    title: 'Sales List',
+                    salesData: data,
+                    totalSales
+                });
             });
         });
     } else if (sortSales === 'sortAmountDesc') {
@@ -132,9 +146,14 @@ exports.adminSortSales = async (req, res) => {
         ORDER BY PAYMENT_AMOUNT DESC`;
         db.query(sql, function (err, data, fields) {
             if (err) throw err;
-            res.render('adminSalesData', {
-                title: 'User List',
-                salesData: data
+            var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+            db.query(salesTotal, function (err, totalSales) {
+                
+                res.render('adminSalesData', {
+                    title: 'Sales List',
+                    salesData: data,
+                    totalSales
+                });
             });
         });
     }
@@ -150,18 +169,20 @@ exports.adminSearchSales = async (req, res) => {
     checkout_table.PAYMENT_AMOUNT AS amount, DATE_FORMAT(checkout_table.PAYMENT_DATE, '%y/%m/%d') AS date
     FROM users_table JOIN checkout_table ON users_table.USER_ID = checkout_table.USER_ID
     WHERE users_table.USER_NAME LIKE ?`, ['%' + searchSales + '%'], async (error, data) => {
-        console.log(data);
         if (data.length < 1) {
             return res.status(401).render('adminSalesData', {
                 message: 'There are no users with that username'
             });
         } else {
-            renderSales(res,data);
-            // res.render('adminSalesData', {
-            //     title: 'User List',
-            //     salesData: data
-            // });
-
+            let totalSales = data.reduce((total, sales) => {
+                return total + sales.amount
+            }, 0)
+            res.render('adminSalesData', {
+                title: 'Sales List',    
+                salesData: data,
+                totalSales,
+                isNumber: true
+            });
         }
     })
 }
@@ -434,10 +455,15 @@ exports.dailySales = async (req, res) => {
                 message: 'There are no purchases for today.'
             });
         }
-        
+        let totalSales = data.reduce((total, sales) => {
+                return total + sales.amount
+            }, 0)
+
         res.render('adminSalesData', {
             title: 'User List',
             salesData: data,
+            totalSales,
+            isNumber: true
         });
     })
 }
@@ -453,9 +479,14 @@ exports.monthlySales = async (req, res) => {
                 message: 'There are no purchases for this month.'
             });
         }
+        let totalSales = data.reduce((total, sales) => {
+            return total + sales.amount
+        }, 0)
         res.render('adminSalesData', {
             title: 'User List',
             salesData: data,
+            totalSales,
+            isNumber: true
         });
     })
 }
@@ -471,9 +502,13 @@ exports.annualSales = async (req, res) => {
                 message: 'There are no purchases for this month.'
             });
         }
-        res.render('adminSalesData', {
-            title: 'Sales List',
-            salesData: data,
+        var salesTotal = "SELECT SUM(PAYMENT_AMOUNT) AS totalSales FROM checkout_table";
+        db.query(salesTotal, function (err, totalSales) {  
+            res.render('adminSalesData', {
+                title: 'Sales List',
+                salesData: data,
+                totalSales
+            });
         });
     })
 }
