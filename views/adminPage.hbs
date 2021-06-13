@@ -23,7 +23,7 @@
 
     <!--Begin page content-->
     <div class="container-fluid px-lg-4">
-        <div class="row">
+        <div class="row .d-flex">
             <div class="col-md-12 mt-lg-4 mt-4">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -88,10 +88,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
                     {{!-- Top 3/5/10 Chart --}}
-                    <div>
-                        <form action="/adminTopChart" method="POST">
-                            <div class="dl float-left">
+                    <div class = "card2">
+                        <form class = "d-flex justify-content-between" action="/adminTopChart" method="POST">
+                         <h1 class="h4 text-left text-gray-800">Top Selling Books</h1>
+                            <div class="float-right">
                                 <select class="custom-select" name="selectTop" id="selectTop" onchange="this.form.submit()">
                                     <option class="text-muted" name="default" value="default">All</option>
                                     <option name="3" value="3">3</option>
@@ -100,13 +102,15 @@
                                 </select>
                             </div>
                         </form>
+                        <hr>
                         <div>
-                            <canvas id="topBooksChart" width="1000" height="450"></canvas>
+                            <canvas id="topBooksChart" width="1100" height="500"></canvas> 
                         </div>
                     </div>
                     {{!-- Top sales of book bar chart --}}
-                    <div>
-                        <form action="/adminSelectChart" method="POST">
+                    <div class="card2">
+                         <form class = "d-flex justify-content-between" action="/adminSelectChart" method="POST">
+                        <h1 class="h4 text-left text-gray-800">Top Selling Books (Category)</h1>
                             <div class="dl float-left">
                                 <select class="custom-select" name="selectCategory" id="selectCategory" onchange="this.form.submit()">
                                     <option class="text-muted" name="category" value="default">All</option>
@@ -136,13 +140,13 @@
                                 </select>
                             </div>
                         </form>
-
+                        <hr>
                         <div>
-                            <canvas id="barChart" width="1000" height="450"></canvas>
+                            <canvas id="barChart" width="1100" height="500"></canvas>
                         </div>
                     </div>
                     {{!-- Sales line chart --}}
-                    <div class="col-lg-12 col-md-12">
+                    <div class="card2 mb-5">
                         <div class="row d-flex align-items-center">
                     
                             <div class="col-lg-4 col-md-4 d-flex">
@@ -175,11 +179,11 @@
                     
                             </div>
                         </div>
-                    </div>
+                   
                     <div>
                         {{#if daily}}
                         <form action="/adminSalesChart" method="POST">
-                            <div class="dl float-left">
+                            <div class="dl float-right">
                                 <select class="custom-select" name="selectedDaily" id="selectedDaily" onchange="this.form.submit()">
                                     <option class="text-muted" name="default" value="default">All</option>
                                     {{!-- <option name="none" value="none">None</option> --}}
@@ -193,7 +197,7 @@
                         {{/if}}
                         {{#if monthly}}
                         <form action="/adminSalesChart" method="POST">
-                            <div class="dl float-left">
+                            <div class="dl float-right">
                                 <select class="custom-select" name="selectedMonthly" id="selectedMonthly" onchange="this.form.submit()">
                                     <option class="text-muted" name="default" value="default">All</option>
                                     {{!-- <option name="none" value="none">None</option> --}}
@@ -207,7 +211,7 @@
                         {{/if}}
                         {{#if annual}}
                         <form action="/adminSalesChart" method="POST">
-                            <div class="dl float-left">
+                            <div class="dl float-right">
                                 <select class="custom-select" name="selectedAnnualy" id="selectedAnnualy" onchange="this.form.submit()">
                                     <option class="text-muted" name="default" value="default">All</option>
                                     {{#each annualLabel}}
@@ -217,17 +221,20 @@
                                 </select>
                             </div>
                         </form>
+                        
                         {{/if}}
+                       
                         <div>
-                            <canvas id="lineChart" width="800" height="200"></canvas>
+                            <canvas id="lineChart" width="700" height="200"></canvas>
                         </div>
                         {{!-- Insert message for prediction here --}}
                         {{#if prediction}}
                             <p>*{{prediction}}</p>
                         {{/if}}
                     </div>
+                    </div>
                 </div>
-            </div>
+            
         </div>
     </div>
 
@@ -274,7 +281,7 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "Top Selling Books",
+                        text: "",
                     },
                     legend: {
                         display: false
@@ -326,7 +333,7 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "{{barChartName}}"
+                        text: ""
                     },
                     legend: {
                         display: false
@@ -371,7 +378,12 @@
                     title: {
                         align: 'center',
                         display: 'true',
-                        text: "{{lineChartName}}"
+                        text: "{{lineChartName}}",
+                        font: {
+                            size: 25,
+                            family: 'Montserrat',
+                            style: 'normal'
+                        }
                     },
                     legend: {
                         display: false

@@ -305,8 +305,9 @@ html {
 .card {
     margin-bottom: 24px;
     border: none;
-    box-shadow: 0 0 0.875rem 0 rgba(33, 37, 41, 0.5);
+    box-shadow: 0 0 0px 0px rgba(33, 37, 41, 0.5);
     display: flex;
+    background-color: #ffd63b;
 }
 
 .card #sales-box {
@@ -326,9 +327,10 @@ html {
 }
 
 .card-body h5 {
-    font-size: .990rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #fff;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card-body h1 {
@@ -493,3 +495,30 @@ footer.footer ul {
     color: #6c757d !important;
     font-size: 14px;
 }
+
+
+hr{
+    margin-left: 0;
+    margin-right: 0;
+    color: #212520;
+    margin-top: 20px;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.card2{
+        background-color: #fff;
+        margin-bottom: 24px;
+        border: none;
+        display: flexbox;
+        font-size: 15px;
+        padding-bottom: 40px;
+        padding-top: 40px;
+        align-content: center;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 50px;
+}
+
