@@ -37,11 +37,11 @@ exports.checkoutGcash = async (req, res, next) => {
     } else {
         var datetime = new Date();
         var cart = new Cart(req.session.cart);
-
+        var totalPrice = cart.totalPrice.toFixed(2)
         db.query('INSERT INTO checkout_table SET ?', {
             USER_ID: userID,
             PAYMENT_METHOD: mop,
-            PAYMENT_AMOUNT: cart.totalPrice,
+            PAYMENT_AMOUNT: totalPrice,
             PAYMENT_DATE: datetime
         }, (error, results) => {
             if (error) {
@@ -104,11 +104,12 @@ exports.checkoutCard = async (req, res, next) => {
     } else {
         var datetime = new Date();
         var cart = new Cart(req.session.cart);
+        var totalPrice = cart.totalPrice.toFixed(2)
 
         db.query('INSERT INTO checkout_table SET ?', {
             USER_ID: userID,
             PAYMENT_METHOD: mop,
-            PAYMENT_AMOUNT: cart.totalPrice,
+            PAYMENT_AMOUNT: totalPrice,
             PAYMENT_DATE: datetime
         }, (error, results) => {
             if (error) {
@@ -176,9 +177,10 @@ exports.addSelected = async (req, res, next) => {
 
     cart.addSelected(bookID);
     req.session.cart = cart;
+    var totalPrice = cart.totalPrice.toFixed(2)
     res.render('cartPage', {
         book: cart.generateArray(),
-        totalPrice: cart.totalPrice
+        totalPrice: totalPrice
     });
 }
 

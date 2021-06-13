@@ -741,10 +741,11 @@ router.get('/check-out', authController.isLoggedIn, (req, res) => {
             res.redirect('/cart')
         } else {
             var cart = new Cart(req.session.cart);
+            var totalPrice = cart.totalPrice.toFixed(2)
             res.render('checkOutPage', {
                 user: req.user,
                 book: cart.generateArray(),
-                total: cart.totalPrice
+                total: totalPrice
             });
         }
     } else {
@@ -757,10 +758,12 @@ router.get('/check-out', authController.isLoggedIn, (req, res) => {
 //CHECKOUT GCASH ERROR PAGE
 router.get('/check-out/error/gcash', authController.isLoggedIn, (req, res) => {
     var cart = new Cart(req.session.cart);
+    var totalPrice = cart.totalPrice.toFixed(2)
+
     res.render('checkOutPage', {
         message: 'Please input a valid gcash number',
         book: cart.generateArray(),
-        total: cart.totalPrice,
+        total: totalPrice,
         user: req.user
     });
 })
@@ -768,10 +771,11 @@ router.get('/check-out/error/gcash', authController.isLoggedIn, (req, res) => {
 //CHECKOUT GCASH ERROR CARD
 router.get('/check-out/error/card', authController.isLoggedIn, (req, res) => {
     var cart = new Cart(req.session.cart);
+    var totalPrice = cart.totalPrice.toFixed(2)
     res.render('checkOutPage', {
         message: 'Please input valid card credentials',
         book: cart.generateArray(),
-        total: cart.totalPrice,
+        total: totalPrice,
         user: req.user
     });
 })
