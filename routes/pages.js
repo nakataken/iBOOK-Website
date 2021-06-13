@@ -950,7 +950,7 @@ router.post('/adminSalesChart', function (req, res, next) {
                                             totalSales: encodeURI(JSON.stringify(monthlySales)),
                                             annual: true,
                                             annualLabel,
-                                            lineChartName: `Total Sales - Annual Sales of ${year}`,
+                                            lineChartName: `Total Sales - Annual Sales of ${selectedYear}`,
                                             books: encodeURI(JSON.stringify(books)),
                                             bookSales: encodeURI(JSON.stringify(bookSales)),
                                             barChartName: `Top Selling Books (Category)`
