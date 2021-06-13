@@ -387,7 +387,7 @@ router.get('/adminPage', authController.adminIsLoggedIn, (req, res) => {
                                             lineChartName: `Total Sales`,
                                             books: encodeURI(JSON.stringify(books)),
                                             bookSales: encodeURI(JSON.stringify(bookSales)),
-                                            barChartName: `Top Selling Books`
+                                            barChartName: `Top Selling Books (Category)`
                                         });
                                     }
                                 })
@@ -614,7 +614,7 @@ router.post('/adminSelectChart', authController.adminIsLoggedIn, (req, res) => {
                                                 lineChartName: `Total Sales`,
                                                 books: encodeURI(JSON.stringify(books)),
                                                 bookSales: encodeURI(JSON.stringify(bookSales)),
-                                                barChartName: `Top Selling Books (Category)`
+                                                barChartName: `Top Selling Books - ${selectCategory}`
                                             });
                                         }
                                     })
